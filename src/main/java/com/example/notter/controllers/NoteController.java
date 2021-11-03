@@ -4,7 +4,6 @@ import com.example.notter.db.entity.Note;
 import com.example.notter.db.repository.NoteRepository;
 import com.example.notter.db.entity.User;
 import com.example.notter.db.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +13,17 @@ import java.util.Optional;
 @RequestMapping("api/v1/note")
 public class NoteController {
 
-    @Autowired
-    private NoteRepository noteRepository;
+    private final NoteRepository noteRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public NoteController(
+            NoteRepository noteRepository,
+            UserRepository userRepository
+    ) {
+        this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
+    }
 
     @PostMapping("add")
     public @ResponseBody

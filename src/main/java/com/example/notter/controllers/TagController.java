@@ -2,7 +2,6 @@ package com.example.notter.controllers;
 
 import com.example.notter.db.entity.Tag;
 import com.example.notter.db.repository.TagRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,8 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/tag")
 public class TagController {
 
-    @Autowired
-    TagRepository tagRepository;
+    private final TagRepository tagRepository;
+
+    public TagController(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     @PostMapping("add")
     public @ResponseBody
