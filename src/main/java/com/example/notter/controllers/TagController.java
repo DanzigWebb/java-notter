@@ -27,7 +27,10 @@ public class TagController {
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<Tag> getAll() {
+    Iterable<Tag> getAll(@RequestParam Integer userId) {
+        if (userId != null) {
+            return tagRepository.findByUserId(userId);
+        }
         return tagRepository.findAll();
     }
 
