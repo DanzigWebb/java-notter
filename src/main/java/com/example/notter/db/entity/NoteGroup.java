@@ -3,7 +3,7 @@ package com.example.notter.db.entity;
 import javax.persistence.*;
 
 @Entity
-public class Note {
+public class NoteGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

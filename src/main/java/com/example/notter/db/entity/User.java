@@ -21,6 +21,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Tag> tags = new ArrayList<>();
 
+//    @OneToMany(mappedBy = "user")
+//    private List<Group> groups = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }

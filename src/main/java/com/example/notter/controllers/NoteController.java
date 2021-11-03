@@ -27,7 +27,7 @@ public class NoteController {
 
     @PostMapping("add")
     public @ResponseBody
-    String add(@RequestParam String title, @RequestParam String description) {
+    Note add(@RequestParam String title, @RequestParam String description) {
 
         Optional<User> u = userRepository.findById(1);
         Note n = new Note();
@@ -37,7 +37,7 @@ public class NoteController {
         u.ifPresent(n::setUser);
 
         noteRepository.save(n);
-        return "Create";
+        return n;
     }
 
     @GetMapping("all")

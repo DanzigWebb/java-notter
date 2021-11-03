@@ -17,14 +17,14 @@ public class TagController {
 
     @PostMapping("add")
     public @ResponseBody
-    String add(@RequestParam String name, @RequestParam String description) {
+    Tag add(@RequestParam String name, @RequestParam String description) {
 
         Tag t = new Tag();
         t.setName(name);
         t.setColor(description);
 
         tagRepository.save(t);
-        return "Create";
+        return t;
     }
 
     @GetMapping(path = "/all")
