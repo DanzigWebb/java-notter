@@ -15,7 +15,7 @@ public class UserController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    String addNewUser(@RequestParam String name, @RequestParam String email) {
+    String add(@RequestParam String name, @RequestParam String email) {
 
         User n = new User();
         n.setName(name);
@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<User> getAllUsers() {
+    Iterable<User> getAll() {
         return userRepository.findAll();
     }
 

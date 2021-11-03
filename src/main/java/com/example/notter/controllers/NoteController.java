@@ -22,7 +22,7 @@ public class NoteController {
 
     @PostMapping("add")
     public @ResponseBody
-    String addNote(@RequestParam String title, @RequestParam String description) {
+    String add(@RequestParam String title, @RequestParam String description) {
 
         Optional<User> u = userRepository.findById(1);
         Note n = new Note();
