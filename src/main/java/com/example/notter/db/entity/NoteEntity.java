@@ -2,8 +2,8 @@ package com.example.notter.db.entity;
 
 import javax.persistence.*;
 
-@Entity
-public class Note {
+@Entity(name = "note")
+public class NoteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,7 +14,7 @@ public class Note {
     private String description;
 
     @ManyToOne
-    private User user;
+    private UserEntity user;
 
     public void setId(Integer id) {
         this.id = id;
@@ -40,7 +40,7 @@ public class Note {
         this.description = description;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 }

@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-public class User {
+@Entity(name = "user")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,13 +16,13 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user")
-    private List<Note> notes = new ArrayList<>();
+    private List<NoteEntity> notes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Tag> tags = new ArrayList<>();
+    private List<TagEntity> tags = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Group> groups = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<GroupEntity> groups = new ArrayList<>();
 
     public Integer getId() {
         return id;

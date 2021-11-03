@@ -1,7 +1,7 @@
 package com.example.notter.controllers;
 
-import com.example.notter.db.entity.Tag;
-import com.example.notter.db.repository.TagRepository;
+import com.example.notter.db.entity.TagEntity;
+import com.example.notter.db.repository.TagRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/tag")
 public class TagController {
 
-    private final TagRepository tagRepository;
+    private final TagRepo tagRepository;
 
-    public TagController(TagRepository tagRepository) {
+    public TagController(TagRepo tagRepository) {
         this.tagRepository = tagRepository;
     }
 
     @PostMapping("add")
     public @ResponseBody
-    Tag add(@RequestParam String name, @RequestParam String description) {
+    TagEntity add(@RequestParam String name, @RequestParam String description) {
 
-        Tag t = new Tag();
+        TagEntity t = new TagEntity();
         t.setName(name);
         t.setColor(description);
 
@@ -29,7 +29,7 @@ public class TagController {
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<Tag> getAll(@RequestParam Integer userId) {
+    Iterable<TagEntity> getAll(@RequestParam Integer userId) {
         if (userId != null) {
             return tagRepository.findByUserId(userId);
         }

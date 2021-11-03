@@ -1,11 +1,11 @@
 package com.example.notter.db.repository;
 
-import com.example.notter.db.entity.User;
+import com.example.notter.db.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepo extends CrudRepository<UserEntity, Integer> {
 
 }

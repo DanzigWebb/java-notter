@@ -1,7 +1,7 @@
 package com.example.notter.controllers;
 
-import com.example.notter.db.entity.User;
-import com.example.notter.db.repository.UserRepository;
+import com.example.notter.db.entity.UserEntity;
+import com.example.notter.db.repository.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "api/v1/user")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserRepo userRepository;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepo userRepository) {
         this.userRepository = userRepository;
     }
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    User add(@RequestParam String name, @RequestParam String email) {
+    UserEntity add(@RequestParam String name, @RequestParam String email) {
 
-        User u = new User();
+        UserEntity u = new UserEntity();
         u.setName(name);
         u.setEmail(email);
         userRepository.save(u);
@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<User> getAll() {
+    Iterable<UserEntity> getAll() {
         return userRepository.findAll();
     }
 

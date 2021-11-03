@@ -2,8 +2,8 @@ package com.example.notter.db.entity;
 
 import javax.persistence.*;
 
-@Entity
-public class Tag {
+@Entity(name = "tag")
+public class TagEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,7 +14,7 @@ public class Tag {
     private String color;
 
     @ManyToOne
-    private User user;
+    private UserEntity user;
 
     public void setId(Integer id) {
         this.id = id;

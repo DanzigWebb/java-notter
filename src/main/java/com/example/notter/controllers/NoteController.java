@@ -1,9 +1,9 @@
 package com.example.notter.controllers;
 
-import com.example.notter.db.entity.Note;
-import com.example.notter.db.repository.NoteRepository;
-import com.example.notter.db.entity.User;
-import com.example.notter.db.repository.UserRepository;
+import com.example.notter.db.entity.NoteEntity;
+import com.example.notter.db.repository.NoteRepo;
+import com.example.notter.db.entity.UserEntity;
+import com.example.notter.db.repository.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +13,13 @@ import java.util.Optional;
 @RequestMapping("api/v1/note")
 public class NoteController {
 
-    private final NoteRepository noteRepository;
+    private final NoteRepo noteRepository;
 
-    private final UserRepository userRepository;
+    private final UserRepo userRepository;
 
     public NoteController(
-            NoteRepository noteRepository,
-            UserRepository userRepository
+            NoteRepo noteRepository,
+            UserRepo userRepository
     ) {
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
@@ -27,10 +27,10 @@ public class NoteController {
 
     @PostMapping("add")
     public @ResponseBody
-    Note add(@RequestParam String title, @RequestParam String description) {
+    NoteEntity add(@RequestParam String title, @RequestParam String description) {
 
-        Optional<User> u = userRepository.findById(1);
-        Note n = new Note();
+        Optional<UserEntity> u = userRepository.findById(1);
+        NoteEntity n = new NoteEntity();
 
         n.setTitle(title);
         n.setDescription(description);
@@ -42,7 +42,7 @@ public class NoteController {
 
     @GetMapping("all")
     public @ResponseBody
-    Iterable<Note> getAll() {
+    Iterable<NoteEntity> getAll() {
         return noteRepository.findAll();
     }
 }
