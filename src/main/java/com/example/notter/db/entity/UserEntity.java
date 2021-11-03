@@ -47,4 +47,16 @@ public class UserEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<TagEntity> getTags() {
+        return tags;
+    }
+
+    public List<NoteEntity> getNotes() {
+        return notes;
+    }
+
+    public List<GroupEntity> getGroups() {
+        return groups;
+    }
 }
