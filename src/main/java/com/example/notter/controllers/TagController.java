@@ -1,7 +1,7 @@
 package com.example.notter.controllers;
 
 import com.example.notter.db.entity.Tag;
-import com.example.notter.db.entity.TagRepository;
+import com.example.notter.db.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

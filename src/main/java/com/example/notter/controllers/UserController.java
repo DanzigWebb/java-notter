@@ -1,7 +1,7 @@
 package com.example.notter.controllers;
 
 import com.example.notter.db.entity.User;
-import com.example.notter.db.entity.UserRepository;
+import com.example.notter.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
