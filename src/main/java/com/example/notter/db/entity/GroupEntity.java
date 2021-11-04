@@ -27,9 +27,8 @@ public class GroupEntity {
     @ManyToOne
     private UserEntity user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "group")
     private List<NoteEntity> notes;
-
 
 
     public void setId(Integer id) {

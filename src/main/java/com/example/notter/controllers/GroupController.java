@@ -1,7 +1,8 @@
 package com.example.notter.controllers;
 
 import com.example.notter.db.entity.GroupEntity;
-import com.example.notter.db.repository.GroupRepo;
+import com.example.notter.model.Group;
+import com.example.notter.services.GroupService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,27 +10,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/group")
 public class GroupController {
 
-    private final GroupRepo groupRepository;
+    private final GroupService groupService;
 
-    GroupController(GroupRepo groupRepository) {
-        this.groupRepository = groupRepository;
+    GroupController(GroupService groupService) {
+        this.groupService = groupService;
     }
 
     @PostMapping("add")
     public @ResponseBody
-    GroupEntity add(@RequestParam String title, @RequestParam String description) {
-
-        GroupEntity g = new GroupEntity();
-        g.setTitle(title);
-        g.setDescription(description);
-
-        groupRepository.save(g);
-        return g;
+    Group add(@RequestBody GroupEntity entity) {
+        return groupService.add(entity);
     }
 
     @GetMapping("all")
     public @ResponseBody
-    Iterable<GroupEntity> getAll() {
-        return groupRepository.findAll();
+    Iterable<Group> getAll() {
+        return groupService.getAll();
     }
 }
