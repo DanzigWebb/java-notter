@@ -4,7 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.example.notter.db.entity.TagEntity;
 import org.springframework.data.jpa.repository.Query;
 
-
 import java.util.List;
 
 public interface TagRepo extends CrudRepository<TagEntity, Integer> {

@@ -1,35 +1,34 @@
 package com.example.notter.controllers;
 
 import com.example.notter.db.entity.UserEntity;
-import com.example.notter.db.repository.UserRepo;
+import com.example.notter.exception.UserAlreadyExistException;
+import com.example.notter.model.User;
+import com.example.notter.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "api/v1/user")
 public class UserController {
 
-    private final UserRepo userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepo userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    UserEntity add(@RequestParam String name, @RequestParam String email) {
-
-        UserEntity u = new UserEntity();
-        u.setName(name);
-        u.setEmail(email);
-        userRepository.save(u);
-        return u;
+    User add(@RequestBody UserEntity user) throws UserAlreadyExistException {
+        return userService.add(user);
     }
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<UserEntity> getAll() {
-        return userRepository.findAll();
+    List<User> getAll() {
+        return userService.getAll();
     }
 
 }
