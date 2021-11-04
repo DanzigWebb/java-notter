@@ -20,7 +20,7 @@ public class NoteService {
 
     public Note add(NoteEntity entity) {
         // Todo: добавить получение юзера из контекста
-        entity.setId(1);
+        //  entity.setUser(1);
         return Note.toModel(noteRepo.save(entity));
     }
 

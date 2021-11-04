@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "note")
 public class NoteEntity {
@@ -29,6 +30,8 @@ public class NoteEntity {
     @ManyToOne
     private GroupEntity group;
 
+    @ManyToMany()
+    private List<TagEntity> tags;
 
 
     public void setId(Integer id) {
@@ -65,5 +68,9 @@ public class NoteEntity {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public List<TagEntity> getTags() {
+        return tags;
     }
 }
