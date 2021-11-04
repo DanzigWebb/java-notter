@@ -1,39 +1,33 @@
 package com.example.notter.controllers;
 
 import com.example.notter.db.entity.TagEntity;
-import com.example.notter.db.repository.TagRepo;
+import com.example.notter.model.Tag;
+import com.example.notter.services.TagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("api/v1/tag")
 public class TagController {
 
-    private final TagRepo tagRepository;
+    private final TagService tagService;
 
-    public TagController(TagRepo tagRepository) {
-        this.tagRepository = tagRepository;
+    public TagController(TagService tagService) {
+        this.tagService = tagService;
     }
 
     @PostMapping("add")
     public @ResponseBody
-    TagEntity add(@RequestParam String name, @RequestParam String description) {
-
-        TagEntity t = new TagEntity();
-        t.setName(name);
-        t.setColor(description);
-
-        tagRepository.save(t);
-        return t;
+    Tag add(@RequestBody TagEntity tag) {
+        return tagService.add(tag);
     }
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    Iterable<TagEntity> getAll(@RequestParam Integer userId) {
-        if (userId != null) {
-            return tagRepository.findByUserId(userId);
-        }
-        return tagRepository.findAll();
+    List<Tag> getAll() {
+        return tagService.getAll();
     }
 
 }
