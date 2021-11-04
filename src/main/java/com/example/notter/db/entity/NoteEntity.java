@@ -29,6 +29,8 @@ public class NoteEntity {
     @ManyToOne
     private GroupEntity group;
 
+
+
     public void setId(Integer id) {
         this.id = id;
     }

@@ -1,6 +1,10 @@
 package com.example.notter.db.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +19,12 @@ public class UserEntity {
 
     private String email;
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "user")
     private List<NoteEntity> notes = new ArrayList<>();
 
@@ -23,6 +33,8 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<GroupEntity> groups = new ArrayList<>();
+
+
 
     public Integer getId() {
         return id;
@@ -58,5 +70,13 @@ public class UserEntity {
 
     public List<GroupEntity> getGroups() {
         return groups;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
