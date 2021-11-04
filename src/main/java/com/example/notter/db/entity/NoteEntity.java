@@ -1,6 +1,10 @@
 package com.example.notter.db.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "note")
 public class NoteEntity {
@@ -13,8 +17,17 @@ public class NoteEntity {
 
     private String description;
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
     @ManyToOne
     private UserEntity user;
+
+    @ManyToOne
+    private GroupEntity group;
 
     public void setId(Integer id) {
         this.id = id;
@@ -42,5 +55,13 @@ public class NoteEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

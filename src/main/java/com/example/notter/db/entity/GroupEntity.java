@@ -1,6 +1,7 @@
 package com.example.notter.db.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "note_group")
 public class GroupEntity {
@@ -15,6 +16,9 @@ public class GroupEntity {
 
     @ManyToOne
     private UserEntity user;
+
+    @OneToMany
+    private List<NoteEntity> notes;
 
     public void setId(Integer id) {
         this.id = id;
@@ -42,5 +46,9 @@ public class GroupEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public List<NoteEntity> getNotes() {
+        return notes;
     }
 }
