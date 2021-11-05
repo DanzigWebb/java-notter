@@ -4,7 +4,6 @@ import com.example.notter.db.entity.UserEntity;
 import com.example.notter.db.repository.UserRepo;
 import com.example.notter.exception.UserAlreadyExistException;
 import com.example.notter.model.User;
-import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +27,7 @@ public class UserService {
     }
 
     public List<User> getAll() {
-        Iterable<UserEntity> entities = userRepo.findAll();
-        return Util.IterableToList(entities)
+        return userRepo.findAll()
                 .stream().map(User::toModel)
                 .collect(Collectors.toList());
     }

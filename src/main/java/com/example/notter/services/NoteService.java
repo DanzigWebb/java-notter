@@ -3,7 +3,6 @@ package com.example.notter.services;
 import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.db.repository.NoteRepo;
 import com.example.notter.model.Note;
-import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class NoteService {
     }
 
     public List<Note> getAll() {
-        return Util.IterableToList(noteRepo.findAll())
+        return noteRepo.findAll()
                 .stream().map(Note::toModel)
                 .collect(Collectors.toList());
     }

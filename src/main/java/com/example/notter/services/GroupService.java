@@ -3,7 +3,6 @@ package com.example.notter.services;
 import com.example.notter.db.entity.GroupEntity;
 import com.example.notter.db.repository.GroupRepo;
 import com.example.notter.model.Group;
-import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class GroupService {
     public List<Group> getAll() {
         Iterable<GroupEntity> groups = groupRepo.findAll();
 
-        return Util.IterableToList(groupRepo.findAll())
+        return groupRepo.findAll()
                 .stream().map(Group::toModel)
                 .collect(Collectors.toList());
     }

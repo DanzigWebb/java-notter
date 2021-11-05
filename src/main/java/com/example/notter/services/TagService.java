@@ -3,7 +3,6 @@ package com.example.notter.services;
 import com.example.notter.db.entity.TagEntity;
 import com.example.notter.db.repository.TagRepo;
 import com.example.notter.model.Tag;
-import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class TagService {
     }
 
     public List<Tag> getAll() {
-        return Util.IterableToList(tagRepo.findAll())
+        return tagRepo.findAll()
                 .stream().map(Tag::toModel)
                 .collect(Collectors.toList());
     }
