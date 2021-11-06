@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface TagRepo extends JpaRepository<TagEntity, Integer> {
     @Query("select t from tag t where t.user.id = ?1")
-    List<TagEntity> findByUserId(Integer id);
+    List<TagEntity> findAllByUserId(Integer id);
 }

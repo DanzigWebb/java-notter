@@ -1,8 +1,10 @@
 package com.example.notter.controllers;
 
+import com.example.notter.config.CustomUserDetails;
 import com.example.notter.db.entity.TagEntity;
 import com.example.notter.model.Tag;
 import com.example.notter.services.TagService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +22,14 @@ public class TagController {
 
     @PostMapping("add")
     public @ResponseBody
-    Tag add(@RequestBody TagEntity tag) {
-        return tagService.add(tag);
+    Tag add(@RequestBody TagEntity tag, @AuthenticationPrincipal CustomUserDetails user) {
+        return tagService.add(tag, user.getUserEntity());
     }
 
     @GetMapping(path = "/all")
     public @ResponseBody
-    List<Tag> getAll() {
-        return tagService.getAll();
+    List<Tag> getAll(@AuthenticationPrincipal CustomUserDetails user) {
+        return tagService.getAllByUser(user.getUserEntity());
     }
 
 }

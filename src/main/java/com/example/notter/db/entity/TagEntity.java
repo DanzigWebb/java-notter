@@ -1,12 +1,19 @@
 package com.example.notter.db.entity;
 
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(name = "tag")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class TagEntity {
 
     @Id
@@ -26,37 +33,16 @@ public class TagEntity {
     @ManyToOne
     private UserEntity user;
 
-
-
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        TagEntity tagEntity = (TagEntity) o;
+        return id != null && Objects.equals(id, tagEntity.id);
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
