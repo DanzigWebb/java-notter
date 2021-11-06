@@ -1,8 +1,6 @@
 package com.example.notter.controllers;
 
 import com.example.notter.db.entity.NoteEntity;
-import com.example.notter.db.repository.NoteRepo;
-import com.example.notter.db.repository.UserRepo;
 import com.example.notter.model.Note;
 import com.example.notter.services.NoteService;
 import org.springframework.stereotype.Controller;
