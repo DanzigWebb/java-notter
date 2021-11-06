@@ -1,8 +1,10 @@
 package com.example.notter.controllers;
 
+import com.example.notter.config.CustomUserDetails;
 import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.model.Note;
 import com.example.notter.services.NoteService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +22,13 @@ public class NoteController {
 
     @PostMapping("add")
     public @ResponseBody
-    Note add(@RequestBody NoteEntity entity) {
-        return noteService.add(entity);
+    Note add(@RequestBody NoteEntity entity, @AuthenticationPrincipal CustomUserDetails user) {
+        return noteService.add(entity, user.getUserEntity());
     }
 
     @GetMapping("all")
     public @ResponseBody
-    List<Note> getAll() {
-        return noteService.getAll();
+    List<Note> getAllByUser(@AuthenticationPrincipal CustomUserDetails user) {
+        return noteService.getAllByUser(user.getUserEntity().getId());
     }
 }

@@ -12,12 +12,14 @@ public class CustomUserDetails implements UserDetails {
 
     private String login;
     private String password;
+    private UserEntity userEntity;
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
     public static CustomUserDetails fromUserEntityToCustomUserDetails(UserEntity userEntity) {
         CustomUserDetails c = new CustomUserDetails();
         c.login = userEntity.getEmail();
         c.password = userEntity.getPassword();
+        c.userEntity = userEntity;
         c.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
         return c;
     }
@@ -35,6 +37,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return login;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
     @Override
