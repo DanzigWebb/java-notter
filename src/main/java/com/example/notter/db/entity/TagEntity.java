@@ -25,7 +25,7 @@ public class TagEntity {
     @NotBlank(message = "Обязательное поле")
     private String name;
 
-    @Length(min = 6, message = "Минимальная длина 6 символов")
+    @Length(min = 2, message = "Минимальная длина 6 символов")
     private String color;
 
     @CreationTimestamp
