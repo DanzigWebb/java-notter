@@ -4,8 +4,10 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -20,8 +22,10 @@ public class TagEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotBlank(message = "Обязательное поле")
     private String name;
 
+    @Length(min = 6, message = "Минимальная длина 6 символов")
     private String color;
 
     @CreationTimestamp

@@ -18,15 +18,8 @@ public class TagService {
         this.tagRepo = tagRepo;
     }
 
-    public Tag add(TagEntity tag, UserEntity user) {
-        tag.setUser(user);
+    public Tag add(TagEntity tag) {
         return Tag.toModel(tagRepo.save(tag));
-    }
-
-    public List<Tag> getAll() {
-        return tagRepo.findAll()
-                .stream().map(Tag::toModel)
-                .collect(Collectors.toList());
     }
 
     public List<Tag> getAllByUser(UserEntity user) {

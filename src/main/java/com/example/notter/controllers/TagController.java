@@ -6,12 +6,15 @@ import com.example.notter.model.Tag;
 import com.example.notter.services.TagService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("api/v1/tag")
+@Validated
 public class TagController {
 
     private final TagService tagService;
@@ -22,8 +25,12 @@ public class TagController {
 
     @PostMapping("add")
     public @ResponseBody
-    Tag add(@RequestBody TagEntity tag, @AuthenticationPrincipal CustomUserDetails user) {
-        return tagService.add(tag, user.getUserEntity());
+    Tag create(
+            @Valid @RequestBody TagEntity tag,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        tag.setUser(user.getUserEntity());
+        return tagService.add(tag);
     }
 
     @GetMapping(path = "/all")
