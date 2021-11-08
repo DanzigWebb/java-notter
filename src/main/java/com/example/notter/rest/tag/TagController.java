@@ -1,6 +1,6 @@
 package com.example.notter.rest.tag;
 
-import com.example.notter.config.CustomUserDetails;
+import com.example.notter.config.security.CustomUserDetails;
 import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.rest.tag.model.TagRequest;
 import org.springframework.http.ResponseEntity;

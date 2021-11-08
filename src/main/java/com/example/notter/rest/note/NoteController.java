@@ -1,6 +1,6 @@
 package com.example.notter.rest.note;
 
-import com.example.notter.config.CustomUserDetails;
+import com.example.notter.config.security.CustomUserDetails;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.rest.note.model.NoteRequest;
 import org.springframework.http.ResponseEntity;

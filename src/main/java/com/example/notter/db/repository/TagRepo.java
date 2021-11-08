@@ -16,13 +16,4 @@ public interface TagRepo extends JpaRepository<TagEntity, Integer> {
 
     @Query("SELECT t FROM tag t WHERE t.user.id = ?1 AND t.id = ?2")
     TagEntity findByUserAndId(Integer userId, Integer tagId);
-
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE tag t SET t.name = :name, t.color = :color WHERE t.id = :tagId AND t.user.id = :userId")
-    void updateTagData(
-            @Param("tagId") Integer tagId,
-            @Param("userId") Integer userId,
-            @Param("name") String name,
-            @Param("color") String color
-    );
 }

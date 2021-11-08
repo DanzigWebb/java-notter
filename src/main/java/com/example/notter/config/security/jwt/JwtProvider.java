@@ -1,4 +1,4 @@
-package com.example.notter.config.jwt;
+package com.example.notter.config.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

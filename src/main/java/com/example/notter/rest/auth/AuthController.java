@@ -1,6 +1,6 @@
 package com.example.notter.rest.auth;
 
-import com.example.notter.config.jwt.JwtProvider;
+import com.example.notter.config.security.jwt.JwtProvider;
 import com.example.notter.db.entity.UserEntity;
 import com.example.notter.rest.auth.model.AuthSigninRequest;
 import com.example.notter.rest.auth.model.AuthSigninResponse;

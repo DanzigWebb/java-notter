@@ -1,4 +1,4 @@
-package com.example.notter.config;
+package com.example.notter.config.security;
 
 import com.example.notter.db.entity.UserEntity;
 import com.example.notter.rest.auth.UserService;

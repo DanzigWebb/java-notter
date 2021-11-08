@@ -1,4 +1,4 @@
-package com.example.notter.config;
+package com.example.notter.config.security;
 
 import com.example.notter.db.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;

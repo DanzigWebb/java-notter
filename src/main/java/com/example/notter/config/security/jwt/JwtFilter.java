@@ -1,7 +1,7 @@
-package com.example.notter.config.jwt;
+package com.example.notter.config.security.jwt;
 
-import com.example.notter.config.CustomUserDetails;
-import com.example.notter.config.CustomUserDetailsService;
+import com.example.notter.config.security.CustomUserDetails;
+import com.example.notter.config.security.CustomUserDetailsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

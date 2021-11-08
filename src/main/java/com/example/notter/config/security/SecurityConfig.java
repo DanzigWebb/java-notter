@@ -1,6 +1,6 @@
-package com.example.notter.config;
+package com.example.notter.config.security;
 
-import com.example.notter.config.jwt.JwtFilter;
+import com.example.notter.config.security.jwt.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

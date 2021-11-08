@@ -1,6 +1,6 @@
 package com.example.notter.rest.group;
 
-import com.example.notter.config.CustomUserDetails;
+import com.example.notter.config.security.CustomUserDetails;
 import com.example.notter.rest.group.model.Group;
 import com.example.notter.rest.group.model.GroupRequest;
 import org.springframework.http.ResponseEntity;
