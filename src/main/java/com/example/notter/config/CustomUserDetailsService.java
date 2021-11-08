@@ -1,7 +1,7 @@
 package com.example.notter.config;
 
 import com.example.notter.db.entity.UserEntity;
-import com.example.notter.services.UserService;
+import com.example.notter.rest.auth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

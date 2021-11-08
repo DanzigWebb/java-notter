@@ -1,10 +1,11 @@
-package com.example.notter.controllers;
+package com.example.notter.rest.auth.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthResponse {
+public class AuthSigninResponse {
     private String token;
+    private User user;
 }
