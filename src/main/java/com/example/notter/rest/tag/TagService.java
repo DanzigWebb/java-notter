@@ -1,10 +1,11 @@
-package com.example.notter.services;
+package com.example.notter.rest.tag;
 
 import com.example.notter.db.entity.TagEntity;
 import com.example.notter.db.entity.UserEntity;
 import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
-import com.example.notter.model.Tag;
+import com.example.notter.rest.tag.model.Tag;
+import com.example.notter.rest.tag.model.TagRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,23 +20,23 @@ public class TagService {
         this.tagRepo = tagRepo;
     }
 
-    public Tag add(TagEntity tag) {
-        return Tag.toModel(tagRepo.save(tag));
+    public Tag create(TagRequest tag, UserEntity user) {
+        TagEntity t = new TagEntity();
+        t.setUser(user);
+        t.setName(tag.getName());
+        t.setColor(tag.getColor());
+
+        return Tag.toModel(tagRepo.save(t));
     }
 
-    public Tag update(Integer tagId, TagEntity tag, UserEntity user) {
+    public Tag update(Integer tagId, TagRequest tag, UserEntity user) {
         TagEntity t = tagRepo.findByUserAndId(user.getId(), tagId);
-        if (t != null) {
-            if (tag.getName() != null) {
-                t.setName(tag.getName());
-            }
-
-            if (tag.getColor() != null) {
-                t.setColor(tag.getColor());
-            }
-        } else {
+        if (t == null) {
             throw new EntityNotFoundException();
         }
+
+        t.setName(tag.getName());
+        t.setColor(tag.getColor());
 
         return Tag.toModel(tagRepo.save(t));
     }

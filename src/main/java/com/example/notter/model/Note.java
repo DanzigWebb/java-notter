@@ -1,6 +1,7 @@
 package com.example.notter.model;
 
 import com.example.notter.db.entity.NoteEntity;
+import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.util.Util;
 
 import java.time.LocalDateTime;

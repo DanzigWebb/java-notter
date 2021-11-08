@@ -1,10 +1,8 @@
-package com.example.notter.controllers;
+package com.example.notter.rest.tag;
 
 import com.example.notter.config.CustomUserDetails;
-import com.example.notter.db.entity.TagEntity;
-import com.example.notter.model.Tag;
-import com.example.notter.services.TagService;
-import org.springframework.http.HttpStatus;
+import com.example.notter.rest.tag.model.Tag;
+import com.example.notter.rest.tag.model.TagRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,18 +26,17 @@ public class TagController {
     @PostMapping()
     public @ResponseBody
     Tag create(
-            @Valid @RequestBody TagEntity tag,
+            @Valid @RequestBody TagRequest tag,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
-        tag.setUser(user.getUserEntity());
-        return tagService.add(tag);
+        return tagService.create(tag, user.getUserEntity());
     }
 
     @PutMapping("/{tagId}")
     public @ResponseBody
     Tag update(
             @PathVariable Integer tagId,
-            @Valid @RequestBody TagEntity tag,
+            @Valid @RequestBody TagRequest tag,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         return tagService.update(tagId, tag, user.getUserEntity());
