@@ -1,6 +1,7 @@
 package com.example.notter.model;
 
 import com.example.notter.db.entity.GroupEntity;
+import com.example.notter.rest.note.model.Note;
 import com.example.notter.util.Util;
 
 import java.time.LocalDateTime;
