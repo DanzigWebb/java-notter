@@ -1,9 +1,8 @@
-package com.example.notter.model;
+package com.example.notter.rest.group.model;
 
 import com.example.notter.db.entity.GroupEntity;
 import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.rest.note.model.Note;
-import com.example.notter.util.Util;
 import lombok.Data;
 
 import java.time.LocalDateTime;

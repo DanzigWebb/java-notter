@@ -23,12 +23,6 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping()
-    public @ResponseBody
-    List<Note> getAllByUser(@AuthenticationPrincipal CustomUserDetails user) {
-        return noteService.getAllByUser(user.getUserEntity().getId());
-    }
-
     @PostMapping()
     public @ResponseBody
     Note create(
@@ -36,6 +30,12 @@ public class NoteController {
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         return noteService.create(note, user.getUserEntity());
+    }
+
+    @GetMapping()
+    public @ResponseBody
+    List<Note> getAllByUser(@AuthenticationPrincipal CustomUserDetails user) {
+        return noteService.getAllByUser(user.getUserEntity().getId());
     }
 
     @PutMapping("/{noteId}")
