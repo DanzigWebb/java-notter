@@ -2,6 +2,7 @@ package com.example.notter.rest.note.model;
 
 import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.db.entity.TagEntity;
+import com.example.notter.model.Group;
 import com.example.notter.rest.tag.model.Tag;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class Note {
     LocalDateTime updateAt;
 
     List<Tag> tags;
+    Integer groupId;
 
 
     public static Note toModel(NoteEntity entity) {
@@ -32,6 +34,12 @@ public class Note {
         n.setUpdateAt(entity.getUpdatedAt());
 
         n.setTags(getTagsFromEntity(entity.getTags()));
+
+        if (entity.getGroup() != null) {
+            n.setGroupId(entity.getGroup().getId());
+        } else {
+            n.setGroupId(null);
+        }
 
         return n;
     }

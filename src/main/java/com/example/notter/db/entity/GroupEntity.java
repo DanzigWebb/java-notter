@@ -1,13 +1,20 @@
 package com.example.notter.db.entity;
 
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "note_group")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class GroupEntity {
 
     @Id
@@ -28,46 +35,20 @@ public class GroupEntity {
     private UserEntity user;
 
     @OneToMany(mappedBy = "group")
+    @ToString.Exclude
     private List<NoteEntity> notes;
 
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        GroupEntity that = (GroupEntity) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public List<NoteEntity> getNotes() {
-        return notes;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -1,13 +1,17 @@
 package com.example.notter.model;
 
 import com.example.notter.db.entity.GroupEntity;
+import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.util.Util;
+import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 public class Group {
 
     Integer id;
@@ -18,65 +22,28 @@ public class Group {
     List<Note> notes;
 
     public static Group toModel(GroupEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+
         Group g = new Group();
         g.setId(entity.getId());
         g.setTitle(entity.getTitle());
         g.setDescription(entity.getDescription());
         g.setCreateAt(entity.getCreatedAt());
         g.setUpdateAt(entity.getUpdatedAt());
-        g.setNotes(Util.IterableToList(entity.getNotes())
-                .stream().map(Note::toModel)
-                .collect(Collectors.toList())
-        );
+        g.setNotes(getNotesList(entity.getNotes()));
 
         return g;
     }
 
-    public Integer getId() {
-        return id;
-    }
+    private static List<Note> getNotesList(List<NoteEntity> list) {
+        if (list == null) {
+            return new ArrayList<>();
+        }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDateTime getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public List<Note> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(List<Note> notes) {
-        this.notes = notes;
+        return list
+                .stream().map(Note::toModel)
+                .collect(Collectors.toList());
     }
 }
