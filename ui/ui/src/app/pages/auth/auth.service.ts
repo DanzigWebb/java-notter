@@ -10,7 +10,7 @@ import { LoginDto, LoginDtoResponse, SignupDto } from "@app/models";
 export class AuthService {
 
   get host() {
-    return this.config.host;
+    return this.config.authHost;
   }
 
   constructor(
@@ -20,13 +20,13 @@ export class AuthService {
 
   signup({name, password, email}: SignupDto) {
     const body = {name, password, email};
-    const url = `${this.host}auth/sign-up`;
+    const url = `${this.host}sign-up`;
     return this.http.post(url, body);
   }
 
-  login({name, password}: LoginDto) {
-    const body = {name, password};
-    const url = `${this.host}auth/sign-in`;
+  login({login, password}: LoginDto) {
+    const body = {login: login, password};
+    const url = `${this.host}sign-in`;
     return this.http.post<LoginDtoResponse>(url, body);
   }
 }
