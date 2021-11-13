@@ -1,0 +1,15 @@
+<div class="relative">
+    <input
+        #input
+        class="input w-full input-ghost"
+        [formControl]="control"
+        (keydown.enter)="createGroup()"
+        type="text"
+        placeholder="Имя группы"
+    >
+    <button class="absolute top-0 right-0 rounded-l-none btn btn-primary"
+            (click)="createGroup()"
+    >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+</div>

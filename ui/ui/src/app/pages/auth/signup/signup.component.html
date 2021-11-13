@@ -1,0 +1,54 @@
+<form class="form bg-base-200 shadow-lg" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h3 class="text-2xl mb-4">Регистрация</h3>
+
+    <am-form-field>
+        <label class="input-group input-group-xs">
+            <span><i class="fas fa-user"></i></span>
+            <input type="text" amInput class="input-ghost" placeholder="Имя" [bordered]="true" formControlName="login"
+                   autocomplete="none">
+        </label>
+
+        <am-form-error>
+            <span *ngIf="form.get('login')?.hasError('required')">Обязательное поле</span>
+        </am-form-error>
+    </am-form-field>
+
+    <am-form-field>
+        <label class="input-group input-group-xs">
+            <span><i class="fas fa-envelope"></i></span>
+            <input type="text"
+                   amInput
+                   class="input-ghost"
+                   placeholder="Email"
+                   [bordered]="true"
+                   formControlName="email"
+            >
+        </label>
+
+        <am-form-error>
+            <span *ngIf="form.get('email')?.hasError('required')">Обязательное поле</span>
+            <span *ngIf="form.get('email')?.hasError('email')">Невалидный Email</span>
+        </am-form-error>
+    </am-form-field>
+
+    <am-form-field>
+        <label class="input-group input-group-xs">
+            <span><i class="fas fa-unlock-alt"></i></span>
+            <input type="password"
+                   amInput
+                   class="input-ghost"
+                   placeholder="Пароль"
+                   [bordered]="true"
+                   formControlName="password"
+            >
+        </label>
+
+        <am-form-error>
+            <span *ngIf="form.get('password')?.hasError('required')">Обязательное поле</span>
+            <span *ngIf="form.get('password')?.hasError('minlength')">Минимальная длина: 7</span>
+        </am-form-error>
+    </am-form-field>
+
+    <button class="btn btn-sm btn-primary" type="submit">Регистрация</button>
+</form>
+

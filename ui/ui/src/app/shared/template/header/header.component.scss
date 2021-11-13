@@ -1,0 +1,16 @@
+.header {
+	display: flex;
+	align-items: center;
+	min-height: 40px;
+	padding: 10px;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.spacer {
+	flex: 1;
+}
+
+.controls {
+	display: flex;
+}

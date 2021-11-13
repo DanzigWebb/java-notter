@@ -19,6 +19,7 @@ public class Group {
     LocalDateTime createAt;
     LocalDateTime updateAt;
     List<Note> notes;
+    int noteCount;
 
     public static Group toModel(GroupEntity entity) {
         if (entity == null) {
@@ -32,6 +33,7 @@ public class Group {
         g.setCreateAt(entity.getCreatedAt());
         g.setUpdateAt(entity.getUpdatedAt());
         g.setNotes(getNotesList(entity.getNotes()));
+        g.setNoteCount(g.getNotes().size());
 
         return g;
     }

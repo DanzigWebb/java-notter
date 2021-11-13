@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@RestController
+@RestController()
 @Validated
 public class AuthController {
     private final UserService userService;
@@ -24,7 +24,7 @@ public class AuthController {
         this.jwtProvider = jwtProvider;
     }
 
-    @PostMapping("/signup")
+    @PostMapping("auth/sign-up")
     public User registerUser(@Valid @RequestBody AuthSignupRequest request) {
         UserEntity u = new UserEntity();
         u.setPassword(request.getPassword());
@@ -34,7 +34,7 @@ public class AuthController {
         return userService.create(u);
     }
 
-    @PostMapping("/signin")
+    @PostMapping("auth/sign-in")
     public AuthSigninResponse auth(@Valid @RequestBody AuthSigninRequest request) {
         UserEntity userEntity = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
         String token = jwtProvider.generateToken(userEntity.getEmail());

@@ -1,0 +1,38 @@
+<form class="form bg-base-200 shadow-lg" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h3 class="text-2xl mb-4">Логин</h3>
+
+    <am-form-field>
+        <label class="input-group input-group-xs">
+            <span><i class="fas fa-user"></i></span>
+            <input type="text"
+                   amInput
+                   placeholder="Имя"
+                   class="input-ghost"
+                   [bordered]="true"
+                   formControlName="login"
+            >
+        </label>
+
+        <am-form-error>
+          <span *ngIf="form.get('login')?.hasError('required')">Обязательное поле</span>
+          <span *ngIf="form.get('login')?.hasError('invalidLogin')">Неверно имя или пароль</span>
+        </am-form-error>
+    </am-form-field>
+
+    <am-form-field>
+        <label class="input-group input-group-xs">
+            <span><i class="fas fa-envelope"></i></span>
+            <input type="password"
+                   amInput
+                   placeholder="Пароль"
+                   class="input-ghost"
+                   [bordered]="true"
+                   formControlName="password"
+            >
+        </label>
+        <am-form-error>Обязательное поле</am-form-error>
+    </am-form-field>
+
+    <button class="btn btn-sm btn-primary" type="submit">Логин</button>
+</form>
+

@@ -1,0 +1,21 @@
+.main {
+	height: 100%;
+	overflow: hidden;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	
+	&-content {
+		flex: 1;
+		overflow: hidden;
+		display: flex;
+	}
+	
+	&-page {
+		padding: 15px;
+		width: 100%;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+}

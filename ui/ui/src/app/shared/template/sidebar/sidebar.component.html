@@ -1,0 +1,90 @@
+<div class="sidebar bg-base-200 shadow-lg"
+     [class.un-expand]="!isExpand"
+>
+    <div class="sidebar-toggle has-background-light">
+        <button class="btn btn-ghost sidebar-btn" (click)="toggle()">
+            <span class="icon is-small">
+                <i [class.un-expand]="!isExpand" class="fas fa-chevron-left sidebar-icon"></i>
+            </span>
+        </button>
+    </div>
+
+
+    <div class="sidebar-content">
+        <div class="sidebar-scroll">
+            <ul class="group-list menu">
+                <ng-container *ngFor="let group of groups">
+                    <li>
+                        <a
+                            class="panel-block group-item"
+                            [amTooltip]="group.title"
+                            [disable]="isExpand"
+                            placement="bottom-start"
+                            (click)="checkEmit(group)"
+                            [routerLink]="['group', group.id]"
+                        >
+                            <span class="mr-5">
+                                <i class="fas fa-folder-open"></i>
+                            </span>
+
+                            <span class="group-title is-5">{{group.title}}</span>
+
+                            <button [amMenuTrigger]="menu"
+                                    (click)="$event.preventDefault(); $event.stopPropagation()"
+                                    class="btn btn-ghost btn-circle btn-sm"
+                            >
+                                <span class="icon is-small">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                            </button>
+                        </a>
+                    </li>
+
+                    <am-menu-panel #menu="amMenu">
+                        <li>
+                            <a (click)="deleteEmit(group)" tabindex="1">
+                                 <span class="inline-block w-6 h-6 mr-2 stroke-current">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span>Удалить</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="1" (click)="renameGroup(group)">
+                                 <span class="inline-block w-6 h-6 mr-2 stroke-current">
+                                    <i class="fas fa-file-signature"></i>
+                                </span>
+                                <span>Переименовать</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="1">
+                                 <span class="inline-block w-6 h-6 mr-2 stroke-current">
+                                    <i class="fas fa-tag"></i>
+                                </span>
+                                <span>Тэг</span>
+                            </a>
+                        </li>
+                    </am-menu-panel>
+                </ng-container>
+            </ul>
+        </div>
+
+
+    </div>
+    <div class="group-form w-full">
+        <button
+            class="btn btn-ghost sidebar-btn"
+            (click)="isExpand ? createGroup.input.focus() : expand()"
+        >
+            <span class="icon is-small">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </span>
+        </button>
+
+        <app-create-group-form
+            #createGroup="appCreateGroupForm"
+            (onCreateGroup)="createEmit($event)">
+        </app-create-group-form>
+    </div>
+</div>

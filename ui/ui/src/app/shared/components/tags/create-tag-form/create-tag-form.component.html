@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+ <div class="tag-wrapper">
+   <am-form-field>
+        <span class="icon is-small is-left">
+          <i class="fa fa-tag" aria-hidden="true"></i>
+        </span>
+
+     <input type="text" amInput placeholder="Имя тега" formControlName="title">
+     <am-form-error>
+       <span *ngIf="form.get('title')?.hasError('required')">Обязательное поле</span>
+     </am-form-error>
+   </am-form-field>
+   <button class="button is-primary">
+    <span class="icon is-small">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+    </span>
+   </button>
+ </div>
+</form>
