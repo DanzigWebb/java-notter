@@ -1,0 +1,15 @@
+<div class="relative">
+    <input
+        #input
+        class="input input-bordered w-full"
+        [formControl]="control"
+        (keydown.enter)="createNote()"
+        type="text"
+        placeholder="Название заметки"
+    >
+    <button class="absolute top-0 right-0 rounded-l-none btn btn-primary"
+            (click)="createNote()"
+    >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+</div>
