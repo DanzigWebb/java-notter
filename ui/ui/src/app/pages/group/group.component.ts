@@ -1,31 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from "rxjs";
-import { GroupDto } from "@app/models";
-import { filter, map, switchMap } from "rxjs/operators";
-import { GroupsService } from "@app/groups";
-import { ActivatedRoute } from "@angular/router";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { GroupDto } from '@app/models';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { GroupFacade } from '@app/store/group';
 
 @Component({
   template: `
-      <app-group-page
-          [group]="group$ | async">
-      </app-group-page>
+    <app-group-page
+      [group]="group$ | async">
+    </app-group-page>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnInit {
 
-  group$: Observable<GroupDto> = this.route.paramMap.pipe(
+  group$: Observable<GroupDto | null> = this.route.paramMap.pipe(
     map(map => map.get('id') || ''),
     filter(id => !!id),
-    switchMap((id: string) => this.groups.getOne(id)),
+    switchMap((id: string) => this.groupFacade.groups$.pipe(
+      map((groups) => this.findGroupById(groups, Number(id)))
+    )),
   );
 
   constructor(
-    private groups: GroupsService,
+    private groupFacade: GroupFacade,
     private route: ActivatedRoute,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
+  }
+
+  private findGroupById(groups: GroupDto[], id: number): GroupDto | null {
+    return groups.find(group => group.id === Number(id)) || null;
   }
 
 }
