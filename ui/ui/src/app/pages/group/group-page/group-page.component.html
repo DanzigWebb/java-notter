@@ -1,3 +1,17 @@
 <div class="group" *ngIf="group">
     <h2 class="text-2xl mb-4">{{group.title}}</h2>
+
+    <div class="notes">
+        <div class="card shadow" *ngFor="let note of group.notes">
+            <div class="card-body">
+                <div class="card-title mr-10">
+                    <h4>{{note.title}}</h4>
+                    <span class="badge badge-primary" *ngFor="let tag of note.tags">
+                        {{tag.name}}
+                    </span>
+                </div>
+                <p>{{note.description}}</p>
+            </div>
+        </div>
+    </div>
 </div>
