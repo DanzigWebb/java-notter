@@ -1,10 +1,9 @@
 export interface TagCreateDto {
-  title: string;
+  name: string;
 }
 
 export interface TagDto {
   id: number;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
+  name: string;
+  color?: string;
 }

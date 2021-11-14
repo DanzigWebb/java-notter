@@ -34,7 +34,7 @@ export class CreateTagFormComponent implements OnInit {
       return;
     }
     const data: TagCreateDto = {
-      title: this.form.controls.title?.value
+      name: this.form.controls.title?.value
     };
 
     this.create.emit(data)

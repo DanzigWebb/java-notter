@@ -1,3 +1,5 @@
+import { NoteDto } from './note.model';
+
 export interface GroupCreateDto {
   title: string;
   description?: string;
@@ -6,8 +8,11 @@ export interface GroupCreateDto {
 export interface GroupDto {
   id: number;
   title: string;
+  description?: string;
+
   createdAt: string;
   updatedAt: string;
-  description?: string;
+
+  notes: NoteDto[];
   noteCount?: number;
 }

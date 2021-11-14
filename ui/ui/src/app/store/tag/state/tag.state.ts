@@ -50,8 +50,8 @@ export class TagState {
 
   @Action(TagActions.Update)
   update({dispatch}: StateContext<TagStateModel>, {payload}: TagActions.Update) {
-    const {id, title} = payload;
-    this.tags.update(id, {title}).pipe(
+    const {id, name} = payload;
+    this.tags.update(id, {name}).pipe(
       switchMap(() => dispatch(TagActions.GetAll)),
     );
   }
