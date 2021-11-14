@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { GroupCreateDto, NoteCreateDto } from '@app/models';
+import { NoteCreateDto } from '@app/models';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -21,7 +21,7 @@ export class CreateNoteFormComponent implements OnInit {
 
   @ViewChild('input') private inputEl!: ElementRef;
 
-  @Output() onCreateGroup = new EventEmitter<GroupCreateDto>();
+  @Output() onCreateNote = new EventEmitter<NoteCreateDto>();
 
   control = new FormControl('', Validators.required);
 
@@ -54,8 +54,8 @@ export class CreateNoteFormComponent implements OnInit {
     this.ref.detectChanges();
   }
 
-  private createEmit(group: GroupCreateDto) {
-    this.onCreateGroup.emit(group);
+  private createEmit(note: NoteCreateDto) {
+    this.onCreateNote.emit(note);
   }
 
 }

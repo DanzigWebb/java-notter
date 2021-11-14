@@ -19,7 +19,7 @@ public class NoteEntity extends BaseEntity {
     @ManyToOne
     private GroupEntity group;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private List<TagEntity> tags;
 }

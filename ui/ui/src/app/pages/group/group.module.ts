@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { GroupRoutingModule } from './group-routing.module';
 import { GroupPageComponent } from './group-page/group-page.component';
 import { GroupComponent } from './group.component';
+import { NotesModule } from '@app/notes';
 
 
 @NgModule({
@@ -13,7 +14,9 @@ import { GroupComponent } from './group.component';
   ],
   imports: [
     CommonModule,
-    GroupRoutingModule
+    GroupRoutingModule,
+    NotesModule
   ]
 })
-export class GroupModule { }
+export class GroupModule {
+}

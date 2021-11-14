@@ -11,4 +11,6 @@ public class NoteRequest {
     String title;
 
     String description;
+
+    Integer groupId;
 }

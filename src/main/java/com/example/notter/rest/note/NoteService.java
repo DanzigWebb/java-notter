@@ -1,7 +1,9 @@
 package com.example.notter.rest.note;
 
+import com.example.notter.db.entity.GroupEntity;
 import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.db.entity.UserEntity;
+import com.example.notter.db.repository.GroupRepo;
 import com.example.notter.db.repository.NoteRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.note.model.Note;
@@ -15,9 +17,11 @@ import java.util.stream.Collectors;
 public class NoteService {
 
     private final NoteRepo noteRepo;
+    private final GroupRepo groupRepo;
 
-    public NoteService(NoteRepo noteRepo) {
+    public NoteService(NoteRepo noteRepo, GroupRepo groupRepo) {
         this.noteRepo = noteRepo;
+        this.groupRepo = groupRepo;
     }
 
     public Note create(NoteRequest note, UserEntity user) {
@@ -25,6 +29,11 @@ public class NoteService {
         n.setUser(user);
         n.setTitle(note.getTitle());
         n.setDescription(note.getDescription());
+
+        if (note.getGroupId() != null) {
+            GroupEntity g = groupRepo.findByUserAndId(user.getId(), note.getGroupId());
+            n.setGroup(g);
+        }
 
         return Note.toModel(noteRepo.save(n));
     }

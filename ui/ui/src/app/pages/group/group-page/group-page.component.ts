@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GroupDto } from '@app/models';
+import { GroupDto, NoteCreateDto } from '@app/models';
+import { NoteFacade } from '@app/store/note';
 
 @Component({
   selector: 'app-group-page',
@@ -11,10 +12,17 @@ export class GroupPageComponent implements OnInit {
 
   @Input() group: GroupDto | null = null;
 
-  constructor() {
+  constructor(
+    private noteFacade: NoteFacade,
+  ) {
   }
 
   ngOnInit(): void {
   }
 
+  createNote(dto: NoteCreateDto) {
+    const note: NoteCreateDto = {...dto, groupId: this.group?.id};
+    console.log(note);
+    this.noteFacade.create(note);
+  }
 }

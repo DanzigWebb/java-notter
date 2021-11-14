@@ -2,6 +2,7 @@ package com.example.notter.db.entity;
 
 import lombok.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,7 +18,7 @@ public class GroupEntity extends BaseEntity {
     @ManyToOne
     private UserEntity user;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<NoteEntity> notes;
 }

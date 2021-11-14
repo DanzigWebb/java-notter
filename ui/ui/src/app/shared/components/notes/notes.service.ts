@@ -9,7 +9,7 @@ import { NoteCreateDto, NoteDto } from '@app/models';
 export class NotesService {
 
   get url() {
-    return this.config.host + 'group/';
+    return this.config.host + 'note/';
   }
 
   constructor(
