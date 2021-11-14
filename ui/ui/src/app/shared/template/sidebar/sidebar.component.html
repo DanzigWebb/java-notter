@@ -10,11 +10,11 @@
     </div>
 
 
-    <div class="sidebar-content">
+    <div class="sidebar-content py-3">
         <div class="sidebar-scroll">
-            <ul class="group-list menu">
+            <ul class="group-list menu py-2">
                 <ng-container *ngFor="let group of groups">
-                    <li>
+                    <li [indicator]="group.noteCount">
                         <a
                             class="panel-block group-item"
                             [amTooltip]="group.title"

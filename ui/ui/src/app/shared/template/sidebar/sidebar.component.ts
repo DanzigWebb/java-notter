@@ -1,8 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2
+} from '@angular/core';
 import { GroupCreateDto, GroupDto } from '@app/models';
 import { ModalService } from 'am-bulba';
 import { RenameGroupDialog } from './rename-group.dialog';
 import { filter } from 'rxjs/operators';
+import { Instance } from '@popperjs/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -64,5 +76,50 @@ export class SidebarComponent implements OnInit {
     ).subscribe(group => {
       this.onUpdateGroup.emit(group);
     });
+  }
+}
+
+@Directive({
+  selector: '[indicator]'
+})
+export class IndicatorDirective implements OnInit, OnDestroy, AfterViewInit {
+
+  @Input()
+  indicator: string | number | undefined;
+
+  private popperRef: Instance | undefined;
+
+  constructor(
+    private el: ElementRef,
+    private render: Renderer2
+  ) {
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    const div = this.createRef();
+    this.render.setStyle(this.el.nativeElement, 'position', 'relative')
+    this.render.appendChild(this.el.nativeElement, div);
+  }
+
+  private createRef(): HTMLElement {
+    const wrapper = this.render.createElement('div');
+    this.render.setStyle(wrapper, 'position', 'absolute');
+    this.render.setStyle(wrapper, 'left', '0px');
+    this.render.setStyle(wrapper, 'top', '-5px');
+
+    const div = this.render.createElement('div');
+    this.render.setProperty(div, 'innerText', this.indicator);
+    this.render.addClass(div, 'badge')
+    this.render.addClass(div, 'badge-primary')
+    this.render.appendChild(wrapper, div);
+
+    return wrapper;
+  }
+
+  ngOnDestroy() {
+    this.popperRef?.destroy();
   }
 }

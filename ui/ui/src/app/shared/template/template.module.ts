@@ -4,7 +4,7 @@ import { SubmitModalComponent, TemplateComponent } from './template.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from "@angular/router";
 import { MenuModule, ModalModule, NavbarModule } from "am-bulba";
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { IndicatorDirective, SidebarComponent } from './sidebar/sidebar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GroupsModule } from '@app/groups';
 import { TooltipModule } from "../components/tooltip/tooltip.module";
@@ -19,6 +19,7 @@ import { RenameGroupDialog } from "./sidebar/rename-group.dialog";
     SidebarComponent,
     SubmitModalComponent,
     RenameGroupDialog,
+    IndicatorDirective
   ],
   imports: [
     CommonModule,
