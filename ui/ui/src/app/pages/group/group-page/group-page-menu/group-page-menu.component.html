@@ -1,0 +1,19 @@
+<form class="note-menu bg-base-200 shadow-lg" [formGroup]="form" *ngIf="note">
+    <input type="text" class="input input-lg input-ghost w-full"  formControlName="title">
+    <br>
+    <ul class="badge-list">
+        <li class="badge badge-primary" *ngFor="let tag of note.tags">{{tag.name}}</li>
+    </ul>
+    <br>
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text">Описание заметки</span>
+        </label>
+        <textarea
+            class="textarea"
+            placeholder="..."
+            formControlName="description">
+        </textarea>
+    </div>
+
+</form>

@@ -7,10 +7,13 @@ import { GroupFacade } from '@app/store/group';
 
 @Component({
   template: `
-    <app-group-page
-      [group]="group$ | async">
-    </app-group-page>
+    <div class="page" *ngIf="group$ | async as group">
+      <app-group-page
+        [group]="group">
+      </app-group-page>
+    </div>
   `,
+  styleUrls: ['./group.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnInit {
