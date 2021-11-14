@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { NoteCreateDto, NoteDto } from '@app/models';
+import { Store } from '@ngxs/store';
+import { NoteActions } from '@app/store/note/state/note.actions';
+
+@Injectable()
+export class NoteFacade {
+
+  constructor(
+    private store: Store,
+  ) {
+  }
+
+  create(dto: NoteCreateDto) {
+    return this.store.dispatch(new NoteActions.Create(dto));
+  }
+
+  update(dto: NoteDto) {
+    return this.store.dispatch(new NoteActions.Update(dto));
+  }
+
+  remove(id: number) {
+    return this.store.dispatch(new NoteActions.Remove(id));
+  }
+}

@@ -33,7 +33,7 @@ export class NotesService {
     return this.http.get<NoteDto>(url);
   }
 
-  delete(id: number) {
+  remove(id: number) {
     const url = this.url + id;
     return this.http.delete(url);
   }

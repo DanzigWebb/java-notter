@@ -14,6 +14,7 @@ export interface NoteDto {
 }
 
 export interface NoteCreateDto {
+  groupId?: number;
   title: string;
   description?: string;
 }
