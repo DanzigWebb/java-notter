@@ -12,3 +12,8 @@ export interface NoteDto {
 
   tags: TagDto[];
 }
+
+export interface NoteCreateDto {
+  title: string;
+  description?: string;
+}

@@ -29,6 +29,7 @@
       "@app/shared/*": ["src/app/shared/*"],
       "@app/environment": ["src/environments/environment"],
       "@app/groups": ["src/app/shared/components/groups"],
+      "@app/notes": ["src/app/shared/components/notes"],
     }
   },
   "angularCompilerOptions": {
