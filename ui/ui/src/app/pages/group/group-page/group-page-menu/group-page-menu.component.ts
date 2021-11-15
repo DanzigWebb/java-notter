@@ -52,14 +52,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
         if (this.form.valid && this.note) {
           const title: string = data.title || '';
           const description: string = data.description || '';
-
-          const tagsIds = (data.tags as string[]).reduce((acc, item) => {
-            const tag: number = this.tags.find(t => t.name === item)?.id || 0;
-            if (tag) {
-              acc.push(tag);
-            }
-            return acc;
-          }, [] as number[]);
+          const tagsIds = data.tags || [];
 
           const note: NoteDto = {...this.note, title, description, tagsIds};
           this.onUpdateNote.emit(note);
@@ -76,7 +69,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.form.reset();
     this.updateControl('title', this.note?.title || '');
     this.updateControl('description', this.note?.description || '');
-    this.updateControl('tags', this.note?.tags.map(t => t.name) || []);
+    this.updateControl('tags', this.note?.tags.map(t => t.id) || []);
     this.ref.detectChanges();
   }
 

@@ -30,6 +30,7 @@
       "@app/environment": ["src/environments/environment"],
       "@app/groups": ["src/app/shared/components/groups"],
       "@app/notes": ["src/app/shared/components/notes"],
+      "am-bulba": ["projects/am-bulba/src/public-api"],
     }
   },
   "angularCompilerOptions": {
