@@ -6,9 +6,9 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
-  OnChanges
+  OnChanges, ChangeDetectorRef
 } from '@angular/core';
-import { NoteDto } from '@app/models';
+import { NoteDto, TagDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
@@ -22,18 +22,25 @@ import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() note: NoteDto | null = null;
+  @Input() tags: TagDto[] = [];
 
   @Output() onUpdateNote = new EventEmitter<NoteDto>();
 
   form: FormGroup = this.fb.group({
     title: ['', Validators.required],
     description: '',
+    tags: []
   });
+
+  get checkedTags(): TagDto[] {
+    return this.note?.tags || [];
+  }
 
   private destroy$ = new Subject();
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ref: ChangeDetectorRef
   ) {
   }
 
@@ -46,7 +53,15 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
           const title: string = data.title || '';
           const description: string = data.description || '';
 
-          const note: NoteDto = {...this.note, title, description};
+          const tagsIds = (data.tags as string[]).reduce((acc, item) => {
+            const tag: number = this.tags.find(t => t.name === item)?.id || 0;
+            if (tag) {
+              acc.push(tag);
+            }
+            return acc;
+          }, [] as number[]);
+
+          const note: NoteDto = {...this.note, title, description, tagsIds};
           this.onUpdateNote.emit(note);
         }
       })
@@ -58,12 +73,19 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateForm() {
+    this.form.reset();
     this.updateControl('title', this.note?.title || '');
     this.updateControl('description', this.note?.description || '');
+    this.updateControl('tags', this.note?.tags.map(t => t.name) || []);
+    this.ref.detectChanges();
   }
 
   private updateControl<T>(controlName: string, value: T) {
     this.form.get(controlName)?.setValue(value);
+  }
+
+  isCheckedTag(id: number) {
+    return !!this.checkedTags.find(tag => tag.id === id);
   }
 
   ngOnDestroy() {

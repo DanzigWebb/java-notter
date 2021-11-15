@@ -3,6 +3,7 @@ package com.example.notter.rest.note.model;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 public class NoteRequest {
@@ -13,4 +14,6 @@ public class NoteRequest {
     String description;
 
     Integer groupId;
+
+    List<Integer> tagsIds;
 }

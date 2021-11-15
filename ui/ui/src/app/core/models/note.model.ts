@@ -11,6 +11,7 @@ export interface NoteDto {
 
 
   tags: TagDto[];
+  tagsIds?: number[];
 }
 
 export interface NoteCreateDto {

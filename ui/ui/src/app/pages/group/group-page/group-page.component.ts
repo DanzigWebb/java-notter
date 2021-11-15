@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GroupDto, NoteCreateDto, NoteDto } from '@app/models';
+import { GroupDto, NoteCreateDto, NoteDto, TagDto } from '@app/models';
 import { NoteFacade } from '@app/store/note';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { TagFacade } from '@app/store/tag';
 
 const queryParamNoteName = 'noteId';
 
@@ -32,6 +33,8 @@ export class GroupPageComponent implements OnInit {
 
   @Input() group: GroupDto | null = null;
 
+  tags$: Observable<TagDto[]> = this.tagFacade.tags$;
+
   checkedNote$: Observable<NoteDto | null> = this.route.queryParams.pipe(
     map((params) => {
       const noteId = parseInt(params[queryParamNoteName]);
@@ -41,6 +44,7 @@ export class GroupPageComponent implements OnInit {
 
   constructor(
     private noteFacade: NoteFacade,
+    private tagFacade: TagFacade,
     private route: ActivatedRoute,
     private router: Router,
   ) {
