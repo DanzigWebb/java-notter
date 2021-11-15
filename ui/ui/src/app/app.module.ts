@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,8 @@ import { AuthService } from "@app/auth";
 import { Config } from "@app/config";
 import { InterceptorsModule } from "@app/interceptors";
 import { TagsModule } from './shared/components/tags/tags.module';
+import { initData } from './app-init-data';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,13 @@ import { TagsModule } from './shared/components/tags/tags.module';
   ],
   providers: [
     AuthService,
-    Config
+    Config,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initData,
+      deps: [AppService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })

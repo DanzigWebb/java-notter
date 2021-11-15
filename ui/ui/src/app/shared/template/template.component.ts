@@ -26,11 +26,6 @@ export class TemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getGroups()
-  }
-
-  getGroups() {
-    this.groupsFacade.getAll()
   }
 
   createGroup(dto: GroupCreateDto) {
