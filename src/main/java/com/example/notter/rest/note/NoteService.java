@@ -50,16 +50,8 @@ public class NoteService {
         }
 
         if (note.getTagsIds() != null && note.getTagsIds().size() > 0) {
-            List<TagEntity> tags = tagRepo.findAllByUserId(user.getId());
-
-            List<TagEntity> filteredTags = new ArrayList<>();
-            tags.forEach(tag -> {
-                if (note.getTagsIds().contains(tag.getId())) {
-                    filteredTags.add(tag);
-                }
-            });
-
-            n.setTags(filteredTags);
+            List<TagEntity> tags = tagRepo.findAllByUserAndIds(user.getId(), note.getTagsIds());
+            n.setTags(tags);
         }
 
         n.setTitle(note.getTitle());
