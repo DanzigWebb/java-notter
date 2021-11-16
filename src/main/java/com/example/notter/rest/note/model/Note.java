@@ -20,6 +20,8 @@ public class Note {
     LocalDateTime createAt;
     LocalDateTime updateAt;
 
+    Boolean checked;
+
     List<Tag> tags;
     Integer groupId;
 
@@ -29,6 +31,9 @@ public class Note {
         n.setId(entity.getId());
         n.setTitle(entity.getTitle());
         n.setDescription(entity.getDescription());
+
+        n.setChecked(entity.getChecked());
+
         n.setCreateAt(entity.getCreatedAt());
         n.setUpdateAt(entity.getUpdatedAt());
 

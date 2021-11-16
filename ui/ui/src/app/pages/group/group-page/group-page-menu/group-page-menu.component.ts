@@ -11,7 +11,7 @@ import {
 import { NoteDto, TagDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-group-page-menu',
@@ -41,18 +41,15 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.form.valueChanges.pipe(
-      takeUntil(this.destroy$),
       debounceTime(1500),
-      tap((data) => {
+      filter(() => this.form.touched),
+      tap(() => {
         if (this.form.valid && this.note) {
-          const title: string = data.title || '';
-          const description: string = data.description || '';
-          const tags = this.findTags(data.tags) || [];
-
-          const note: NoteDto = {...this.note, title, description, tags};
+          const note = this.updateNoteByForm()
           this.onUpdateNote.emit(note);
         }
-      })
+      }),
+      takeUntil(this.destroy$),
     ).subscribe();
   }
 
@@ -69,6 +66,21 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateControl<T>(controlName: string, value: T) {
     this.form.get(controlName)?.setValue(value);
+  }
+
+  saveNote() {
+    const note = this.updateNoteByForm()
+    this.onUpdateNote.emit(note);
+  }
+
+  private updateNoteByForm(): NoteDto {
+    const data = this.form.value;
+
+    const title: string = data.title || '';
+    const description: string = data.description || '';
+    const tags = this.findTags(data.tags) || [];
+
+    return {...this.note!, title, description, tags};
   }
 
   private findTags(ids: number[]): TagDto[] {

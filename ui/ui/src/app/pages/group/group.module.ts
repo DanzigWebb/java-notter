@@ -8,6 +8,7 @@ import { NotesModule } from '@app/notes';
 import { GroupPageMenuComponent } from './group-page/group-page-menu/group-page-menu.component';
 import { FormGroupModule } from 'am-bulba';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 
 
 @NgModule({
@@ -16,13 +17,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     GroupComponent,
     GroupPageMenuComponent
   ],
-  imports: [
-    CommonModule,
-    GroupRoutingModule,
-    NotesModule,
-    FormGroupModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        GroupRoutingModule,
+        NotesModule,
+        FormGroupModule,
+        ReactiveFormsModule,
+        TooltipModule
+    ]
 })
 export class GroupModule {
 }

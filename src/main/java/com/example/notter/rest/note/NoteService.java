@@ -60,6 +60,7 @@ public class NoteService {
 
         n.setTitle(note.getTitle());
         n.setDescription(note.getDescription());
+        n.setChecked(note.getChecked());
 
         return Note.toModel(noteRepo.save(n));
     }

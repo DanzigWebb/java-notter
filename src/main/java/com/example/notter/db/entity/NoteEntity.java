@@ -13,6 +13,8 @@ public class NoteEntity extends BaseEntity {
 
     private String description;
 
+    private Boolean checked;
+
     @ManyToOne
     private UserEntity user;
 

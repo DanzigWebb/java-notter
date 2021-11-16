@@ -6,6 +6,8 @@ export interface NoteDto {
   title: string;
   description?: string;
 
+  checked: boolean;
+
   createdAt: string;
   updatedAt: string;
 

@@ -16,5 +16,7 @@ public class NoteRequest {
 
     Integer groupId;
 
+    Boolean checked;
+
     List<Tag> tags;
 }
