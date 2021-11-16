@@ -10,9 +10,9 @@ import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.rest.note.model.NoteRequest;
+import com.example.notter.rest.tag.model.Tag;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,8 +49,12 @@ public class NoteService {
             throw new EntityNotFoundException();
         }
 
-        if (note.getTagsIds() != null && note.getTagsIds().size() > 0) {
-            List<TagEntity> tags = tagRepo.findAllByUserAndIds(user.getId(), note.getTagsIds());
+        if (note.getTags() != null) {
+            List<Integer> tagIds = note.getTags()
+                    .stream().map(Tag::getId)
+                    .collect(Collectors.toList());
+
+            List<TagEntity> tags = tagRepo.findAllByUserAndIds(user.getId(), tagIds);
             n.setTags(tags);
         }
 

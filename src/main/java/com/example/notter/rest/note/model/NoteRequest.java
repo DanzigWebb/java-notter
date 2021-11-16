@@ -1,5 +1,6 @@
 package com.example.notter.rest.note.model;
 
+import com.example.notter.rest.tag.model.Tag;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,5 +16,5 @@ public class NoteRequest {
 
     Integer groupId;
 
-    List<Integer> tagsIds;
+    List<Tag> tags;
 }

@@ -9,9 +9,7 @@ export interface NoteDto {
   createdAt: string;
   updatedAt: string;
 
-
   tags: TagDto[];
-  tagsIds?: number[];
 }
 
 export interface NoteCreateDto {

@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
-  OnChanges, ChangeDetectorRef
+  OnChanges
 } from '@angular/core';
 import { NoteDto, TagDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -32,29 +32,24 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     tags: []
   });
 
-  get checkedTags(): TagDto[] {
-    return this.note?.tags || [];
-  }
-
   private destroy$ = new Subject();
 
   constructor(
-    private fb: FormBuilder,
-    private ref: ChangeDetectorRef
+    private fb: FormBuilder
   ) {
   }
 
   ngOnInit(): void {
     this.form.valueChanges.pipe(
       takeUntil(this.destroy$),
-      debounceTime(300),
+      debounceTime(1500),
       tap((data) => {
         if (this.form.valid && this.note) {
           const title: string = data.title || '';
           const description: string = data.description || '';
-          const tagsIds = data.tags || [];
+          const tags = this.findTags(data.tags) || [];
 
-          const note: NoteDto = {...this.note, title, description, tagsIds};
+          const note: NoteDto = {...this.note, title, description, tags};
           this.onUpdateNote.emit(note);
         }
       })
@@ -70,15 +65,24 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.updateControl('title', this.note?.title || '');
     this.updateControl('description', this.note?.description || '');
     this.updateControl('tags', this.note?.tags.map(t => t.id) || []);
-    this.ref.detectChanges();
   }
 
   private updateControl<T>(controlName: string, value: T) {
     this.form.get(controlName)?.setValue(value);
   }
 
-  isCheckedTag(id: number) {
-    return !!this.checkedTags.find(tag => tag.id === id);
+  private findTags(ids: number[]): TagDto[] {
+    if (!Array.isArray(ids)) {
+      return [];
+    }
+    return ids.reduce((acc, id) => {
+      const tag = this.tags.find(t => t.id === id);
+      if (tag) {
+        acc.push(tag);
+      }
+
+      return acc;
+    }, [] as TagDto[]);
   }
 
   ngOnDestroy() {
