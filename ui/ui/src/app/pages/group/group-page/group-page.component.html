@@ -6,19 +6,33 @@
             (onCreateNote)="createNote($event)">
         </app-create-note-form>
 
+        <br>
+
         <div class="notes">
-            <div class="card shadow" *ngFor="let note of group.notes" (click)="checkNote(note)">
-                <div class="card-body">
-                    <div class="card-title mr-10">
-                        <h4>{{note.title}}</h4>
-                        <span class="badge badge-primary" *ngFor="let tag of note.tags">
-                            {{tag.name}}
+            <ng-container *ngFor="let note of group.notes">
+                <div class="note p-1.5 px-3 hover:bg-base-200 rounded-md cursor-pointer transition-all mb-3"
+                     [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
+                     (click)="checkNote(note)">
+                    <div class="note-head pb-1">
+                        <h4 class="text-base">{{note.title}}</h4>
+                    </div>
+
+                    <div class="note-meta text-xs">
+                        <span class="note-meta-item">
+                            <span class="opacity-80">Задача</span>
                         </span>
-                        <br>
-                        <p class="text-xs" [innerHTML]="note.description"></p>
+                        <span class="note-meta-item" *ngIf="!!note.description">
+                            <i class="far fa-comment-alt text-xs"></i>
+                        </span>
+                        <span class="note-meta-item" *ngIf="!!note.tags.length">
+                            <span class="mr-2 text-warning" *ngFor="let tag of note.tags">
+                                <i class="far fa-dot-circle text-xs mr-1"></i>
+                                <span class="text-xs">{{tag.name}}</span>
+                            </span>
+                        </span>
                     </div>
                 </div>
-            </div>
+            </ng-container>
         </div>
     </div>
 
