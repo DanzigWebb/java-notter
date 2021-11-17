@@ -12,6 +12,7 @@
             <ng-container *ngFor="let note of group.notes">
                 <div class="note flex p-1.5 px-3 hover:bg-base-200 rounded-md cursor-pointer transition-all mb-3"
                      [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
+                     [class.shadow-lg]="(checkedNote$ | async)?.id === note.id"
                      (click)="checkNote(note)">
 
                     <label class="cursor-pointer label mr-3">
