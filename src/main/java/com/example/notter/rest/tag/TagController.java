@@ -2,6 +2,7 @@ package com.example.notter.rest.tag;
 
 import com.example.notter.config.security.CustomUserDetails;
 import com.example.notter.rest.tag.model.Tag;
+import com.example.notter.rest.tag.model.TagColor;
 import com.example.notter.rest.tag.model.TagRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -65,6 +66,12 @@ public class TagController {
     public @ResponseBody
     List<Tag> getAll(@AuthenticationPrincipal CustomUserDetails user) {
         return tagService.getAllByUser(user.getUserEntity());
+    }
+
+    @GetMapping(path = "/colors")
+    public @ResponseBody
+    List<TagColor> getColors() {
+        return tagService.getColors();
     }
 
 }

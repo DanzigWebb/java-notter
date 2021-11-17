@@ -6,6 +6,7 @@ import com.example.notter.db.repository.TagColorRepo;
 import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.tag.model.Tag;
+import com.example.notter.rest.tag.model.TagColor;
 import com.example.notter.rest.tag.model.TagRequest;
 import org.springframework.stereotype.Service;
 
@@ -68,4 +69,9 @@ public class TagService {
         throw new EntityNotFoundException();
     }
 
+    public List<TagColor> getColors() {
+        return tagColorRepo.findAll()
+                .stream().map(TagColor::toModel)
+                .collect(Collectors.toList());
+    }
 }
