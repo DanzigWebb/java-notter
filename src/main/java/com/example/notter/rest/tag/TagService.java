@@ -2,6 +2,7 @@ package com.example.notter.rest.tag;
 
 import com.example.notter.db.entity.TagEntity;
 import com.example.notter.db.entity.UserEntity;
+import com.example.notter.db.repository.TagColorRepo;
 import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.tag.model.Tag;
@@ -15,16 +16,20 @@ import java.util.stream.Collectors;
 public class TagService {
 
     private final TagRepo tagRepo;
+    private final TagColorRepo tagColorRepo;
 
-    public TagService(TagRepo tagRepo) {
+    public TagService(TagRepo tagRepo, TagColorRepo tagColorRepo) {
         this.tagRepo = tagRepo;
+        this.tagColorRepo = tagColorRepo;
     }
 
     public Tag create(TagRequest tag, UserEntity user) {
         TagEntity t = new TagEntity();
         t.setUser(user);
         t.setName(tag.getName());
-        t.setColor(tag.getColor());
+
+        var color = tagColorRepo.findById(tag.getColor());
+        color.ifPresent(t::setColor);
 
         return Tag.toModel(tagRepo.save(t));
     }
@@ -36,7 +41,8 @@ public class TagService {
         }
 
         t.setName(tag.getName());
-        t.setColor(tag.getColor());
+        var color = tagColorRepo.findById(tag.getColor());
+        color.ifPresent(t::setColor);
 
         return Tag.toModel(tagRepo.save(t));
     }

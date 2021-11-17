@@ -13,8 +13,8 @@ public class TagEntity extends BaseEntity {
     @NotBlank(message = "Обязательное поле")
     private String name;
 
-    @Length(min = 2, message = "Минимальная длина 6 символов")
-    private String color;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    private TagColorEntity color;
 
     @ManyToOne
     private UserEntity user;

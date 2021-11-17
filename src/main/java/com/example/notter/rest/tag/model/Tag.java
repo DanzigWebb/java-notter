@@ -8,13 +8,13 @@ public class Tag {
 
     Integer id;
     String name;
-    String color;
+    TagColor color;
 
     public static Tag toModel(TagEntity entity) {
         Tag t = new Tag();
         t.setId(entity.getId());
         t.setName(entity.getName());
-        t.setColor(entity.getColor());
+        t.setColor(TagColor.toModel(entity.getColor()));
 
         return t;
     }
