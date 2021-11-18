@@ -14,7 +14,10 @@ public class Tag {
         Tag t = new Tag();
         t.setId(entity.getId());
         t.setName(entity.getName());
-        t.setColor(TagColor.toModel(entity.getColor()));
+
+        if (entity.getColor() != null) {
+            t.setColor(TagColor.toModel(entity.getColor()));
+        }
 
         return t;
     }
