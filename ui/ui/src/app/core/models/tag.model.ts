@@ -1,11 +1,12 @@
 export interface TagCreateDto {
   name: string;
+  color?: number;
 }
 
 export interface TagDto {
   id: number;
   name: string;
-  color?: string;
+  color?: TagColorDto;
 }
 
 export interface TagColorDto {

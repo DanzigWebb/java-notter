@@ -32,7 +32,7 @@
                                 <i class="far fa-comment-alt text-xs"></i>
                             </span>
                             <span class="note-meta-item" *ngIf="!!note.tags.length">
-                                <span class="mr-2 text-warning" *ngFor="let tag of note.tags">
+                                <span *ngFor="let tag of note.tags" [class]="'mr-2 text-' + tag.color?.type">
                                     <i class="far fa-dot-circle text-xs mr-1"></i>
                                     <span class="text-xs">{{tag.name}}</span>
                                 </span>

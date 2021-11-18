@@ -39,14 +39,14 @@ export class TagState {
 
   @Action(TagActions.Create)
   add({dispatch}: StateContext<TagStateModel>, {payload}: TagActions.Create) {
-    this.tags.create(payload).pipe(
+    return this.tags.create(payload).pipe(
       switchMap(() => dispatch(TagActions.GetAll)),
     );
   }
 
   @Action(TagActions.Delete)
   delete({dispatch}: StateContext<TagStateModel>, {payload}: TagActions.Delete) {
-    this.tags.delete(payload).pipe(
+    return this.tags.delete(payload).pipe(
       switchMap(() => dispatch(TagActions.GetAll)),
     );
   }
@@ -54,7 +54,7 @@ export class TagState {
   @Action(TagActions.Update)
   update({dispatch}: StateContext<TagStateModel>, {payload}: TagActions.Update) {
     const {id, name} = payload;
-    this.tags.update(id, {name}).pipe(
+    return this.tags.update(id, {name}).pipe(
       switchMap(() => dispatch(TagActions.GetAll)),
     );
   }

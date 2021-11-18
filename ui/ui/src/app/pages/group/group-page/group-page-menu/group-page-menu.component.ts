@@ -8,10 +8,11 @@ import {
   OnDestroy,
   OnChanges
 } from '@angular/core';
-import { NoteDto, TagDto } from '@app/models';
+import { NoteDto, TagCreateDto, TagDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
+import { TagFacade } from '@app/store/tag';
 
 @Component({
   selector: 'app-group-page-menu',
@@ -35,7 +36,8 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tagFacade: TagFacade,
   ) {
   }
 
@@ -45,7 +47,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
       filter(() => this.form.touched),
       tap(() => {
         if (this.form.valid && this.note) {
-          const note = this.updateNoteByForm()
+          const note = this.updateNoteByForm();
           this.onUpdateNote.emit(note);
         }
       }),
@@ -59,6 +61,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateForm() {
     this.form.reset();
+
     this.updateControl('title', this.note?.title || '');
     this.updateControl('description', this.note?.description || '');
     this.updateControl('tags', this.note?.tags.map(t => t.id) || []);
@@ -69,7 +72,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   saveNote() {
-    const note = this.updateNoteByForm()
+    const note = this.updateNoteByForm();
     this.onUpdateNote.emit(note);
   }
 
@@ -87,6 +90,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     if (!Array.isArray(ids)) {
       return [];
     }
+
     return ids.reduce((acc, id) => {
       const tag = this.tags.find(t => t.id === id);
       if (tag) {
@@ -95,6 +99,10 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
       return acc;
     }, [] as TagDto[]);
+  }
+
+  createTag(dto: TagCreateDto) {
+    this.tagFacade.create(dto).subscribe();
   }
 
   ngOnDestroy() {

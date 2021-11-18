@@ -1,25 +1,53 @@
 <form class="note-menu bg-base-200 shadow-lg" [formGroup]="form" *ngIf="note">
     <div class="flex items-center mb-2">
-        <button class="btn btn-ghost mr-1" amTooltip="Сохранить" [placement]="'bottom'" (click)="saveNote()">
-            <i class="fas fa-save text-xl transition-colors" [class.text-warning]="form.touched"></i>
+        <button
+            class="btn btn-ghost mr-1"
+            amTooltip="Сохранить"
+            placement="bottom"
+            (click)="saveNote()"
+        >
+            <i class="fas fa-save text-xl transition-colors"
+               [class.text-warning]="form.touched">
+            </i>
         </button>
         <input type="text" class="input input-ghost w-full text-xl" formControlName="title">
     </div>
 
-    <am-form-field>
-        <label>Тэги</label>
-        <am-select
-            [multiply]="true"
-            formControlName="tags"
-        >
-            <am-option
-                *ngFor="let tag of tags"
-                [value]="tag.id"
+    <div class="flex items-center">
+        <am-form-field class="w-full">
+            <label>Тэги</label>
+            <am-select
+                [multiply]="true"
+                formControlName="tags"
             >
-                {{tag.name}}
-            </am-option>
-        </am-select>
-    </am-form-field>
+                <am-option
+                    *ngFor="let tag of tags"
+                    [value]="tag.id"
+                >
+                    {{tag.name}}
+                </am-option>
+            </am-select>
+        </am-form-field>
+
+        <button
+            class="btn btn-ghost ml-1"
+            amTooltip="Добавить тэг"
+            placement="bottom"
+            [amMenuTrigger]="menu"
+            #menuTrigger="amMenuTrigger"
+        >
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <am-menu-panel #menu="amMenu">
+            <div class="create-tag px-2" style="width: 300px;" (click)="$event.stopPropagation()">
+                <app-create-tag-form
+                    (onCreate)="createTag($event); menuTrigger.close()">
+                </app-create-tag-form>
+            </div>
+        </am-menu-panel>
+    </div>
+
 
     <div class="form-control">
         <label class="label">
