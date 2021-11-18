@@ -7,3 +7,8 @@ export interface TagDto {
   name: string;
   color?: string;
 }
+
+export interface TagColorDto {
+  id: number;
+  type: string;
+}

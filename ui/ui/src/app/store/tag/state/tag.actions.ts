@@ -20,9 +20,8 @@ export namespace TagActions {
     static readonly type = '[Tag] Get all';
   }
 
-  export class GetOne {
-    static readonly type = '[Tag] Get item';
-    constructor(public payload: number) { }
+  export class GetColors {
+    static readonly type = '[Tag] Get tag colors';
   }
 }
 

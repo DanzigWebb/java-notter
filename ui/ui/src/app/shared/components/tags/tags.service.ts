@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '@app/config';
-import { TagCreateDto, TagDto } from '@app/models';
+import { TagColorDto, TagCreateDto, TagDto } from '@app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,11 @@ export class TagsService {
   getAll() {
     const url = this.url + 'all';
     return this.http.get<TagDto[]>(url);
+  }
+
+  getColors() {
+    const url = this.url + 'colors';
+    return this.http.get<TagColorDto[]>(url);
   }
 
   delete(id: number) {

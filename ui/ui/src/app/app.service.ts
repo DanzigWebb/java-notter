@@ -18,8 +18,10 @@ export class AppService {
   init() {
     const takeOne = <T>(obs: Observable<T>) => obs.pipe(take(1));
     return forkJoin([
-      takeOne(this.groups.getAll()),
-      takeOne(this.tags.getAll())]
+        takeOne(this.groups.getAll()),
+        takeOne(this.tags.getAll()),
+        takeOne(this.tags.getColors())
+      ]
     );
   }
 }

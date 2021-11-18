@@ -19,6 +19,10 @@ export class TagFacade {
     return this.store.dispatch(new TagActions.GetAll());
   }
 
+  getColors() {
+    return this.store.dispatch(new TagActions.GetColors());
+  }
+
   create(dto: TagCreateDto) {
     return this.store.dispatch(new TagActions.Create(dto));
   }
