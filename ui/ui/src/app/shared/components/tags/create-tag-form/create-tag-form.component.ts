@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TagCreateDto } from '@app/models';
+import { TagFacade } from '@app/store/tag';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-tag-form',
@@ -9,12 +11,16 @@ import { TagCreateDto } from '@app/models';
 })
 export class CreateTagFormComponent implements OnInit {
 
-  @Output() create = new EventEmitter<TagCreateDto>();
+  @Output() onCreate = new EventEmitter<TagCreateDto>();
 
+  colors$ = this.tags.state$.pipe(
+    map(state => state.colors)
+  )
   form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
+    private tags: TagFacade,
   ) {
     this.form = this.createFormGroup();
   }
@@ -24,7 +30,8 @@ export class CreateTagFormComponent implements OnInit {
 
   private createFormGroup(): FormGroup {
     return this.fb.group({
-      title: ['', Validators.required],
+      name: ['', Validators.required],
+      color: ['', Validators.required]
     });
   }
 
@@ -33,11 +40,13 @@ export class CreateTagFormComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+
     const data: TagCreateDto = {
-      name: this.form.controls.title?.value
+      name: this.form.controls.name?.value,
+      color: this.form.controls.color?.value,
     };
 
-    this.create.emit(data)
-
+    this.onCreate.emit(data);
+    this.form.reset();
   }
 }

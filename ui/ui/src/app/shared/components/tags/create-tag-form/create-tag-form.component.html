@@ -1,19 +1,34 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
- <div class="tag-wrapper">
-   <am-form-field>
-        <span class="icon is-small is-left">
-          <i class="fa fa-tag" aria-hidden="true"></i>
-        </span>
+    <am-form-field>
+        <label class="input-group input-group-xs">
+            <span><i class="fa fa-tag" aria-hidden="true"></i></span>
+            <input type="text" class="w-full" amInput placeholder="Имя тега" formControlName="name">
+        </label>
 
-     <input type="text" amInput placeholder="Имя тега" formControlName="title">
-     <am-form-error>
-       <span *ngIf="form.get('title')?.hasError('required')">Обязательное поле</span>
-     </am-form-error>
-   </am-form-field>
-   <button class="button is-primary">
-    <span class="icon is-small">
-      <i class="fa fa-plus" aria-hidden="true"></i>
-    </span>
-   </button>
- </div>
+        <am-form-error>
+            <span *ngIf="form.get('name')?.hasError('required')">Обязательное поле</span>
+        </am-form-error>
+    </am-form-field>
+
+    <am-form-field>
+        <label class="input-group input-group-xs">
+            <span><i class="fas fa-palette"></i></span>
+            <am-select class="w-full" placeholder="Цвет" formControlName="color">
+                <am-option
+                    *ngFor="let color of colors$ | async"
+                    [value]="color.id"
+                    [class]="'text-' + color.type">
+                    {{color.type}}
+                </am-option>
+            </am-select>
+        </label>
+
+        <am-form-error>
+            <span *ngIf="form.get('color')?.hasError('required')">Обязательное поле</span>
+        </am-form-error>
+    </am-form-field>
+
+    <button class="btn btn-primary w-full">
+        Создать
+    </button>
 </form>
