@@ -2,45 +2,32 @@
     <div class="group" *ngIf="group">
         <h2 class="text-2xl mb-4">{{group.title}}</h2>
 
-        <app-create-note-form
-            (onCreateNote)="createNote($event)">
-        </app-create-note-form>
-
-        <br>
+        <div class="mb-2">
+            <app-create-note-form
+                (onCreateNote)="createNote($event)">
+            </app-create-note-form>
+        </div>
 
         <div class="notes">
-            <ng-container *ngFor="let note of group.notes">
-                <div class="note flex p-1.5 px-3 hover:bg-base-200 rounded-md cursor-pointer transition-all mb-3"
-                     [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
-                     [class.shadow-lg]="(checkedNote$ | async)?.id === note.id"
-                     (click)="checkNote(note)">
+            <app-note-item
+                *ngFor="let note of activeNotes"
+                [note]="note"
+                [checked]="(checkedNote$ | async)?.id === note.id"
+                (onChecked)="onCompleteNote(note, $event)"
+                (click)="checkNote(note)">
+            </app-note-item>
 
-                    <label class="cursor-pointer label mr-3">
-                        <input type="checkbox" #noteChecked [checked]="note.checked" (change)="onCompleteNote(note, noteChecked.checked)" class="checkbox checkbox-primary checkbox-sm">
-                    </label>
-
-                    <div class="note-content">
-                        <div class="note-head pb-1">
-                            <h4 class="text-base">{{note.title}}</h4>
-                        </div>
-
-                        <div class="note-meta text-xs">
-                            <span class="note-meta-item">
-                                <span class="opacity-80">Задача</span>
-                            </span>
-                            <span class="note-meta-item" *ngIf="!!note.description" amTooltip="Есть описание">
-                                <i class="far fa-comment-alt text-xs"></i>
-                            </span>
-                            <span class="note-meta-item" *ngIf="!!note.tags.length">
-                                <span *ngFor="let tag of note.tags" [class]="'mr-2 text-' + tag.color?.type">
-                                    <i class="far fa-dot-circle text-xs mr-1"></i>
-                                    <span class="text-xs">{{tag.name}}</span>
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <ng-container *ngIf="completedNotes.length">
+                <h3 class="text-lg mb-2">Завершенные</h3>
             </ng-container>
+
+            <app-note-item
+                *ngFor="let note of completedNotes"
+                [note]="note"
+                [checked]="(checkedNote$ | async)?.id === note.id"
+                (onChecked)="onCompleteNote(note, $event)"
+                (click)="checkNote(note)">
+            </app-note-item>
         </div>
     </div>
 
@@ -49,8 +36,7 @@
             [@slideInOut]
             [note]="note"
             [tags]="(tags$ | async) || []"
-            (onUpdateNote)="updateNote($event)"
-        >
+            (onUpdateNote)="updateNote($event)">
         </app-group-page-menu>
     </ng-container>
 </div>

@@ -37,6 +37,9 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
 
   checkedNote$ = new BehaviorSubject<NoteDto | null>(null);
 
+  activeNotes: NoteDto[] = [];
+  completedNotes: NoteDto[] = [];
+
   private destroy$ = new Subject();
 
   constructor(
@@ -53,19 +56,15 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
         const noteId = parseInt(params[queryParamNoteName]);
         const note = this.group?.notes.find(note => note.id === noteId) || null;
         this.checkedNote$.next(note);
-        return noteId
+        return noteId;
       }),
     ).subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // обновляем заметку при обновлении состояния группы
     if (changes.group) {
-      const note = this.checkedNote$.getValue();
-      if (note) {
-        const updatedNote = this.group?.notes.find(n => n.id === note.id) || null;
-        this.checkedNote$.next(updatedNote);
-      }
+      this.findCheckedNote();
+      this.sortedNotes();
     }
   }
 
@@ -80,6 +79,22 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
       relativeTo: this.route,
       queryParams
     });
+  }
+
+  private findCheckedNote() {
+    const note = this.checkedNote$.getValue();
+    if (note) {
+      const checkedNote = this.group?.notes.find(n => n.id === note.id) || null;
+      this.checkedNote$.next(checkedNote);
+    }
+  }
+
+  private sortedNotes() {
+    if (this.group) {
+      const notes = this.group.notes || [];
+      this.activeNotes = notes.filter(n => !n.checked);
+      this.completedNotes = notes.filter(n => n.checked);
+    }
   }
 
   updateNote(note: NoteDto) {
