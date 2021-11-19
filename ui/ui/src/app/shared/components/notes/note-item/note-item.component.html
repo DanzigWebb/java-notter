@@ -1,0 +1,38 @@
+<div class="note flex p-1.5 px-3 hover:bg-base-200 rounded-md cursor-pointer transition-all mb-3"
+     *ngIf="note"
+     [class.bg-base-200]="checked"
+     [class.shadow-lg]="checked">
+
+    <label class="cursor-pointer label mr-3" (click)="$event.stopPropagation()">
+        <input
+            type="checkbox"
+            class="checkbox checkbox-primary checkbox-sm"
+            #noteChecked [checked]="note.checked"
+            (change)="onCheckedChange(noteChecked.checked)"
+        >
+    </label>
+
+    <div class="note-content">
+        <div class="note-head pb-1">
+            <h4 class="text-base">{{note.title}}</h4>
+        </div>
+
+        <div class="note-meta text-xs">
+            <span class="note-meta-item">
+                <span class="opacity-80">Задача</span>
+            </span>
+            <span class="note-meta-item" *ngIf="!!note.description" amTooltip="Есть описание">
+                <i class="far fa-comment-alt text-xs"></i>
+            </span>
+            <span class="note-meta-item" *ngIf="!!note.tags.length">
+                <span
+                    *ngFor="let tag of note.tags"
+                    [class]="'mr-2 text-' + tag.color?.type"
+                >
+                    <i class="far fa-dot-circle text-xs mr-1"></i>
+                    <span class="text-xs">{{tag.name}}</span>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>

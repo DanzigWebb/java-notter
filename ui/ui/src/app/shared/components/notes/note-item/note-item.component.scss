@@ -1,0 +1,8 @@
+.note {
+  &-meta-item {
+    &:not(:last-child):after {
+      content: '•';
+      padding: 0 4px;
+    }
+  }
+}
