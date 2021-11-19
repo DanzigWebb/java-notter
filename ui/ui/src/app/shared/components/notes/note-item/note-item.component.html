@@ -13,8 +13,11 @@
     </label>
 
     <div class="note-content">
-        <div class="note-head pb-1">
-            <h4 class="text-base">{{note.title}}</h4>
+        <div class="note-head pb-1 leading-3">
+            <h4 class="text-base leading-5">{{note.title}}</h4>
+            <span class="text-xs font-light opacity-80">
+                {{note.updateAt | date: "dd.MM.YYYY"}}
+            </span>
         </div>
 
         <div class="note-meta text-xs">

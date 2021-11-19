@@ -8,8 +8,8 @@ export interface NoteDto {
 
   checked: boolean;
 
-  createdAt: string;
-  updatedAt: string;
+  createAt: string;
+  updateAt: string;
 
   tags: TagDto[];
 }
