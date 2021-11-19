@@ -27,6 +27,7 @@
       "@app/auth": ["src/app/pages/auth"],
       "@app/store/*": ["src/app/store/*"],
       "@app/shared/*": ["src/app/shared/*"],
+      "@app/animations/": ["src/app/shared/animations"],
       "@app/environment": ["src/environments/environment"],
       "@app/groups": ["src/app/shared/components/groups"],
       "@app/notes": ["src/app/shared/components/notes"],
