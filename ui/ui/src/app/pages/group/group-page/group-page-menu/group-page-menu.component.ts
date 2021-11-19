@@ -65,6 +65,10 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.updateControl('title', this.note?.title || '');
     this.updateControl('description', this.note?.description || '');
     this.updateControl('tags', this.note?.tags.map(t => t.id) || []);
+
+    this.tags.length
+      ? this.form.get('tags')?.enable()
+      : this.form.get('tags')?.disable();
   }
 
   private updateControl<T>(controlName: string, value: T) {

@@ -1,4 +1,8 @@
-<form class="note-menu bg-base-200 shadow-lg" [formGroup]="form" *ngIf="note">
+<form
+    class="note-menu bg-base-200 shadow-lg"
+    [formGroup]="form"
+    *ngIf="note"
+>
     <div class="flex items-center mb-2">
         <button
             class="btn btn-ghost mr-1"
@@ -19,6 +23,7 @@
             <am-select
                 [multiply]="true"
                 formControlName="tags"
+                [placeholder]="tags.length ? 'Тэги' : 'Созданных тэгов нет'"
             >
                 <am-option
                     *ngFor="let tag of tags"
@@ -59,5 +64,4 @@
             formControlName="description">
         </textarea>
     </div>
-
 </form>

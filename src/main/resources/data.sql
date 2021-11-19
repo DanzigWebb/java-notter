@@ -11,10 +11,6 @@ SELECT 'accent' FROM DUAL
 WHERE NOT EXISTS (SELECT * FROM tag_color WHERE type = 'accent');
 
 INSERT INTO tag_color (type)
-SELECT 'neutral' FROM DUAL
-WHERE NOT EXISTS (SELECT * FROM tag_color WHERE type = 'neutral');
-
-INSERT INTO tag_color (type)
 SELECT 'info' FROM DUAL
 WHERE NOT EXISTS (SELECT * FROM tag_color WHERE type = 'info');
 
