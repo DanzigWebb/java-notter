@@ -17,9 +17,23 @@
         <input type="text" class="input input-ghost w-full text-xl" formControlName="title">
     </div>
 
+    <div class="todos py-4">
+        <h3 class="text-lg mb-2">Подзадачи</h3>
+        <div *ngFor="let todo of note.todos" class="todo flex items-center px-2">
+            <label class="cursor-pointer label mr-3" (click)="$event.stopPropagation()">
+                <input
+                    type="checkbox"
+                    class="checkbox checkbox-accent checkbox-sm"
+                    [checked]="todo.checked"
+                >
+            </label>
+            <span [class.line-through]="todo.checked">{{todo.title}}</span>
+        </div>
+    </div>
+
     <div class="flex items-center">
         <am-form-field class="w-full">
-            <label>Тэги</label>
+            <label><span class="text-lg">Тэги</span></label>
             <am-select
                 [multiply]="true"
                 formControlName="tags"

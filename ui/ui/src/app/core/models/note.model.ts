@@ -12,6 +12,14 @@ export interface NoteDto {
   updateAt: string;
 
   tags: TagDto[];
+  todos: TodoDto[];
+}
+
+export interface TodoDto {
+  checked: boolean;
+  id: number;
+  noteId: number;
+  title: string;
 }
 
 export interface NoteCreateDto {
