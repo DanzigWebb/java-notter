@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
+import { UserFacade } from '@app/store/user';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,11 @@ import { DOCUMENT } from "@angular/common";
 })
 export class HeaderComponent implements OnInit {
 
+  user$ = this.userFacade.state$;
+
   constructor(
-    @Inject(DOCUMENT) private doc: Document
+    @Inject(DOCUMENT) private doc: Document,
+    private userFacade: UserFacade,
   ) { }
 
   ngOnInit(): void {

@@ -11,4 +11,9 @@ export interface LoginDto {
 
 export interface LoginDtoResponse {
   token: string;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+  }
 }

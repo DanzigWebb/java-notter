@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { UserActions } from "./user.actions";
-import { AuthService } from "@app/auth";
-import { tap } from "rxjs/operators";
+import { UserActions } from './user.actions';
+import { AuthService } from '@app/auth';
+import { tap } from 'rxjs/operators';
+import { LoginDtoResponse } from '@app/models';
 
 export interface UserStateModel {
   name?: string;
@@ -14,6 +15,23 @@ export interface UserStateModel {
 const defaults: UserStateModel = {
   isLogin: false,
 };
+
+
+try {
+  const localDto: LoginDtoResponse | string = JSON.parse(
+    localStorage.getItem('user') || ''
+  );
+
+  if (typeof localDto === 'object') {
+    defaults.isLogin = true;
+    defaults.token = localDto.token;
+    defaults.name = localDto.user.name;
+    defaults.email = localDto.user.email;
+  }
+} catch {
+  
+}
+
 
 @State<UserStateModel>({
   name: 'user',
@@ -35,12 +53,15 @@ export class UserState {
   @Action(UserActions.Login)
   login({getState, setState}: StateContext<UserStateModel>, {payload}: UserActions.Login) {
     return this.auth.login(payload).pipe(
-      tap((user) => {
+      tap((dto) => {
         setState({
           isLogin: true,
-          token: user.token,
+          token: dto.token,
+          name: dto.user.name,
+          email: dto.user.name,
         });
-        localStorage.setItem('token', user.token);
+        localStorage.setItem('token', dto.token);
+        localStorage.setItem('user', JSON.stringify(dto));
       }),
     );
   }
