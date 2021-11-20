@@ -19,4 +19,5 @@ public class NoteRequest {
     Boolean checked;
 
     List<Tag> tags;
+    List<NoteTodo> todos;
 }

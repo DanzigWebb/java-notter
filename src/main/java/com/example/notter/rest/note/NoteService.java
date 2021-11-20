@@ -1,15 +1,14 @@
 package com.example.notter.rest.note;
 
-import com.example.notter.db.entity.GroupEntity;
-import com.example.notter.db.entity.NoteEntity;
-import com.example.notter.db.entity.TagEntity;
-import com.example.notter.db.entity.UserEntity;
+import com.example.notter.db.entity.*;
 import com.example.notter.db.repository.GroupRepo;
 import com.example.notter.db.repository.NoteRepo;
+import com.example.notter.db.repository.NoteTodoRepo;
 import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.rest.note.model.NoteRequest;
+import com.example.notter.rest.note.model.NoteTodo;
 import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
@@ -21,11 +20,13 @@ import java.util.stream.Collectors;
 public class NoteService {
 
     private final NoteRepo noteRepo;
+    private final NoteTodoRepo noteTodoRepo;
     private final GroupRepo groupRepo;
     private final TagRepo tagRepo;
 
-    public NoteService(NoteRepo noteRepo, GroupRepo groupRepo, TagRepo tagRepo) {
+    public NoteService(NoteRepo noteRepo, NoteTodoRepo noteTodoRepo, GroupRepo groupRepo, TagRepo tagRepo) {
         this.noteRepo = noteRepo;
+        this.noteTodoRepo = noteTodoRepo;
         this.groupRepo = groupRepo;
         this.tagRepo = tagRepo;
     }
@@ -59,11 +60,30 @@ public class NoteService {
             n.setTags(tags);
         }
 
+        if (note.getTodos() != null) {
+            note.getTodos().forEach(t -> {
+                var todo = noteTodoRepo.findById(t.getId());
+                if (todo.isEmpty()) {
+                    var noteTodo = createNoteTodo(t, n);
+                    noteTodoRepo.save(noteTodo);
+                }
+            });
+        }
+
         n.setTitle(note.getTitle());
         n.setDescription(note.getDescription());
         n.setChecked(note.getChecked());
 
         return Note.toModel(noteRepo.save(n));
+    }
+
+    private static NoteTodoEntity createNoteTodo(NoteTodo t, NoteEntity note) {
+        var todo = new NoteTodoEntity();
+        todo.setTitle(t.getTitle());
+        todo.setChecked(t.getChecked());
+        todo.setNote(note);
+
+        return todo;
     }
 
     public void delete(UserEntity user, Integer tagId) {
