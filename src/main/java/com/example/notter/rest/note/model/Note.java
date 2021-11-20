@@ -1,16 +1,12 @@
 package com.example.notter.rest.note.model;
 
 import com.example.notter.db.entity.NoteEntity;
-import com.example.notter.db.entity.TagEntity;
 import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.util.Util;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Data
 public class Note {
@@ -31,7 +27,7 @@ public class Note {
 
 
     public static Note toModel(NoteEntity entity) {
-        Note n = new Note();
+        var n = new Note();
         n.setId(entity.getId());
         n.setTitle(entity.getTitle());
         n.setDescription(entity.getDescription());
@@ -41,8 +37,8 @@ public class Note {
         n.setCreateAt(entity.getCreatedAt());
         n.setUpdateAt(entity.getUpdatedAt());
 
-        n.setTags(Util.getModel(entity.getTags(), Tag::toModel));
-        n.setTodos(Util.getModel(entity.getTodos(), NoteTodo::toModel));
+        n.setTags(Util.listToModel(entity.getTags(), Tag::toModel));
+        n.setTodos(Util.listToModel(entity.getTodos(), NoteTodo::toModel));
 
         if (entity.getGroup() != null) {
             n.setGroupId(entity.getGroup().getId());

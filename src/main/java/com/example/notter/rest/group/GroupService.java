@@ -1,19 +1,15 @@
 package com.example.notter.rest.group;
 
 import com.example.notter.db.entity.GroupEntity;
-import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.db.entity.UserEntity;
 import com.example.notter.db.repository.GroupRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.group.model.Group;
 import com.example.notter.rest.group.model.GroupRequest;
-import com.example.notter.rest.note.model.Note;
-import com.example.notter.rest.note.model.NoteRequest;
+import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
@@ -51,15 +47,8 @@ public class GroupService {
     }
 
     public List<Group> getAllByUser(Integer userId) {
-        List<GroupEntity> groups = groupRepo.findAllByUser(userId);
-
-        if (groups == null) {
-            return new ArrayList<>();
-        }
-
-        return groups
-                .stream().map(Group::toModel)
-                .collect(Collectors.toList());
+        var groups = groupRepo.findAllByUser(userId);
+        return Util.listToModel(groups, Group::toModel);
     }
 
     public Group getByUserAndId(UserEntity user, Integer groupId) {

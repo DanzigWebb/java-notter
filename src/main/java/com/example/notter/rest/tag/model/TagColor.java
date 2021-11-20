@@ -9,7 +9,7 @@ public class TagColor {
     String type;
 
     public static TagColor toModel(TagColorEntity entity) {
-        TagColor t = new TagColor();
+        var t = new TagColor();
         t.setId(entity.getId());
         t.setType(entity.getType());
 

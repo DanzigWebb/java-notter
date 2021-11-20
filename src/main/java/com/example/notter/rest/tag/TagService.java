@@ -8,10 +8,10 @@ import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.rest.tag.model.TagColor;
 import com.example.notter.rest.tag.model.TagRequest;
+import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TagService {
@@ -54,9 +54,10 @@ public class TagService {
     }
 
     public List<Tag> getAllByUser(UserEntity user) {
-        return tagRepo.findAllByUserId(user.getId())
-                .stream().map(Tag::toModel)
-                .collect(Collectors.toList());
+        return Util.listToModel(
+                tagRepo.findAllByUserId(user.getId()),
+                Tag::toModel
+        );
     }
 
     public Tag getByUserAndId(UserEntity user, Integer tagId) {
@@ -70,8 +71,9 @@ public class TagService {
     }
 
     public List<TagColor> getColors() {
-        return tagColorRepo.findAll()
-                .stream().map(TagColor::toModel)
-                .collect(Collectors.toList());
+        return Util.listToModel(
+                tagColorRepo.findAll(),
+                TagColor::toModel
+        );
     }
 }

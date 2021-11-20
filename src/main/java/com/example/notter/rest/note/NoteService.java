@@ -11,6 +11,7 @@ import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.rest.note.model.NoteRequest;
 import com.example.notter.rest.tag.model.Tag;
+import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class NoteService {
         }
 
         if (note.getTags() != null) {
-            List<Integer> tagIds = note.getTags()
+            var tagIds = note.getTags()
                     .stream().map(Tag::getId)
                     .collect(Collectors.toList());
 
@@ -71,9 +72,10 @@ public class NoteService {
     }
 
     public List<Note> getAllByUser(Integer userId) {
-        return noteRepo.findAllByUser(userId)
-                .stream().map(Note::toModel)
-                .collect(Collectors.toList());
+        return Util.listToModel(
+                noteRepo.findAllByUser(userId),
+                Note::toModel
+        );
     }
 
     public Note getByUserAndId(UserEntity user, Integer tagId) {

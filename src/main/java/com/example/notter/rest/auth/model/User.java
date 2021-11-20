@@ -10,7 +10,7 @@ public class User {
     String email;
 
     public static User toModel(UserEntity entity) {
-        User u = new User();
+        var u = new User();
         u.setId(entity.getId());
         u.setName(entity.getName());
         u.setEmail(entity.getEmail());

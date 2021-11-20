@@ -6,8 +6,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Util {
+    /**
+     * @param list - список Entity из репозиториев
+     * @param fn   -  функция преобразования Entity -> Model
+     * @return List<T> - список из fn
+     */
     public static <T, R> List<T>
-    getModel(List<R> list, Function<? super R, ? extends T> fn) {
+    listToModel(List<R> list, Function<? super R, ? extends T> fn) {
         if (list == null) {
             return new ArrayList<>();
         }
