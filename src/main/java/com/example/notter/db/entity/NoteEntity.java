@@ -3,6 +3,7 @@ package com.example.notter.db.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "note")
@@ -20,6 +21,10 @@ public class NoteEntity extends BaseEntity {
 
     @ManyToOne
     private GroupEntity group;
+
+    @OneToMany(mappedBy = "note")
+    @ToString.Exclude
+    private List<NoteTodoEntity> todos = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @ToString.Exclude

@@ -11,7 +11,7 @@ public class Tag {
     TagColor color;
 
     public static Tag toModel(TagEntity entity) {
-        Tag t = new Tag();
+        var t = new Tag();
         t.setId(entity.getId());
         t.setName(entity.getName());
 

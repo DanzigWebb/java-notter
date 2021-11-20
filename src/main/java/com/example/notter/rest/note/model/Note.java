@@ -3,11 +3,13 @@ package com.example.notter.rest.note.model;
 import com.example.notter.db.entity.NoteEntity;
 import com.example.notter.db.entity.TagEntity;
 import com.example.notter.rest.tag.model.Tag;
+import com.example.notter.util.Util;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Data
@@ -23,6 +25,8 @@ public class Note {
     Boolean checked;
 
     List<Tag> tags;
+    List<NoteTodo> todos;
+
     Integer groupId;
 
 
@@ -37,7 +41,8 @@ public class Note {
         n.setCreateAt(entity.getCreatedAt());
         n.setUpdateAt(entity.getUpdatedAt());
 
-        n.setTags(getTagsFromEntity(entity.getTags()));
+        n.setTags(Util.getModel(entity.getTags(), Tag::toModel));
+        n.setTodos(Util.getModel(entity.getTodos(), NoteTodo::toModel));
 
         if (entity.getGroup() != null) {
             n.setGroupId(entity.getGroup().getId());
@@ -48,13 +53,4 @@ public class Note {
         return n;
     }
 
-    private static List<Tag> getTagsFromEntity(List<TagEntity> list) {
-        if (list == null) {
-            return new ArrayList<>();
-        }
-
-        return list
-                .stream().map(Tag::toModel)
-                .collect(Collectors.toList());
-    }
 }
