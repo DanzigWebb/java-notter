@@ -1,6 +1,6 @@
-import { Directive, ElementRef, Inject, Input, Renderer2 } from "@angular/core";
-import { createPopper, Instance, Placement } from "@popperjs/core";
-import { DOCUMENT } from "@angular/common";
+import { Directive, ElementRef, Inject, Input, OnDestroy, Renderer2 } from '@angular/core';
+import { createPopper, Instance, Placement } from '@popperjs/core';
+import { DOCUMENT } from '@angular/common';
 
 @Directive({
   selector: '[amTooltip]',
@@ -10,7 +10,7 @@ import { DOCUMENT } from "@angular/common";
     '(mouseleave)': 'destroy()',
   },
 })
-export class Tooltip {
+export class Tooltip implements OnDestroy {
 
   @Input() amTooltip = '';
   @Input() placement: Placement = 'top';
@@ -58,5 +58,9 @@ export class Tooltip {
     this.popperRef?.destroy();
     this.messageRef?.remove();
     this.isShow = false;
+  }
+
+  ngOnDestroy() {
+    this.destroy();
   }
 }
