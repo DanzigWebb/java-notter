@@ -41,8 +41,10 @@
             <div class="flex items-center">
                 <label class="cursor-pointer label mr-3" (click)="$event.stopPropagation()">
                     <input
+                        #todoCheckbox
                         type="checkbox"
                         class="checkbox checkbox-accent checkbox-sm"
+                        (change)="checkTodo(todoCheckbox.checked, todo)"
                         [checked]="todo.checked"
                     >
                 </label>
