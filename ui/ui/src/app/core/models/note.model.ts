@@ -27,3 +27,7 @@ export interface NoteCreateDto {
   title: string;
   description?: string;
 }
+
+export interface TodoCreateDto {
+  title: string;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NoteCreateDto, NoteDto } from '@app/models';
+import { NoteCreateDto, NoteDto, TodoCreateDto, TodoDto } from '@app/models';
 import { Store } from '@ngxs/store';
 import { NoteActions } from '@app/store/note/state/note.actions';
 
@@ -21,5 +21,17 @@ export class NoteFacade {
 
   remove(id: number) {
     return this.store.dispatch(new NoteActions.Remove(id));
+  }
+
+  addTodo(dto: TodoCreateDto, noteId: number) {
+    return this.store.dispatch(new NoteActions.AddTodo(dto, noteId));
+  }
+
+  updateTodo(dto: TodoDto, noteId: number) {
+    return this.store.dispatch(new NoteActions.UpdateTodo(dto, noteId));
+  }
+
+  deleteTodo(todoId: number, noteId: number) {
+    return this.store.dispatch(new NoteActions.DeleteTodo(todoId, noteId));
   }
 }

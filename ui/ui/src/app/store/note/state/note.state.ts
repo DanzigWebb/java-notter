@@ -43,7 +43,28 @@ export class NoteState {
 
   @Action(NoteActions.Remove)
   remove({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.Remove) {
-    return this.notes.remove(payload).pipe(
+    return this.notes.delete(payload).pipe(
+      switchMap(() => this.groupFacade.getAll())
+    );
+  }
+
+  @Action(NoteActions.AddTodo)
+  addTodo({getState, setState}: StateContext<NoteStateModel>, {payload, noteId}: NoteActions.AddTodo) {
+    return this.notes.addTodo(payload, noteId).pipe(
+      switchMap(() => this.groupFacade.getAll())
+    );
+  }
+
+  @Action(NoteActions.UpdateTodo)
+  updateTodo({getState, setState}: StateContext<NoteStateModel>, {payload, noteId}: NoteActions.UpdateTodo) {
+    return this.notes.updateTodo(payload, noteId).pipe(
+      switchMap(() => this.groupFacade.getAll())
+    );
+  }
+
+  @Action(NoteActions.DeleteTodo)
+  deleteTodo({getState, setState}: StateContext<NoteStateModel>, {todoId, noteId}: NoteActions.DeleteTodo) {
+    return this.notes.deleteTodo(todoId, noteId).pipe(
       switchMap(() => this.groupFacade.getAll())
     );
   }

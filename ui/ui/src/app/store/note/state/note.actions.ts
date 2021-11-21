@@ -1,4 +1,4 @@
-import { NoteCreateDto, NoteDto } from '@app/models';
+import { NoteCreateDto, NoteDto, TodoCreateDto, TodoDto } from '@app/models';
 
 export namespace NoteActions {
   export class Create {
@@ -19,6 +19,27 @@ export namespace NoteActions {
     static readonly type = '[Note] Remove item';
 
     constructor(public payload: number) {
+    }
+  }
+
+  export class AddTodo {
+    static readonly type = '[Note] Add todo';
+
+    constructor(public payload: TodoCreateDto, public noteId: number) {
+    }
+  }
+
+  export class UpdateTodo {
+    static readonly type = '[Note] Update todo';
+
+    constructor(public payload: TodoDto, public noteId: number) {
+    }
+  }
+
+  export class DeleteTodo {
+    static readonly type = '[Note] Delete todo';
+
+    constructor(public noteId: number, public todoId: number) {
     }
   }
 }
