@@ -1,5 +1,5 @@
 <div class="group-page">
-    <div class="group overflow-hidden" *ngIf="group">
+    <div class="group overflow-hidden flex flex-col" *ngIf="group">
         <h2 class="text-2xl mb-4">{{group.title}}</h2>
 
         <div class="mb-2">
@@ -8,7 +8,7 @@
             </app-create-note-form>
         </div>
 
-        <div class="notes">
+        <div class="notes overflow-y-scroll h-full">
             <app-note-item
                 *ngFor="let note of activeNotes"
                 [note]="note"
