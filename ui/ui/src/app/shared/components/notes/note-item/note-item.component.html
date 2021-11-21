@@ -53,4 +53,11 @@
             </span>
         </div>
     </div>
+
+    <div class="note-action flex items-center">
+        <button class="btn btn-ghost btn-circle btn-sm"
+                (click)="$event.stopPropagation(); onDeleteEmit()">
+            <i class="fas fa-trash text-error"></i>
+        </button>
+    </div>
 </div>

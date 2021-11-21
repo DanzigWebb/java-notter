@@ -19,7 +19,7 @@ export class NoteFacade {
     return this.store.dispatch(new NoteActions.Update(dto));
   }
 
-  remove(id: number) {
+  delete(id: number) {
     return this.store.dispatch(new NoteActions.Remove(id));
   }
 

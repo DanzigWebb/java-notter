@@ -13,6 +13,7 @@ export class NoteItemComponent implements OnInit {
   @Input() checked = false;
 
   @Output() onChecked = new EventEmitter<boolean>();
+  @Output() onDelete = new EventEmitter();
 
   checkedTodos: TodoDto[] = [];
 
@@ -32,5 +33,9 @@ export class NoteItemComponent implements OnInit {
       this.checkedTodos = this.note.todos.filter(todo => todo.checked);
     }
 
+  }
+
+  onDeleteEmit() {
+    this.onDelete.emit();
   }
 }

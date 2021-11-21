@@ -14,6 +14,7 @@
                 [note]="note"
                 [checked]="(checkedNote$ | async)?.id === note.id"
                 (onChecked)="onCompleteNote(note, $event)"
+                (onDelete)="deleteNote(note)"
                 (click)="checkNote(note)">
             </app-note-item>
 
@@ -26,6 +27,7 @@
                 [note]="note"
                 [checked]="(checkedNote$ | async)?.id === note.id"
                 (onChecked)="onCompleteNote(note, $event)"
+                (onDelete)="deleteNote(note)"
                 (click)="checkNote(note)">
             </app-note-item>
         </div>

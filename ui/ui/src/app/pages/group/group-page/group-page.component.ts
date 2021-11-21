@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { GroupDto, NoteCreateDto, NoteDto, TagDto } from '@app/models';
 import { NoteFacade } from '@app/store/note';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TagFacade } from '@app/store/tag';
+import { ModalsService } from '@app/shared/service/modals/modals.service';
 
 const queryParamNoteName = 'noteId';
 
@@ -47,6 +48,7 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
     private tagFacade: TagFacade,
     private route: ActivatedRoute,
     private router: Router,
+    private modals: ModalsService
   ) {
   }
 
@@ -104,6 +106,15 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
   onCompleteNote(note: NoteDto, checked: boolean) {
     const dto = {...note, checked};
     this.updateNote(dto);
+  }
+
+  deleteNote(note: NoteDto) {
+    const message = `Подтверждение удаления заметки: "${note.title}"`
+    this.modals.submit({message}).pipe(
+      filter(Boolean)
+    ).subscribe(() => {
+      this.noteFacade.delete(note.id);
+    })
   }
 
   ngOnDestroy() {
