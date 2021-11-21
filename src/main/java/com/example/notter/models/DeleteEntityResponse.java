@@ -1,11 +1,11 @@
-package com.example.notter.rest.group.model;
+package com.example.notter.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GroupDeleteResponse {
-    Integer groupId;
+public class DeleteEntityResponse {
+    Integer entityId;
     String status;
 }

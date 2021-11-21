@@ -1,8 +1,8 @@
 package com.example.notter.rest.group;
 
 import com.example.notter.config.security.CustomUserDetails;
+import com.example.notter.models.DeleteEntityResponse;
 import com.example.notter.rest.group.model.Group;
-import com.example.notter.rest.group.model.GroupDeleteResponse;
 import com.example.notter.rest.group.model.GroupRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -50,13 +50,13 @@ public class GroupController {
 
     @DeleteMapping("/{groupId}")
     public @ResponseBody
-    GroupDeleteResponse delete(
+    DeleteEntityResponse delete(
             @PathVariable Integer groupId,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         groupService.delete(user.getUserEntity(), groupId);
 
-        return new GroupDeleteResponse(groupId, "success");
+        return new DeleteEntityResponse(groupId, "success");
     }
 
     @GetMapping("/{groupId}")

@@ -1,6 +1,7 @@
 package com.example.notter.rest.note;
 
 import com.example.notter.config.security.CustomUserDetails;
+import com.example.notter.models.DeleteEntityResponse;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.rest.note.model.NoteRequest;
 import com.example.notter.rest.note.model.Todo;
@@ -52,12 +53,12 @@ public class NoteController {
 
     @DeleteMapping("/{noteId}")
     public @ResponseBody
-    ResponseEntity<String> delete(
+    DeleteEntityResponse delete(
             @PathVariable Integer noteId,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         noteService.delete(user.getUserEntity(), noteId);
-        return ResponseEntity.ok("Success");
+        return new DeleteEntityResponse(noteId, "Success");
     }
 
     @GetMapping("/{noteId}")
@@ -92,12 +93,12 @@ public class NoteController {
 
     @DeleteMapping("/{noteId}/todo/{todoId}")
     public @ResponseBody
-    ResponseEntity<String> deleteTodo(
+    DeleteEntityResponse deleteTodo(
             @PathVariable Integer noteId,
             @PathVariable Integer todoId,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         noteService.deleteTodo(user.getUserEntity(), noteId, todoId);
-        return ResponseEntity.ok("Success");
+        return new DeleteEntityResponse(todoId, "Success");
     }
 }
