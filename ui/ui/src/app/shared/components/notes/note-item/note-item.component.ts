@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { NoteDto } from '@app/models';
+import { NoteDto, TodoDto } from '@app/models';
 
 @Component({
   selector: 'app-note-item',
@@ -14,13 +14,23 @@ export class NoteItemComponent implements OnInit {
 
   @Output() onChecked = new EventEmitter<boolean>();
 
+  checkedTodos: TodoDto[] = [];
+
   constructor() {
   }
 
   ngOnInit(): void {
+    this.parseTodos();
   }
 
   onCheckedChange(checked: boolean) {
     this.onChecked.emit(checked);
+  }
+
+  parseTodos() {
+    if (this.note) {
+      this.checkedTodos = this.note.todos.filter(todo => todo.checked);
+    }
+
   }
 }

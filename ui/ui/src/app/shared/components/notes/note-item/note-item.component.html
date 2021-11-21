@@ -33,6 +33,13 @@
             </span>
             <span
                 class="note-meta-item"
+                *ngIf="!!note.todos.length"
+                [amTooltip]="checkedTodos.length + '/' + note.todos.length"
+            >
+                <i class="fas fa-tasks"></i>
+            </span>
+            <span
+                class="note-meta-item"
                 *ngIf="!!note.tags.length"
             >
                 <span
