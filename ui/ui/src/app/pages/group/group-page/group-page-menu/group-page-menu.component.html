@@ -19,15 +19,38 @@
 
     <div class="todos py-4">
         <h3 class="text-lg mb-2">Подзадачи</h3>
-        <div *ngFor="let todo of note.todos" class="todo flex items-center px-2">
-            <label class="cursor-pointer label mr-3" (click)="$event.stopPropagation()">
-                <input
-                    type="checkbox"
-                    class="checkbox checkbox-accent checkbox-sm"
-                    [checked]="todo.checked"
-                >
-            </label>
-            <span [class.line-through]="todo.checked">{{todo.title}}</span>
+
+        <div class="todo-form flex items-center pb-4">
+            <button
+                class="btn btn-ghost sidebar-btn mr-1"
+                (click)="addTodo(todoInput)"
+            >
+                <span class="icon is-small">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </span>
+            </button>
+            <input
+                #todoInput
+                type="text"
+                class="input input-ghost w-full"
+                placeholder="Новая задача"
+                (keyup.enter)="addTodo(todoInput)"
+            >
+        </div>
+        <div *ngFor="let todo of note.todos" class="todo w-full flex items-center justify-between px-2">
+            <div class="flex items-center">
+                <label class="cursor-pointer label mr-3" (click)="$event.stopPropagation()">
+                    <input
+                        type="checkbox"
+                        class="checkbox checkbox-accent checkbox-sm"
+                        [checked]="todo.checked"
+                    >
+                </label>
+                <span [class.line-through]="todo.checked">{{todo.title}}</span>
+            </div>
+            <button class="btn btn-circle btn-sm btn-ghost" (click)="deleteTodo(todo)">
+                <i class="fas fa-trash text-error"></i>
+            </button>
         </div>
     </div>
 

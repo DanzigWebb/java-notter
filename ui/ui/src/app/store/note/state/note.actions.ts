@@ -39,7 +39,7 @@ export namespace NoteActions {
   export class DeleteTodo {
     static readonly type = '[Note] Delete todo';
 
-    constructor(public noteId: number, public todoId: number) {
+    constructor(public todoId: number, public noteId: number) {
     }
   }
 }

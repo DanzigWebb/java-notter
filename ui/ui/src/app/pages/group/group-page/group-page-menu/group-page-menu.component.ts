@@ -8,11 +8,12 @@ import {
   OnDestroy,
   OnChanges
 } from '@angular/core';
-import { NoteDto, TagCreateDto, TagDto } from '@app/models';
+import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 import { TagFacade } from '@app/store/tag';
+import { NoteFacade } from '@app/store/note';
 
 @Component({
   selector: 'app-group-page-menu',
@@ -38,6 +39,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private tagFacade: TagFacade,
+    private noteFacade: NoteFacade
   ) {
   }
 
@@ -107,6 +109,25 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   createTag(dto: TagCreateDto) {
     this.tagFacade.create(dto).subscribe();
+  }
+
+  addTodo(input: HTMLInputElement) {
+    if (this.note && input.value) {
+      const dto: TodoCreateDto = {
+        title: input.value
+      };
+
+      this.noteFacade.addTodo(dto, this.note.id)
+        .subscribe(() => {
+          input.value = '';
+        });
+    } else {
+      input.focus();
+    }
+  }
+
+  deleteTodo(todo: TodoDto) {
+    this.noteFacade.deleteTodo(todo.id, this.note!.id)
   }
 
   ngOnDestroy() {
