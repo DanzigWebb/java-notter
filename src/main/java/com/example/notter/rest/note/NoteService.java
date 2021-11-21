@@ -8,7 +8,8 @@ import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.rest.note.model.NoteRequest;
-import com.example.notter.rest.note.model.NoteTodo;
+import com.example.notter.rest.note.model.Todo;
+import com.example.notter.rest.note.model.TodoRequest;
 import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
@@ -77,7 +78,7 @@ public class NoteService {
         return Note.toModel(noteRepo.save(n));
     }
 
-    private static NoteTodoEntity createNoteTodo(NoteTodo t, NoteEntity note) {
+    private static NoteTodoEntity createNoteTodo(Todo t, NoteEntity note) {
         var todo = new NoteTodoEntity();
         todo.setTitle(t.getTitle());
         todo.setChecked(t.getChecked());
@@ -92,19 +93,59 @@ public class NoteService {
     }
 
     public List<Note> getAllByUser(Integer userId) {
-        return Util.listToModel(
+        return Util.entityListToModel(
                 noteRepo.findAllByUser(userId),
                 Note::toModel
         );
     }
 
-    public Note getByUserAndId(UserEntity user, Integer tagId) {
-        NoteEntity t = noteRepo.findByUserAndId(user.getId(), tagId);
+    public Note getByUserAndId(UserEntity user, Integer noteId) {
+        var note = getNote(user.getId(), noteId);
+        return Note.toModel(note);
+    }
 
-        if (t != null) {
-            return Note.toModel(t);
+    public Todo addTodo(UserEntity user, Integer noteId, TodoRequest todoRequest) {
+        var note = getNote(user.getId(), noteId);
+
+        var todo = new NoteTodoEntity();
+        todo.setTitle(todoRequest.getTitle());
+        todo.setNote(note);
+
+        return Todo.toModel(noteTodoRepo.save(todo));
+    }
+
+    public Todo updateTodo(UserEntity user, Integer noteId, Integer todoId, TodoRequest todoRequest) {
+        var note = getNote(user.getId(), noteId);
+        var todo = getTodo(note.getId(), todoId);
+
+        todo.setChecked(todoRequest.getChecked());
+        todo.setTitle(todoRequest.getTitle());
+
+        return Todo.toModel(noteTodoRepo.save(todo));
+    }
+
+    public void deleteTodo(UserEntity user, Integer noteId, Integer todoId) {
+        var note = getNote(user.getId(), noteId);
+        var todo = getTodo(note.getId(), todoId);
+
+        noteTodoRepo.delete(todo);
+    }
+
+    private NoteEntity getNote(Integer userId, Integer noteId) {
+        var note = noteRepo.findByUserAndId(userId, noteId);
+        if (note == null) {
+            throw new EntityNotFoundException();
         }
 
-        throw new EntityNotFoundException();
+        return note;
+    }
+
+    private NoteTodoEntity getTodo(Integer noteId, Integer todoId) {
+        var todo = noteTodoRepo.findByNoteAndId(noteId, todoId);
+        if (todo == null) {
+            throw new EntityNotFoundException();
+        }
+
+        return todo;
     }
 }

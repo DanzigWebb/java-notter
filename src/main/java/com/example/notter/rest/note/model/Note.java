@@ -21,7 +21,7 @@ public class Note {
     Boolean checked;
 
     List<Tag> tags;
-    List<NoteTodo> todos;
+    List<Todo> todos;
 
     Integer groupId;
 
@@ -37,8 +37,8 @@ public class Note {
         n.setCreateAt(entity.getCreatedAt());
         n.setUpdateAt(entity.getUpdatedAt());
 
-        n.setTags(Util.listToModel(entity.getTags(), Tag::toModel));
-        n.setTodos(Util.listToModel(entity.getTodos(), NoteTodo::toModel));
+        n.setTags(Util.entityListToModel(entity.getTags(), Tag::toModel));
+        n.setTodos(Util.entityListToModel(entity.getTodos(), Todo::toModel));
 
         if (entity.getGroup() != null) {
             n.setGroupId(entity.getGroup().getId());

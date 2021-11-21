@@ -12,13 +12,11 @@ public class Util {
      * @return List<T> - список из fn
      */
     public static <T, R> List<T>
-    listToModel(List<R> list, Function<? super R, ? extends T> fn) {
+    entityListToModel(List<R> list, Function<? super R, ? extends T> fn) {
         if (list == null) {
             return new ArrayList<>();
         }
 
-        return list
-                .stream().map(fn)
-                .collect(Collectors.toList());
+        return list.stream().map(fn).collect(Collectors.toList());
     }
 }

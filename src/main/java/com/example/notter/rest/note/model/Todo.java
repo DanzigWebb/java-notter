@@ -4,14 +4,14 @@ import com.example.notter.db.entity.NoteTodoEntity;
 import lombok.Data;
 
 @Data
-public class NoteTodo {
+public class Todo {
     Integer id;
     Integer noteId;
     String title;
     Boolean checked;
 
-    public static NoteTodo toModel(NoteTodoEntity entity) {
-        var todo = new NoteTodo();
+    public static Todo toModel(NoteTodoEntity entity) {
+        var todo = new Todo();
         todo.setId(entity.getId());
         todo.setNoteId(entity.getNote().getId());
         todo.setTitle(entity.getTitle());

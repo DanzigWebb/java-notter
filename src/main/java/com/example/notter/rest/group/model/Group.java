@@ -30,7 +30,7 @@ public class Group {
         g.setDescription(entity.getDescription());
         g.setCreateAt(entity.getCreatedAt());
         g.setUpdateAt(entity.getUpdatedAt());
-        g.setNotes(Util.listToModel(entity.getNotes(), Note::toModel));
+        g.setNotes(Util.entityListToModel(entity.getNotes(), Note::toModel));
         g.setNoteCount(g.getNotes().size());
 
         return g;

@@ -54,7 +54,7 @@ public class TagService {
     }
 
     public List<Tag> getAllByUser(UserEntity user) {
-        return Util.listToModel(
+        return Util.entityListToModel(
                 tagRepo.findAllByUserId(user.getId()),
                 Tag::toModel
         );
@@ -71,7 +71,7 @@ public class TagService {
     }
 
     public List<TagColor> getColors() {
-        return Util.listToModel(
+        return Util.entityListToModel(
                 tagColorRepo.findAll(),
                 TagColor::toModel
         );

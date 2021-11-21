@@ -48,7 +48,7 @@ public class GroupService {
 
     public List<Group> getAllByUser(Integer userId) {
         var groups = groupRepo.findAllByUser(userId);
-        return Util.listToModel(groups, Group::toModel);
+        return Util.entityListToModel(groups, Group::toModel);
     }
 
     public Group getByUserAndId(UserEntity user, Integer groupId) {

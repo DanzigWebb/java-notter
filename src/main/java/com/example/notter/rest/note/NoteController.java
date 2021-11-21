@@ -3,6 +3,8 @@ package com.example.notter.rest.note;
 import com.example.notter.config.security.CustomUserDetails;
 import com.example.notter.rest.note.model.Note;
 import com.example.notter.rest.note.model.NoteRequest;
+import com.example.notter.rest.note.model.Todo;
+import com.example.notter.rest.note.model.TodoRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -65,5 +67,37 @@ public class NoteController {
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         return noteService.getByUserAndId(user.getUserEntity(), noteId);
+    }
+
+    @PostMapping("/{noteId}/todo")
+    public @ResponseBody
+    Todo addTodo(
+            @PathVariable Integer noteId,
+            @AuthenticationPrincipal CustomUserDetails user,
+            @Valid @RequestBody TodoRequest todo
+    ) {
+        return noteService.addTodo(user.getUserEntity(), noteId, todo);
+    }
+
+    @PutMapping("/{noteId}/todo/{todoId}")
+    public @ResponseBody
+    Todo updateTodo(
+            @PathVariable Integer noteId,
+            @PathVariable Integer todoId,
+            @AuthenticationPrincipal CustomUserDetails user,
+            @Valid @RequestBody TodoRequest todo
+    ) {
+        return noteService.updateTodo(user.getUserEntity(), noteId, todoId, todo);
+    }
+
+    @DeleteMapping("/{noteId}/todo/{todoId}")
+    public @ResponseBody
+    ResponseEntity<String> deleteTodo(
+            @PathVariable Integer noteId,
+            @PathVariable Integer todoId,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        noteService.deleteTodo(user.getUserEntity(), noteId, todoId);
+        return ResponseEntity.ok("Success");
     }
 }
