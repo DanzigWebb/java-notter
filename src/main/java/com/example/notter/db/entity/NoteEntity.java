@@ -22,11 +22,11 @@ public class NoteEntity extends BaseEntity {
     @ManyToOne
     private GroupEntity group;
 
-    @OneToMany(mappedBy = "note")
+    @OneToMany(mappedBy = "note", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
     private List<TodoEntity> todos = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.DETACH)
     @ToString.Exclude
     private List<TagEntity> tags;
 }
