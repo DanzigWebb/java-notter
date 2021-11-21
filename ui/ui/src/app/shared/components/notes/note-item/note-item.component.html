@@ -12,9 +12,9 @@
         >
     </label>
 
-    <div class="note-content">
+    <div class="note-content w-full overflow-hidden">
         <div class="note-head pb-1 leading-3">
-            <h4 class="text-base leading-5">{{note.title}}</h4>
+            <h4 class="note-title text-base leading-5 truncate">{{note.title}}</h4>
             <span class="text-xs font-light opacity-80">
                 {{note.updateAt | date: "dd.MM.YYYY"}}
             </span>
@@ -44,6 +44,7 @@
             >
                 <span
                     *ngFor="let tag of note.tags"
+                    class="inline-flex"
                     [class]="'mr-2 text-' + tag.color?.type"
                 >
                     <i class="far fa-dot-circle text-xs mr-1"></i>

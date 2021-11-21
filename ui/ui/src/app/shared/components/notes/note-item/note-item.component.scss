@@ -1,6 +1,17 @@
+@import "src/styles/vars";
+
 .note {
+  overflow: hidden;
+  &-title {
+    //width: 100%;
+    //@include sliceText;
+  }
+
   &-meta-item {
-    &:not(:last-child):after {
+    display: inline-flex;
+    align-items: center;
+
+    &:before {
       content: '•';
       padding: 0 4px;
     }
