@@ -14,12 +14,28 @@ import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-group-page-menu',
   templateUrl: './group-page-menu.component.html',
   styleUrls: ['./group-page-menu.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({
+          width: '0',
+          opacity: 0,
+          overflow: 'hidden'
+        }),
+        animate('160ms cubic-bezier(0.4, 0, 0.2, 1)', style({width: '*', opacity: 1,}))
+      ]),
+      transition(':leave', [
+        animate('160ms ease-in-out', style({width: 0, overflow: 'hidden'}))
+      ])
+    ])
+  ]
 })
 export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 

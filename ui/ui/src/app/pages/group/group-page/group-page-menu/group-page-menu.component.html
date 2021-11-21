@@ -2,6 +2,7 @@
     class="note-menu bg-base-200 p-6 pt-0 shadow-lg relative overflow-hidden overflow-y-scroll h-full"
     [formGroup]="form"
     *ngIf="note"
+    [@slideInOut]
 >
     <div class="flex justify-end items-center mb-2 sticky top-0 pt-1 bg-base-200">
         <button
@@ -27,12 +28,17 @@
     <input type="text" class="input input-ghost w-full text-xl" formControlName="title">
 
     <div class="todos py-4">
-        <h3 class="text-lg mb-2">Подзадачи
-
-            <span *ngIf="note.todos.length">{{checkedTodos.length}}/{{note.todos.length}}</span>
+        <h3 class="mb-2 opacity-90">
+            <span>Подзадачи</span>
+            <span
+                class="text-xs opacity-80 pl-2"
+                *ngIf="note.todos.length"
+            >
+                {{checkedTodos.length}}/{{note.todos.length}}
+            </span>
         </h3>
 
-        <div class="todo-form flex items-center pb-4">
+        <div class="todo-form flex items-center pb-2">
             <button
                 class="btn btn-ghost sidebar-btn mr-1"
                 (click)="addTodo(todoInput)"
@@ -60,7 +66,7 @@
                         [checked]="todo.checked"
                     >
                 </label>
-                <span [class.line-through]="todo.checked">{{todo.title}}</span>
+                <span class="leading-5 opacity-80" [class.line-through]="todo.checked">{{todo.title}}</span>
             </div>
             <button class="btn btn-circle btn-sm btn-ghost" (click)="deleteTodo(todo)">
                 <i class="fas fa-trash text-error"></i>
@@ -68,9 +74,8 @@
         </div>
     </div>
 
-    <div class="flex items-center">
+    <div class="flex pt-4">
         <am-form-field class="w-full">
-            <label><span class="text-lg">Тэги</span></label>
             <am-select
                 [multiply]="true"
                 formControlName="tags"
@@ -107,7 +112,7 @@
 
     <div class="form-control">
         <label class="label">
-            <span class="label-text">Описание заметки</span>
+            <span class="label-text opacity-90">Описание заметки</span>
         </label>
         <textarea
             class="textarea"

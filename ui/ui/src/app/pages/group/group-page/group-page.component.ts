@@ -4,7 +4,6 @@ import { NoteFacade } from '@app/store/note';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { TagFacade } from '@app/store/tag';
 import { ModalsService } from '@app/shared/service/modals/modals.service';
 
@@ -15,20 +14,6 @@ const queryParamNoteName = 'noteId';
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({
-          width: '0',
-          overflow: 'hidden'
-        }),
-        animate('160ms ease-in-out', style({width: '*'}))
-      ]),
-      transition(':leave', [
-        animate('160ms ease-in-out', style({width: 0, overflow: 'hidden'}))
-      ])
-    ])
-  ]
 })
 export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
 

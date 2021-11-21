@@ -33,13 +33,10 @@
         </div>
     </div>
 
-    <ng-container *ngIf="checkedNote$ | async as note">
-        <app-group-page-menu
-            [@slideInOut]
-            [note]="note"
-            [tags]="(tags$ | async) || []"
-            (onUpdateNote)="updateNote($event)"
-            (onDeleteNote)="deleteNote($event)">
-        </app-group-page-menu>
-    </ng-container>
+    <app-group-page-menu
+        [note]="checkedNote$ | async"
+        [tags]="(tags$ | async) || []"
+        (onUpdateNote)="updateNote($event)"
+        (onDeleteNote)="deleteNote($event)">
+    </app-group-page-menu>
 </div>
