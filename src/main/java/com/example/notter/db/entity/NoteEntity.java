@@ -24,7 +24,7 @@ public class NoteEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "note")
     @ToString.Exclude
-    private List<NoteTodoEntity> todos = new ArrayList<>();
+    private List<TodoEntity> todos = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @ToString.Exclude

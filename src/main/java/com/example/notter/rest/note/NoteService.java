@@ -3,7 +3,7 @@ package com.example.notter.rest.note;
 import com.example.notter.db.entity.*;
 import com.example.notter.db.repository.GroupRepo;
 import com.example.notter.db.repository.NoteRepo;
-import com.example.notter.db.repository.NoteTodoRepo;
+import com.example.notter.db.repository.TodoRepo;
 import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.note.model.Note;
@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 public class NoteService {
 
     private final NoteRepo noteRepo;
-    private final NoteTodoRepo noteTodoRepo;
+    private final TodoRepo todoRepo;
     private final GroupRepo groupRepo;
     private final TagRepo tagRepo;
 
-    public NoteService(NoteRepo noteRepo, NoteTodoRepo noteTodoRepo, GroupRepo groupRepo, TagRepo tagRepo) {
+    public NoteService(NoteRepo noteRepo, TodoRepo todoRepo, GroupRepo groupRepo, TagRepo tagRepo) {
         this.noteRepo = noteRepo;
-        this.noteTodoRepo = noteTodoRepo;
+        this.todoRepo = todoRepo;
         this.groupRepo = groupRepo;
         this.tagRepo = tagRepo;
     }
@@ -63,10 +63,9 @@ public class NoteService {
 
         if (note.getTodos() != null) {
             note.getTodos().forEach(t -> {
-                var todo = noteTodoRepo.findById(t.getId());
+                var todo = todoRepo.findById(t.getId());
                 if (todo.isEmpty()) {
-                    var noteTodo = createNoteTodo(t, n);
-                    noteTodoRepo.save(noteTodo);
+                    todoRepo.save(createTodo(t, n));
                 }
             });
         }
@@ -78,8 +77,8 @@ public class NoteService {
         return Note.toModel(noteRepo.save(n));
     }
 
-    private static NoteTodoEntity createNoteTodo(Todo t, NoteEntity note) {
-        var todo = new NoteTodoEntity();
+    private static TodoEntity createTodo(Todo t, NoteEntity note) {
+        var todo = new TodoEntity();
         todo.setTitle(t.getTitle());
         todo.setChecked(t.getChecked());
         todo.setNote(note);
@@ -107,11 +106,11 @@ public class NoteService {
     public Todo addTodo(UserEntity user, Integer noteId, TodoRequest todoRequest) {
         var note = getNote(user.getId(), noteId);
 
-        var todo = new NoteTodoEntity();
+        var todo = new TodoEntity();
         todo.setTitle(todoRequest.getTitle());
         todo.setNote(note);
 
-        return Todo.toModel(noteTodoRepo.save(todo));
+        return Todo.toModel(todoRepo.save(todo));
     }
 
     public Todo updateTodo(UserEntity user, Integer noteId, Integer todoId, TodoRequest todoRequest) {
@@ -121,14 +120,14 @@ public class NoteService {
         todo.setChecked(todoRequest.getChecked());
         todo.setTitle(todoRequest.getTitle());
 
-        return Todo.toModel(noteTodoRepo.save(todo));
+        return Todo.toModel(todoRepo.save(todo));
     }
 
     public void deleteTodo(UserEntity user, Integer noteId, Integer todoId) {
         var note = getNote(user.getId(), noteId);
         var todo = getTodo(note.getId(), todoId);
 
-        noteTodoRepo.delete(todo);
+        todoRepo.delete(todo);
     }
 
     private NoteEntity getNote(Integer userId, Integer noteId) {
@@ -140,8 +139,8 @@ public class NoteService {
         return note;
     }
 
-    private NoteTodoEntity getTodo(Integer noteId, Integer todoId) {
-        var todo = noteTodoRepo.findByNoteAndId(noteId, todoId);
+    private TodoEntity getTodo(Integer noteId, Integer todoId) {
+        var todo = todoRepo.findByNoteAndId(noteId, todoId);
         if (todo == null) {
             throw new EntityNotFoundException();
         }

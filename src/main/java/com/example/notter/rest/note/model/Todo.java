@@ -1,6 +1,6 @@
 package com.example.notter.rest.note.model;
 
-import com.example.notter.db.entity.NoteTodoEntity;
+import com.example.notter.db.entity.TodoEntity;
 import lombok.Data;
 
 @Data
@@ -10,7 +10,7 @@ public class Todo {
     String title;
     Boolean checked;
 
-    public static Todo toModel(NoteTodoEntity entity) {
+    public static Todo toModel(TodoEntity entity) {
         var todo = new Todo();
         todo.setId(entity.getId());
         todo.setNoteId(entity.getNote().getId());

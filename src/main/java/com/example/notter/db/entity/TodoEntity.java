@@ -5,9 +5,9 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-@Entity(name = "note_todo")
+@Entity(name = "todo")
 @Data
-public class NoteTodoEntity extends BaseEntity {
+public class TodoEntity extends BaseEntity {
     private String title;
     private Boolean checked;
 
