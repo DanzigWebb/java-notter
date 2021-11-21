@@ -38,7 +38,8 @@
             [@slideInOut]
             [note]="note"
             [tags]="(tags$ | async) || []"
-            (onUpdateNote)="updateNote($event)">
+            (onUpdateNote)="updateNote($event)"
+            (onDeleteNote)="deleteNote($event)">
         </app-group-page-menu>
     </ng-container>
 </div>

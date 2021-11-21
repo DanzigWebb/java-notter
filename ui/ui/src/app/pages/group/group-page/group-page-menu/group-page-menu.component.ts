@@ -27,12 +27,17 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tags: TagDto[] = [];
 
   @Output() onUpdateNote = new EventEmitter<NoteDto>();
+  @Output() onDeleteNote = new EventEmitter<NoteDto>();
 
   form: FormGroup = this.fb.group({
     title: ['', Validators.required],
     description: '',
     tags: []
   });
+
+  get checkedTodos() {
+    return this.note?.todos.filter(t => t.checked) || []
+  }
 
   private destroy$ = new Subject();
 
@@ -130,9 +135,13 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.noteFacade.deleteTodo(todo.id, this.note!.id);
   }
 
-  checkTodo(checked: boolean, todo: TodoDto) {
+  completeTodo(checked: boolean, todo: TodoDto) {
     const updated: TodoDto = {...todo, checked};
     this.noteFacade.updateTodo(updated, this.note!.id);
+  }
+
+  deleteNote() {
+    this.onDeleteNote.emit(this.note!);
   }
 
   ngOnDestroy() {

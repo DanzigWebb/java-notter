@@ -1,24 +1,36 @@
 <form
-    class="note-menu bg-base-200 shadow-lg"
+    class="note-menu bg-base-200 p-6 pt-0 shadow-lg relative overflow-hidden overflow-y-scroll h-full"
     [formGroup]="form"
     *ngIf="note"
 >
-    <div class="flex items-center mb-2">
+    <div class="flex justify-end items-center mb-2 sticky top-0 pt-1 bg-base-200">
         <button
-            class="btn btn-ghost mr-1"
+            class="btn btn-ghost btn-sm"
             amTooltip="Сохранить"
             placement="bottom"
             (click)="saveNote()"
         >
-            <i class="fas fa-save text-xl transition-colors"
+            <i class="fas fa-save transition-colors"
                [class.text-warning]="form.touched">
             </i>
         </button>
-        <input type="text" class="input input-ghost w-full text-xl" formControlName="title">
+        <button
+            class="btn btn-ghost btn-sm"
+            amTooltip="Удалить"
+            placement="bottom"
+            (click)="deleteNote()"
+        >
+            <i class="fas fa-trash text-error"></i>
+        </button>
     </div>
 
+    <input type="text" class="input input-ghost w-full text-xl" formControlName="title">
+
     <div class="todos py-4">
-        <h3 class="text-lg mb-2">Подзадачи</h3>
+        <h3 class="text-lg mb-2">Подзадачи
+
+            <span *ngIf="note.todos.length">{{checkedTodos.length}}/{{note.todos.length}}</span>
+        </h3>
 
         <div class="todo-form flex items-center pb-4">
             <button
@@ -44,7 +56,7 @@
                         #todoCheckbox
                         type="checkbox"
                         class="checkbox checkbox-accent checkbox-sm"
-                        (change)="checkTodo(todoCheckbox.checked, todo)"
+                        (change)="completeTodo(todoCheckbox.checked, todo)"
                         [checked]="todo.checked"
                     >
                 </label>
