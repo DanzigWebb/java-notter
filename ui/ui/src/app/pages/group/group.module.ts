@@ -10,6 +10,7 @@ import { FormGroupModule, MenuModule } from 'am-bulba';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { TagsModule } from '@app/shared/components/tags/tags.module';
+import { ContenteditableModule } from '@app/shared/contenteditable/contenteditable.module';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { TagsModule } from '@app/shared/components/tags/tags.module';
     ReactiveFormsModule,
     TooltipModule,
     MenuModule,
-    TagsModule
+    TagsModule,
+    ContenteditableModule
   ]
 })
 export class GroupModule {

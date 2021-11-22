@@ -25,7 +25,9 @@
         </button>
     </div>
 
-    <input type="text" class="input input-ghost w-full text-xl" formControlName="title">
+    <h3 class="mb-2 opacity-90">Заголовок</h3>
+    <input type="text" class="input w-full" formControlName="title">
+
 
     <div class="todos py-4">
         <h3 class="mb-2 opacity-90">
@@ -114,10 +116,11 @@
         <label class="label">
             <span class="label-text opacity-90">Описание заметки</span>
         </label>
-        <textarea
-            class="textarea"
-            placeholder="..."
-            formControlName="description">
-        </textarea>
+        <div
+            class="textarea min-h-16 leading-5"
+            contenteditable
+            formControlName="description"
+            placeholder="...">
+        </div>
     </div>
 </form>
