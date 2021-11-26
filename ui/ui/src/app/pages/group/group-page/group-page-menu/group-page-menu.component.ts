@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  ChangeDetectionStrategy,
   Input,
   Output,
   EventEmitter,
@@ -20,7 +19,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
   selector: 'app-group-page-menu',
   templateUrl: './group-page-menu.component.html',
   styleUrls: ['./group-page-menu.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('slideInOut', [
       transition(':enter', [

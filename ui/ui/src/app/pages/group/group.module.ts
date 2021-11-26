@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { TagsModule } from '@app/shared/components/tags/tags.module';
 import { ContenteditableModule } from '@app/shared/contenteditable/contenteditable.module';
+import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 
 @NgModule({
@@ -19,17 +21,19 @@ import { ContenteditableModule } from '@app/shared/contenteditable/contenteditab
     GroupComponent,
     GroupPageMenuComponent
   ],
-  imports: [
-    CommonModule,
-    GroupRoutingModule,
-    NotesModule,
-    FormGroupModule,
-    ReactiveFormsModule,
-    TooltipModule,
-    MenuModule,
-    TagsModule,
-    ContenteditableModule
-  ]
+    imports: [
+        CommonModule,
+        GroupRoutingModule,
+        NotesModule,
+        FormGroupModule,
+        ReactiveFormsModule,
+        TooltipModule,
+        MenuModule,
+        TagsModule,
+        ContenteditableModule,
+        TextareaAutoModule,
+        TextFieldModule
+    ]
 })
 export class GroupModule {
 }

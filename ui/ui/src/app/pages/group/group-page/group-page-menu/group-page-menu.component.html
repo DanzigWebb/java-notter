@@ -25,8 +25,9 @@
         </button>
     </div>
 
-    <h3 class="mb-2 opacity-90">Заголовок</h3>
-    <input type="text" class="input w-full" formControlName="title">
+    <textarea-auto class="w-full block">
+        <textarea appTextareaAuto formControlName="title" class="text-xl py-2"></textarea>
+    </textarea-auto>
 
 
     <div class="todos py-4">
@@ -58,8 +59,8 @@
             </button>
         </div>
         <div *ngFor="let todo of note.todos" class="todo w-full flex items-center justify-between px-2 mb-2">
-            <div class="flex items-center">
-                <label class="cursor-pointer label mr-3" (click)="$event.stopPropagation()">
+            <div class="flex flex-1 items-center">
+                <label class="cursor-pointer label mr-2" (click)="$event.stopPropagation()">
                     <input
                         #todoCheckbox
                         type="checkbox"
@@ -68,7 +69,9 @@
                         [checked]="todo.checked"
                     >
                 </label>
-                <span class="leading-5 opacity-80" [class.line-through]="todo.checked">{{todo.title}}</span>
+                <textarea-auto>
+                    <textarea appTextareaAuto>{{todo.title}}</textarea>
+                </textarea-auto>
             </div>
             <button class="btn btn-circle btn-sm btn-ghost" (click)="deleteTodo(todo)">
                 <i class="fas fa-trash text-error"></i>
