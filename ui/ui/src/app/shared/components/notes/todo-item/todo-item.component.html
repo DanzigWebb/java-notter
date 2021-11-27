@@ -1,0 +1,24 @@
+<div class="todo w-full flex items-center justify-between px-2 mb-2"  *ngIf="todo">
+    <div class="flex flex-1 items-center">
+        <label class="cursor-pointer label mr-2" (click)="$event.stopPropagation()">
+            <input
+                #todoCheckbox
+                type="checkbox"
+                class="checkbox checkbox-accent checkbox-sm"
+                (change)="onToggle.emit(todoCheckbox.checked)"
+                [checked]="todo.checked"
+            >
+        </label>
+
+        <textarea-auto>
+            <textarea
+                appTextareaAuto
+                (blur)="changeEmit(control.value)"
+                [formControl]="control"
+            >{{todo.title}}</textarea>
+        </textarea-auto>
+    </div>
+    <button class="btn btn-circle btn-sm btn-ghost" (click)="onDelete.emit(todo)">
+        <i class="fas fa-trash text-error"></i>
+    </button>
+</div>
