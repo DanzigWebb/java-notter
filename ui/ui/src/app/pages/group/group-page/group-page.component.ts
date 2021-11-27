@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { GroupDto, NoteCreateDto, NoteDto, TagDto } from '@app/models';
 import { NoteFacade } from '@app/store/note';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { TagFacade } from '@app/store/tag';
 import { ModalsService } from '@app/shared/service/modals/modals.service';
@@ -22,6 +22,7 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
   tags$: Observable<TagDto[]> = this.tagFacade.tags$;
 
   checkedNote$ = new BehaviorSubject<NoteDto | null>(null);
+  checkedNoteId$ = new BehaviorSubject<number>(-1);
 
   activeNotes: NoteDto[] = [];
   completedNotes: NoteDto[] = [];
@@ -43,8 +44,10 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
         const noteId = parseInt(params[queryParamNoteName]);
         const note = this.group?.notes.find(note => note.id === noteId) || null;
         this.checkedNote$.next(note);
+        this.checkedNoteId$.next(noteId);
         return noteId;
       }),
+      takeUntil(this.destroy$)
     ).subscribe();
   }
 
@@ -69,9 +72,9 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private findCheckedNote() {
-    const note = this.checkedNote$.getValue();
-    if (note) {
-      const checkedNote = this.group?.notes.find(n => n.id === note.id) || null;
+    const noteId = this.checkedNoteId$.getValue();
+    if (noteId) {
+      const checkedNote = this.group?.notes.find(n => n.id === noteId) || null;
       this.checkedNote$.next(checkedNote);
     }
   }
