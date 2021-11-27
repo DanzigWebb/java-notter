@@ -12,7 +12,6 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { TagsModule } from '@app/shared/components/tags/tags.module';
 import { ContenteditableModule } from '@app/shared/contenteditable/contenteditable.module';
 import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
-import { TextFieldModule } from '@angular/cdk/text-field';
 
 
 @NgModule({
@@ -32,7 +31,6 @@ import { TextFieldModule } from '@angular/cdk/text-field';
         TagsModule,
         ContenteditableModule,
         TextareaAutoModule,
-        TextFieldModule
     ]
 })
 export class GroupModule {
