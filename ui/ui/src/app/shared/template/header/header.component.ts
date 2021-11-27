@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
       startWith(''),
       switchMap((value) => this.notes$.pipe(
         map((notes) => notes.filter(
-          (n) => n.title.toLowerCase().includes(value.toLowerCase())
+          (n) => n.title.toLowerCase().includes(value?.toLowerCase() || '')
         ))
       ))
     );
@@ -55,6 +55,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['group', note.groupId], {
       relativeTo: this.route,
       queryParams
-    });
+    }).then(() => this.control.reset());
   }
 }
