@@ -21,7 +21,7 @@
             >
 
             <am-menu-panel #menu="amMenu" >
-                <div [style.width]="searchNoteInput.scrollWidth + 'px'">
+                <div [style.width]="searchNoteInput.offsetWidth + 'px'">
                     <ng-container *ngIf="filteredNotes$ | async as notes">
                         <am-option *ngIf="!notes.length">Нет заметок</am-option>
                         <am-option *ngFor="let note of filteredNotes$ | async" (click)="checkNote(note)">
