@@ -4,21 +4,26 @@ import { CreateNoteFormComponent } from './create-note-form/create-note-form.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoteItemComponent } from './note-item/note-item.component';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
+import { TodoItemComponent } from './todo-item/todo-item.component';
+import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
 
 
 @NgModule({
   declarations: [
     CreateNoteFormComponent,
-    NoteItemComponent
+    NoteItemComponent,
+    TodoItemComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TooltipModule
+    TooltipModule,
+    TextareaAutoModule
   ],
-    exports: [
-        CreateNoteFormComponent,
-        NoteItemComponent
-    ]
+  exports: [
+    CreateNoteFormComponent,
+    NoteItemComponent,
+    TodoItemComponent
+  ]
 })
 export class NotesModule { }

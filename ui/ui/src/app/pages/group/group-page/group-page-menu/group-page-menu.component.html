@@ -58,25 +58,13 @@
                 </span>
             </button>
         </div>
-        <div *ngFor="let todo of note.todos" class="todo w-full flex items-center justify-between px-2 mb-2">
-            <div class="flex flex-1 items-center">
-                <label class="cursor-pointer label mr-2" (click)="$event.stopPropagation()">
-                    <input
-                        #todoCheckbox
-                        type="checkbox"
-                        class="checkbox checkbox-accent checkbox-sm"
-                        (change)="completeTodo(todoCheckbox.checked, todo)"
-                        [checked]="todo.checked"
-                    >
-                </label>
-                <textarea-auto>
-                    <textarea appTextareaAuto>{{todo.title}}</textarea>
-                </textarea-auto>
-            </div>
-            <button class="btn btn-circle btn-sm btn-ghost" (click)="deleteTodo(todo)">
-                <i class="fas fa-trash text-error"></i>
-            </button>
-        </div>
+        <app-todo-item
+            *ngFor="let todo of note.todos"
+            [todo]="todo"
+            (onToggle)="completeTodo($event, todo)"
+            (onDelete)="deleteTodo(todo)"
+            (onChange)="updateTodo($event, todo)">
+        </app-todo-item>
     </div>
 
     <div class="flex pt-4">

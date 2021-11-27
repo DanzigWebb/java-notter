@@ -154,6 +154,11 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.noteFacade.updateTodo(updated, this.note!.id);
   }
 
+  updateTodo(title: string, todo: TodoDto) {
+    const updated: TodoDto = {...todo, title};
+    this.noteFacade.updateTodo(updated, this.note!.id);
+  }
+
   deleteNote() {
     this.onDeleteNote.emit(this.note!);
   }
