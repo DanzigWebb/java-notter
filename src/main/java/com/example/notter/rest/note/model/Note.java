@@ -14,6 +14,7 @@ public class Note {
     Integer id;
     String title;
     String description;
+    Long order;
 
     LocalDateTime createAt;
     LocalDateTime updateAt;
@@ -39,6 +40,7 @@ public class Note {
 
         n.setTags(Util.entityListToModel(entity.getTags(), Tag::toModel));
         n.setTodos(Util.entityListToModel(entity.getTodos(), Todo::toModel));
+        n.setOrder(entity.getOrderIndex());
 
         if (entity.getGroup() != null) {
             n.setGroupId(entity.getGroup().getId());

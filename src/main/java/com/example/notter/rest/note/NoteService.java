@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,7 +131,20 @@ public class NoteService {
         todoRepo.delete(todo);
     }
 
-    public List<Todo> updateTodoOrder(UserEntity user, List<TodoOrderRequest> request) {
+    public List<Note> updateNoteOrder(UserEntity user, List<EntityOrderRequest> request) {
+        var notes = new ArrayList<Note>();
+        request.forEach(item -> {
+            var note = noteRepo.findByUserAndId(user.getId(), item.getEntityId());
+            if (note != null) {
+                note.setOrderIndex(item.getOrder());
+                notes.add(Note.toModel(noteRepo.save(note)));
+            }
+        });
+        
+        return notes;
+    }
+
+    public List<Todo> updateTodoOrder(UserEntity user, List<EntityOrderRequest> request) {
         var todos = new ArrayList<Todo>();
         request.forEach(item -> {
             var todo = todoRepo.findByUserAndId(user.getId(), item.getEntityId());

@@ -11,10 +11,9 @@ import java.util.List;
 public class NoteEntity extends BaseEntity {
 
     private String title;
-
     private String description;
-
     private Boolean checked;
+    private Long orderIndex;
 
     @ManyToOne
     private UserEntity user;

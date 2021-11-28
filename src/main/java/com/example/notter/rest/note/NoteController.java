@@ -3,7 +3,6 @@ package com.example.notter.rest.note;
 import com.example.notter.config.security.CustomUserDetails;
 import com.example.notter.models.DeleteEntityResponse;
 import com.example.notter.rest.note.model.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -67,6 +66,15 @@ public class NoteController {
         return noteService.getByUserAndId(user.getUserEntity(), noteId);
     }
 
+    @PostMapping("/order")
+    public @ResponseBody
+    List<Note> updateNoteOrder(
+            @Valid @RequestBody List<EntityOrderRequest> entitiesOrder,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return noteService.updateNoteOrder(user.getUserEntity(), entitiesOrder);
+    }
+
     @PostMapping("/{noteId}/todo")
     public @ResponseBody
     Todo addTodo(
@@ -102,9 +110,9 @@ public class NoteController {
     @PostMapping("/todo/order")
     public @ResponseBody
     List<Todo> updateOrderTodo(
-            @Valid @RequestBody List<TodoOrderRequest> todoOrder,
+            @Valid @RequestBody List<EntityOrderRequest> entitiesOrder,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
-        return noteService.updateTodoOrder(user.getUserEntity(), todoOrder);
+        return noteService.updateTodoOrder(user.getUserEntity(), entitiesOrder);
     }
 }
