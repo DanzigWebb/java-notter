@@ -1,9 +1,6 @@
-<div class="note flex p-1.5 px-3 hover:bg-base-200 rounded-md cursor-pointer transition-all mb-3"
-     *ngIf="note"
-     [class.bg-base-200]="checked"
-     [class.shadow-lg]="checked">
+<div class="note flex rounded-md cursor-pointer w-full" *ngIf="note">
 
-    <label class="cursor-pointer label mr-3" (click)="$event.stopPropagation()">
+    <label class="cursor-pointer label mr-2" (click)="$event.stopPropagation()">
         <input
             type="checkbox"
             class="checkbox checkbox-primary checkbox-sm"

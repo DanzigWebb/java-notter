@@ -15,28 +15,63 @@
             </app-create-note-form>
         </div>
 
-        <div class="notes overflow-y-scroll h-full">
-            <app-note-item
-                *ngFor="let note of activeNotes"
-                [note]="note"
-                [checked]="(checkedNote$ | async)?.id === note.id"
-                (onChecked)="onCompleteNote(note, $event)"
-                (onDelete)="deleteNote(note)"
-                (click)="checkNote(note)">
-            </app-note-item>
+        <div class="overflow-y-scroll h-full">
+            <div
+                class="note-list"
+                cdkDropList
+                [cdkDropListData]="activeNotes"
+                (cdkDropListDropped)="dropNote($event)"
+            >
+                <div class="note-box overflow-x-hidden hover:bg-base-200 p-2 mb-2 flex items-center w-full"
+                     *ngFor="let note of activeNotes"
+                     cdkDrag
+                     [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
+                     [class.shadow-lg]="(checkedNote$ | async)?.id === note.id"
+                >
+                    <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
+                        <i class="fas fa-grip-vertical"></i>
+                    </button>
+                    <app-note-item
+                        class="w-full"
+                        [note]="note"
+                        [checked]="(checkedNote$ | async)?.id === note.id"
+                        (onChecked)="onCompleteNote(note, $event)"
+                        (onDelete)="deleteNote(note)"
+                        (click)="checkNote(note)">
+                    </app-note-item>
+                </div>
+            </div>
+
 
             <ng-container *ngIf="completedNotes.length">
                 <h3 class="text-lg mb-2">Завершенные</h3>
             </ng-container>
 
-            <app-note-item
-                *ngFor="let note of completedNotes"
-                [note]="note"
-                [checked]="(checkedNote$ | async)?.id === note.id"
-                (onChecked)="onCompleteNote(note, $event)"
-                (onDelete)="deleteNote(note)"
-                (click)="checkNote(note)">
-            </app-note-item>
+            <div
+                class="note-list"
+                cdkDropList
+                [cdkDropListData]="completedNotes"
+                (cdkDropListDropped)="dropNote($event)"
+            >
+                <div
+                    class="note-box hover:bg-base-200 p-2 mb-2 flex items-center w-full"
+                    *ngFor="let note of completedNotes"
+                    [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
+                    [class.shadow-lg]="(checkedNote$ | async)?.id === note.id"
+                    cdkDrag
+                >
+                    <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
+                        <i class="fas fa-grip-vertical"></i>
+                    </button>
+                    <app-note-item
+                        class="flex-1"
+                        [note]="note"
+                        (onChecked)="onCompleteNote(note, $event)"
+                        (onDelete)="deleteNote(note)"
+                        (click)="checkNote(note)">
+                    </app-note-item>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -2,10 +2,8 @@
 
 .note {
   overflow: hidden;
-  &-title {
-    //width: 100%;
-    //@include sliceText;
-  }
+  display: grid;
+  grid-template-columns: auto 1fr auto;
 
   &-meta-item {
     display: inline-flex;

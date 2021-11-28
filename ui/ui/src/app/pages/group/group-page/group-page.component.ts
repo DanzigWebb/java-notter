@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { GroupDto, NoteCreateDto, NoteDto, TagDto } from '@app/models';
+import { GroupDto, NoteCreateDto, NoteDto, TagDto, UpdateOrderDto } from '@app/models';
 import { NoteFacade } from '@app/store/note';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, takeUntil } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { TagFacade } from '@app/store/tag';
 import { ModalsService } from '@app/shared/service/modals/modals.service';
 import { FormControl } from '@angular/forms';
 import { GroupFacade } from '@app/store/group';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 const queryParamNoteName = 'noteId';
 
@@ -87,8 +88,8 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
   private sortedNotes() {
     if (this.group) {
       const notes = this.group.notes || [];
-      this.activeNotes = notes.filter(n => !n.checked);
-      this.completedNotes = notes.filter(n => n.checked);
+      this.activeNotes = notes.filter(n => !n.checked).sort((a, b) => (a.order || 0) - (b.order || 0));
+      this.completedNotes = notes.filter(n => n.checked).sort((a, b) => (a.order || 0) - (b.order || 0));
     }
   }
 
@@ -118,6 +119,22 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
     ).subscribe(() => {
       this.noteFacade.delete(note.id);
     });
+  }
+
+  dropNote(event: CdkDragDrop<NoteDto[], any>) {
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex,
+    );
+
+    const dto: UpdateOrderDto[] = event.container.data.map((todo, index) => ({
+      entityId: todo.id,
+      order: index
+    }));
+
+    this.noteFacade.updateNoteOrder(dto);
   }
 
   ngOnDestroy() {
