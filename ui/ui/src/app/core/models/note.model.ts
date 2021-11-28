@@ -5,6 +5,7 @@ export interface NoteDto {
   groupId: number;
   title: string;
   description?: string;
+  order?: number;
 
   checked: boolean;
 

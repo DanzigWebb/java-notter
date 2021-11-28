@@ -54,13 +54,18 @@ export class NotesService {
     return this.http.put(url, todo);
   }
 
+  deleteTodo(todoId: number, noteId: number) {
+    const url = `${this.url}${noteId}/todo/${todoId}`;
+    return this.http.delete(url);
+  }
+
   updateTodoOrder(dto: UpdateOrderDto[]) {
     const url = `${this.url}todo/order`;
     return this.http.post(url, dto);
   }
 
-  deleteTodo(todoId: number, noteId: number) {
-    const url = `${this.url}${noteId}/todo/${todoId}`;
-    return this.http.delete(url);
+  updateNoteOrder(dto: UpdateOrderDto[]) {
+    const url = `${this.url}order`;
+    return this.http.post(url, dto);
   }
 }

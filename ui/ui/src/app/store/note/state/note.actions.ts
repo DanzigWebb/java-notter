@@ -36,6 +36,13 @@ export namespace NoteActions {
     }
   }
 
+  export class DeleteTodo {
+    static readonly type = '[Note] Delete todo';
+
+    constructor(public todoId: number, public noteId: number) {
+    }
+  }
+
   export class UpdateTodoOrder {
     static readonly type = '[Note] Update todo order';
 
@@ -43,10 +50,10 @@ export namespace NoteActions {
     }
   }
 
-  export class DeleteTodo {
-    static readonly type = '[Note] Delete todo';
+  export class UpdateNoteOrder {
+    static readonly type = '[Note] Update note order';
 
-    constructor(public todoId: number, public noteId: number) {
+    constructor(public payload: UpdateOrderDto[]) {
     }
   }
 }

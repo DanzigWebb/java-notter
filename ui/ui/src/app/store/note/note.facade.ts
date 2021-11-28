@@ -31,11 +31,15 @@ export class NoteFacade {
     return this.store.dispatch(new NoteActions.UpdateTodo(dto, noteId));
   }
 
+  deleteTodo(todoId: number, noteId: number) {
+    return this.store.dispatch(new NoteActions.DeleteTodo(todoId, noteId));
+  }
+
   updateTodoOrder(dto: UpdateOrderDto[]) {
     return this.store.dispatch(new NoteActions.UpdateTodoOrder(dto));
   }
 
-  deleteTodo(todoId: number, noteId: number) {
-    return this.store.dispatch(new NoteActions.DeleteTodo(todoId, noteId));
+  updateNoteOrder(dto: UpdateOrderDto[]) {
+    return this.store.dispatch(new NoteActions.UpdateNoteOrder(dto));
   }
 }
