@@ -16,10 +16,16 @@ export interface NoteDto {
 }
 
 export interface TodoDto {
-  checked: boolean;
   id: number;
+  checked: boolean;
   noteId: number;
   title: string;
+  order?: number;
+}
+
+export interface UpdateOrderDto {
+  entityId: number;
+  order: number;
 }
 
 export interface NoteCreateDto {

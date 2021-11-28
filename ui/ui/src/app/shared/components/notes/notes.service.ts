@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Config } from '@app/config';
 import { HttpClient } from '@angular/common/http';
-import { NoteCreateDto, NoteDto, TodoCreateDto, TodoDto } from '@app/models';
+import { NoteCreateDto, NoteDto, TodoCreateDto, TodoDto, UpdateOrderDto } from '@app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,8 @@ export class NotesService {
   constructor(
     private http: HttpClient,
     private config: Config
-  ) { }
+  ) {
+  }
 
 
   create(dto: NoteCreateDto) {
@@ -51,6 +52,11 @@ export class NotesService {
   updateTodo(todo: TodoDto, noteId: number) {
     const url = `${this.url}${noteId}/todo/${todo.id}`;
     return this.http.put(url, todo);
+  }
+
+  updateTodoOrder(dto: UpdateOrderDto[]) {
+    const url = `${this.url}todo/order`;
+    return this.http.post(url, dto);
   }
 
   deleteTodo(todoId: number, noteId: number) {
