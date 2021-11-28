@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
-import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto } from '@app/models';
+import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto, UpdateOrderDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-group-page-menu',
@@ -42,7 +42,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     tags: []
   });
 
-  todos: TodoDto[] = []
+  todos: TodoDto[] = [];
 
   get checkedTodos() {
     return this.note?.todos.filter(t => t.checked) || [];
@@ -75,13 +75,14 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges() {
     this.updateForm();
+    this.getTodos();
   }
 
 
   getTodos() {
-    this.todos = this.note ? [...this.note.todos] : []
+    const todos = this.note ? [...this.note.todos] : [];
+    this.todos = todos.sort((a, b) => (a.order || 0) - (b.order || 0));
   }
-
 
   private updateForm() {
     this.form.reset();
@@ -167,7 +168,19 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   dropTodo(event: CdkDragDrop<TodoDto[], any>) {
-    console.log(event);
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex,
+    );
+
+    const dto: UpdateOrderDto[] = this.todos.map((todo, index) => ({
+      entityId: todo.id,
+      order: index
+    }));
+
+    this.noteFacade.updateTodoOrder(dto);
   }
 
   ngOnDestroy() {
