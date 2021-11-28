@@ -59,7 +59,10 @@
             </button>
         </div>
         <div class="todo-list" cdkDropList [cdkDropListData]="todos" (cdkDropListDropped)="dropTodo($event)">
-            <div *ngFor="let todo of todos, index as i" class="todo-box" cdkDrag>
+            <div *ngFor="let todo of todos, index as i" class="todo-box flex items-center" cdkDrag>
+                <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
+                    <i class="fas fa-grip-vertical"></i>
+                </button>
                 <app-todo-item
                     [todo]="todo"
                     (onToggle)="completeTodo($event, todo)"
