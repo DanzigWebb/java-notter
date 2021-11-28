@@ -9,6 +9,7 @@ public class Todo {
     Integer noteId;
     String title;
     Boolean checked;
+    Long order;
 
     public static Todo toModel(TodoEntity entity) {
         var todo = new Todo();
@@ -16,6 +17,7 @@ public class Todo {
         todo.setNoteId(entity.getNote().getId());
         todo.setTitle(entity.getTitle());
         todo.setChecked(entity.getChecked());
+        todo.setOrder(entity.getOrderIndex());
 
         return todo;
     }

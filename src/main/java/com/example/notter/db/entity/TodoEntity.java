@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 public class TodoEntity extends BaseEntity {
     private String title;
     private Boolean checked;
+    private Long orderIndex;
 
     @ManyToOne
     private NoteEntity note;

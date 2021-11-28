@@ -6,15 +6,14 @@ import com.example.notter.db.repository.NoteRepo;
 import com.example.notter.db.repository.TodoRepo;
 import com.example.notter.db.repository.TagRepo;
 import com.example.notter.exception.EntityNotFoundException;
-import com.example.notter.rest.note.model.Note;
-import com.example.notter.rest.note.model.NoteRequest;
-import com.example.notter.rest.note.model.Todo;
-import com.example.notter.rest.note.model.TodoRequest;
+import com.example.notter.rest.note.model.*;
 import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -110,6 +109,9 @@ public class NoteService {
         todo.setTitle(todoRequest.getTitle());
         todo.setNote(note);
 
+        var todos = note.getTodos();
+        todo.setOrderIndex((long) todos.size());
+
         return Todo.toModel(todoRepo.save(todo));
     }
 
@@ -128,6 +130,19 @@ public class NoteService {
         var todo = getTodo(note.getId(), todoId);
 
         todoRepo.delete(todo);
+    }
+
+    public List<Todo> updateTodoOrder(UserEntity user, List<TodoOrderRequest> request) {
+        var todos = new ArrayList<Todo>();
+        request.forEach(item -> {
+            var todo = todoRepo.findByUserAndId(user.getId(), item.getEntityId());
+            if (todo != null) {
+                todo.setOrderIndex(item.getOrder());
+                todos.add(Todo.toModel(todoRepo.save(todo)));
+            }
+        });
+
+        return todos;
     }
 
     private NoteEntity getNote(Integer userId, Integer noteId) {

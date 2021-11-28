@@ -2,10 +2,7 @@ package com.example.notter.rest.note;
 
 import com.example.notter.config.security.CustomUserDetails;
 import com.example.notter.models.DeleteEntityResponse;
-import com.example.notter.rest.note.model.Note;
-import com.example.notter.rest.note.model.NoteRequest;
-import com.example.notter.rest.note.model.Todo;
-import com.example.notter.rest.note.model.TodoRequest;
+import com.example.notter.rest.note.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -100,5 +97,14 @@ public class NoteController {
     ) {
         noteService.deleteTodo(user.getUserEntity(), noteId, todoId);
         return new DeleteEntityResponse(todoId, "Success");
+    }
+
+    @PostMapping("/todo/order")
+    public @ResponseBody
+    List<Todo> updateOrderTodo(
+            @Valid @RequestBody List<TodoOrderRequest> todoOrder,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return noteService.updateTodoOrder(user.getUserEntity(), todoOrder);
     }
 }
