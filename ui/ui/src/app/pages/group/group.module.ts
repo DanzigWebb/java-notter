@@ -12,6 +12,7 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { TagsModule } from '@app/shared/components/tags/tags.module';
 import { ContenteditableModule } from '@app/shared/contenteditable/contenteditable.module';
 import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -20,18 +21,19 @@ import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textare
     GroupComponent,
     GroupPageMenuComponent
   ],
-    imports: [
-        CommonModule,
-        GroupRoutingModule,
-        NotesModule,
-        FormGroupModule,
-        ReactiveFormsModule,
-        TooltipModule,
-        MenuModule,
-        TagsModule,
-        ContenteditableModule,
-        TextareaAutoModule,
-    ]
+  imports: [
+    CommonModule,
+    GroupRoutingModule,
+    NotesModule,
+    FormGroupModule,
+    ReactiveFormsModule,
+    TooltipModule,
+    MenuModule,
+    TagsModule,
+    ContenteditableModule,
+    TextareaAutoModule,
+    DragDropModule,
+  ]
 })
 export class GroupModule {
 }

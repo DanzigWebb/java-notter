@@ -41,7 +41,7 @@
             </span>
         </h3>
 
-        <div class="todo-form flex items-center pb-2">
+        <div class="todo-form flex items-center pb-2 transition-all">
             <input
                 #todoInput
                 type="text"
@@ -58,13 +58,17 @@
                 </span>
             </button>
         </div>
-        <app-todo-item
-            *ngFor="let todo of note.todos"
-            [todo]="todo"
-            (onToggle)="completeTodo($event, todo)"
-            (onDelete)="deleteTodo(todo)"
-            (onChange)="updateTodo($event, todo)">
-        </app-todo-item>
+        <div class="todo-list" cdkDropList [cdkDropListData]="todos" (cdkDropListDropped)="dropTodo($event)">
+            <div *ngFor="let todo of todos, index as i" class="todo-box" cdkDrag>
+                <app-todo-item
+                    [todo]="todo"
+                    (onToggle)="completeTodo($event, todo)"
+                    (onDelete)="deleteTodo(todo)"
+                    (onChange)="updateTodo($event, todo)">
+                </app-todo-item>
+            </div>
+        </div>
+
     </div>
 
     <div class="flex pt-4">

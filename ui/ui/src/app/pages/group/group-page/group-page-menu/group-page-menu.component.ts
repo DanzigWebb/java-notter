@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  OnChanges
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -14,6 +6,7 @@ import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-group-page-menu',
@@ -49,8 +42,10 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     tags: []
   });
 
+  todos: TodoDto[] = []
+
   get checkedTodos() {
-    return this.note?.todos.filter(t => t.checked) || []
+    return this.note?.todos.filter(t => t.checked) || [];
   }
 
   private destroy$ = new Subject();
@@ -74,11 +69,19 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
       }),
       takeUntil(this.destroy$),
     ).subscribe();
+
+    this.getTodos();
   }
 
   ngOnChanges() {
     this.updateForm();
   }
+
+
+  getTodos() {
+    this.todos = this.note ? [...this.note.todos] : []
+  }
+
 
   private updateForm() {
     this.form.reset();
@@ -161,6 +164,10 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   deleteNote() {
     this.onDeleteNote.emit(this.note!);
+  }
+
+  dropTodo(event: CdkDragDrop<TodoDto[], any>) {
+    console.log(event);
   }
 
   ngOnDestroy() {
