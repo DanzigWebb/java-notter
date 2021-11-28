@@ -6,6 +6,8 @@ import { filter, map, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { TagFacade } from '@app/store/tag';
 import { ModalsService } from '@app/shared/service/modals/modals.service';
+import { FormControl } from '@angular/forms';
+import { GroupFacade } from '@app/store/group';
 
 const queryParamNoteName = 'noteId';
 
@@ -27,11 +29,14 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
   activeNotes: NoteDto[] = [];
   completedNotes: NoteDto[] = [];
 
+  control = new FormControl();
+
   private destroy$ = new Subject();
 
   constructor(
     private noteFacade: NoteFacade,
     private tagFacade: TagFacade,
+    private groupFacade: GroupFacade,
     private route: ActivatedRoute,
     private router: Router,
     private modals: ModalsService
@@ -55,12 +60,8 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.group) {
       this.findCheckedNote();
       this.sortedNotes();
+      this.updateControl();
     }
-  }
-
-  createNote(dto: NoteCreateDto) {
-    const note: NoteCreateDto = {...dto, groupId: this.group?.id};
-    this.noteFacade.create(note);
   }
 
   checkNote(note: NoteDto) {
@@ -69,6 +70,10 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
       relativeTo: this.route,
       queryParams
     });
+  }
+
+  updateControl() {
+    this.control.setValue(this.group?.title);
   }
 
   private findCheckedNote() {
@@ -87,6 +92,16 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  updateGroup(title: string) {
+    const dto: GroupDto = {...this.group!, title};
+    this.groupFacade.update(dto);
+  }
+
+  createNote(dto: NoteCreateDto) {
+    const note: NoteCreateDto = {...dto, groupId: this.group?.id};
+    this.noteFacade.create(note);
+  }
+
   updateNote(note: NoteDto) {
     this.noteFacade.update(note).subscribe();
   }
@@ -97,12 +112,12 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteNote(note: NoteDto) {
-    const message = `Подтверждение удаления заметки: "${note.title}"`
+    const message = `Подтверждение удаления заметки: "${note.title}"`;
     this.modals.submit({message}).pipe(
       filter(Boolean)
     ).subscribe(() => {
       this.noteFacade.delete(note.id);
-    })
+    });
   }
 
   ngOnDestroy() {
