@@ -12,7 +12,10 @@ const routes: Routes = [
       },
       {
         path: 'group', loadChildren: () => import('./pages/group/group.module') .then(m => m.GroupModule)
-      }
+      },
+      {
+        path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module') .then(m => m.DashboardModule)
+      },
     ]
   }
 ];

@@ -3,6 +3,11 @@ html, body {
   overflow: hidden;
 }
 
+.page {
+  height: 100%;
+}
+
+
 [contenteditable] {
   outline: none;
 }

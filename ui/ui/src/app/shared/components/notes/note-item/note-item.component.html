@@ -1,4 +1,4 @@
-<div class="note flex rounded-md cursor-pointer w-full" *ngIf="note">
+<div class="note flex rounded-md w-full" *ngIf="note">
 
     <label class="cursor-pointer label mr-2" (click)="$event.stopPropagation()">
         <input
@@ -50,9 +50,9 @@
     </div>
 
     <div class="note-action flex items-center">
-        <button class="btn btn-ghost btn-circle btn-sm"
-                (click)="$event.stopPropagation(); onDeleteEmit()">
-            <i class="fas fa-trash text-error"></i>
-        </button>
+<!--        <button class="btn btn-ghost btn-circle btn-sm"-->
+<!--                (click)="$event.stopPropagation(); onDeleteEmit()">-->
+<!--            <i class="fas fa-trash text-error"></i>-->
+<!--        </button>-->
     </div>
 </div>
