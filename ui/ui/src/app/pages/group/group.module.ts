@@ -5,7 +5,6 @@ import { GroupRoutingModule } from './group-routing.module';
 import { GroupPageComponent } from './group-page/group-page.component';
 import { GroupComponent } from './group.component';
 import { NotesModule } from '@app/notes';
-import { GroupPageMenuComponent } from './group-page/group-page-menu/group-page-menu.component';
 import { FormGroupModule, MenuModule } from 'am-bulba';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
@@ -19,7 +18,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   declarations: [
     GroupPageComponent,
     GroupComponent,
-    GroupPageMenuComponent
   ],
   imports: [
     CommonModule,

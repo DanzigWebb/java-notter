@@ -1,4 +1,4 @@
-<div class="group-page">
+<div class="group-page flex h-full">
     <div class="group overflow-hidden flex flex-col" *ngIf="group">
         <textarea-auto>
             <textarea
@@ -22,7 +22,7 @@
                 [cdkDropListData]="activeNotes"
                 (cdkDropListDropped)="dropNote($event)"
             >
-                <div class="note-box overflow-x-hidden hover:bg-base-200 p-2 mb-2 flex items-center w-full"
+                <div class="note-box overflow-x-hidden rounded-md cursor-pointer hover:bg-base-200 p-2 mb-2 flex items-center w-full"
                      *ngFor="let note of activeNotes"
                      cdkDrag
                      [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
@@ -75,10 +75,13 @@
         </div>
     </div>
 
-    <app-group-page-menu
+    <app-note-menu
+        [width]="340"
         [note]="checkedNote$ | async"
         [tags]="(tags$ | async) || []"
         (onUpdateNote)="updateNote($event)"
         (onDeleteNote)="deleteNote($event)">
-    </app-group-page-menu>
+    </app-note-menu>
+
+
 </div>

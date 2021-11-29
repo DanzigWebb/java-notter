@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto, UpdateOrderDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -9,18 +19,19 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-group-page-menu',
-  templateUrl: './group-page-menu.component.html',
-  styleUrls: ['./group-page-menu.component.scss'],
+  selector: 'app-note-menu',
+  templateUrl: './note-menu.component.html',
+  styleUrls: ['./note-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('slideInOut', [
       transition(':enter', [
         style({
-          width: '0',
+          width: 0,
           opacity: 0,
           overflow: 'hidden'
         }),
-        animate('160ms cubic-bezier(0.4, 0, 0.2, 1)', style({width: '*', opacity: 1,}))
+        animate('160ms cubic-bezier(0.4, 0, 0.2, 1)', style({width: '*', opacity: 1}))
       ]),
       transition(':leave', [
         animate('160ms ease-in-out', style({width: 0, overflow: 'hidden'}))
@@ -28,10 +39,11 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
     ])
   ]
 })
-export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
+export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() note: NoteDto | null = null;
   @Input() tags: TagDto[] = [];
+  @Input() width: number | undefined;
 
   @Output() onUpdateNote = new EventEmitter<NoteDto>();
   @Output() onDeleteNote = new EventEmitter<NoteDto>();
@@ -43,6 +55,7 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   });
 
   todos: TodoDto[] = [];
+  isShowTags = true;
 
   get checkedTodos() {
     return this.note?.todos.filter(t => t.checked) || [];
@@ -53,7 +66,8 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private tagFacade: TagFacade,
-    private noteFacade: NoteFacade
+    private noteFacade: NoteFacade,
+    private ref: ChangeDetectorRef
   ) {
   }
 
@@ -73,11 +87,15 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.getTodos();
   }
 
-  ngOnChanges() {
-    this.updateForm();
-    this.getTodos();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.note) {
+      if (changes.note.currentValue) {
+        this.updateForm();
+        this.getTodos();
+        this.reloadTags();
+      }
+    }
   }
-
 
   getTodos() {
     const todos = this.note ? [...this.note.todos] : [];
@@ -94,6 +112,8 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.tags.length
       ? this.form.get('tags')?.enable()
       : this.form.get('tags')?.disable();
+
+    this.ref.markForCheck();
   }
 
   private updateControl<T>(controlName: string, value: T) {
@@ -181,6 +201,16 @@ export class GroupPageMenuComponent implements OnInit, OnChanges, OnDestroy {
     }));
 
     this.noteFacade.updateTodoOrder(dto);
+  }
+
+  // Todo: починить быстрый хак
+  //  иногда в safari ломается отображение селекта
+  reloadTags() {
+    this.isShowTags = false;
+    Promise.resolve().then(() => {
+      this.isShowTags = true;
+      this.ref.markForCheck();
+    });
   }
 
   ngOnDestroy() {
