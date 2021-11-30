@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { GroupDto, NoteCreateDto, NoteDto, TagDto, UpdateOrderDto } from '@app/models';
 import { NoteFacade } from '@app/store/note';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -9,6 +17,7 @@ import { ModalsService } from '@app/shared/service/modals/modals.service';
 import { FormControl } from '@angular/forms';
 import { GroupFacade } from '@app/store/group';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { ResponsiveService } from '@app/shared/service/responsive/responsive.service';
 
 const queryParamNoteName = 'noteId';
 
@@ -34,13 +43,19 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
 
   private destroy$ = new Subject();
 
+  menuWidth = 320;
+  windowSize$ = this.responsive.resize$.pipe(
+    map(size => size >= 600 ? this.menuWidth : size)
+  );
+
   constructor(
     private noteFacade: NoteFacade,
     private tagFacade: TagFacade,
     private groupFacade: GroupFacade,
     private route: ActivatedRoute,
     private router: Router,
-    private modals: ModalsService
+    private modals: ModalsService,
+    private responsive: ResponsiveService
   ) {
   }
 

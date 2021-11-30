@@ -1,6 +1,10 @@
 .group {
   flex: 1;
   padding: 15px;
+
+  @media (max-width: 550px) {
+    padding: 5px;
+  }
 }
 
 

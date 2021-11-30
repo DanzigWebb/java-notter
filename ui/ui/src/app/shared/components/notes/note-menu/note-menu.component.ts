@@ -55,7 +55,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   });
 
   todos: TodoDto[] = [];
-  isShowTags = true;
 
   get checkedTodos() {
     return this.note?.todos.filter(t => t.checked) || [];
@@ -92,7 +91,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
       if (changes.note.currentValue) {
         this.updateForm();
         this.getTodos();
-        this.reloadTags();
       }
     }
   }
@@ -201,16 +199,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     }));
 
     this.noteFacade.updateTodoOrder(dto);
-  }
-
-  // Todo: починить быстрый хак
-  //  иногда в safari ломается отображение селекта
-  reloadTags() {
-    this.isShowTags = false;
-    Promise.resolve().then(() => {
-      this.isShowTags = true;
-      this.ref.markForCheck();
-    });
   }
 
   ngOnDestroy() {
