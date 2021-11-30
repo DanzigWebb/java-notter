@@ -1,5 +1,5 @@
 <div class="todo w-full flex items-center justify-between" *ngIf="todo">
-    <div class="flex flex-1 items-center">
+    <div class="flex w-full items-center">
         <label class="cursor-pointer label mr-2" (click)="$event.stopPropagation()">
             <input
                 #todoCheckbox
@@ -10,7 +10,7 @@
             >
         </label>
 
-        <textarea-auto>
+        <textarea-auto class="flex-1">
             <textarea
                 appTextareaAuto
                 (blur)="changeEmit(control.value)"
