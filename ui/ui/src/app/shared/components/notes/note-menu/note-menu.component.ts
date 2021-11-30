@@ -47,6 +47,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() onUpdateNote = new EventEmitter<NoteDto>();
   @Output() onDeleteNote = new EventEmitter<NoteDto>();
+  @Output() onClose = new EventEmitter();
 
   form: FormGroup = this.fb.group({
     title: ['', Validators.required],
@@ -54,6 +55,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     tags: []
   });
 
+  isShow = true;
   todos: TodoDto[] = [];
 
   get checkedTodos() {
@@ -66,7 +68,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     private fb: FormBuilder,
     private tagFacade: TagFacade,
     private noteFacade: NoteFacade,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
   ) {
   }
 
@@ -91,6 +93,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
       if (changes.note.currentValue) {
         this.updateForm();
         this.getTodos();
+        this.isShow = true;
       }
     }
   }
@@ -199,6 +202,10 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     }));
 
     this.noteFacade.updateTodoOrder(dto);
+  }
+
+  close() {
+    this.isShow = false
   }
 
   ngOnDestroy() {

@@ -152,6 +152,14 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
     this.noteFacade.updateNoteOrder(dto);
   }
 
+  closeNoteMenu() {
+    const queryParams: Params = {[queryParamNoteName]: null};
+    this.router.navigate(['.'], {
+      relativeTo: this.route,
+      queryParams,
+    });
+  }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

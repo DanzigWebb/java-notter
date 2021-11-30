@@ -22,11 +22,12 @@
                 [cdkDropListData]="activeNotes"
                 (cdkDropListDropped)="dropNote($event)"
             >
-                <div class="note-box overflow-x-hidden rounded-md cursor-pointer hover:bg-base-200 py-2 mb-2 flex items-center w-full"
-                     *ngFor="let note of activeNotes"
-                     cdkDrag
-                     [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
-                     [class.shadow-lg]="(checkedNote$ | async)?.id === note.id"
+                <div
+                    class="note-box overflow-x-hidden rounded-md cursor-pointer hover:bg-base-200 py-2 mb-2 flex items-center w-full"
+                    *ngFor="let note of activeNotes"
+                    cdkDrag
+                    [class.bg-base-200]="(checkedNote$ | async)?.id === note.id"
+                    [class.shadow-lg]="(checkedNote$ | async)?.id === note.id"
                 >
                     <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
                         <i class="fas fa-grip-vertical"></i>
@@ -80,7 +81,8 @@
         [note]="checkedNote$ | async"
         [tags]="(tags$ | async) || []"
         (onUpdateNote)="updateNote($event)"
-        (onDeleteNote)="deleteNote($event)">
+        (onDeleteNote)="deleteNote($event)"
+        (onClose)="closeNoteMenu()">
     </app-note-menu>
 
 
