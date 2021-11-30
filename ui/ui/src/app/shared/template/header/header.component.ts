@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { UserFacade } from '@app/store/user';
 import { GroupFacade } from '@app/store/group';
@@ -7,13 +7,15 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { NoteDto } from '@app/models';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NoteMenuFacade } from '@app/store/ui/note-menu';
 
 const queryParamNoteName = 'noteId';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
 
@@ -30,6 +32,7 @@ export class HeaderComponent implements OnInit {
     @Inject(DOCUMENT) private doc: Document,
     private userFacade: UserFacade,
     private groupFacade: GroupFacade,
+    private menu: NoteMenuFacade,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -55,6 +58,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['group', note.groupId], {
       relativeTo: this.route,
       queryParams
-    }).then(() => this.control.reset());
+    }).then(() => {
+      this.control.reset();
+      this.menu.open();
+    });
   }
 }

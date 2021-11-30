@@ -43,7 +43,6 @@
                 </div>
             </div>
 
-
             <ng-container *ngIf="completedNotes.length">
                 <h3 class="text-lg mb-2">Завершенные</h3>
             </ng-container>
@@ -78,12 +77,12 @@
 
     <app-note-menu
         [width]="(windowSize$ | async) || menuWidth"
+        [isOpen]="isMenuOpen$ | async"
         [note]="checkedNote$ | async"
         [tags]="(tags$ | async) || []"
         (onUpdateNote)="updateNote($event)"
         (onDeleteNote)="deleteNote($event)"
         (onClose)="closeNoteMenu()">
     </app-note-menu>
-
 
 </div>

@@ -17,6 +17,7 @@ import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { NoteMenuFacade } from '@app/store/ui/note-menu';
 
 @Component({
   selector: 'app-note-menu',
@@ -43,6 +44,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() note: NoteDto | null = null;
   @Input() tags: TagDto[] = [];
+  @Input() isOpen: boolean | null = false;
   @Input() width: number | undefined;
 
   @Output() onUpdateNote = new EventEmitter<NoteDto>();
@@ -65,6 +67,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
+    public menu: NoteMenuFacade,
     private fb: FormBuilder,
     private tagFacade: TagFacade,
     private noteFacade: NoteFacade,
@@ -205,7 +208,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   close() {
-    this.isShow = false
+    this.menu.close();
   }
 
   ngOnDestroy() {

@@ -10,14 +10,15 @@ import {
 import { GroupDto, NoteCreateDto, NoteDto, TagDto, UpdateOrderDto } from '@app/models';
 import { NoteFacade } from '@app/store/note';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { TagFacade } from '@app/store/tag';
 import { ModalsService } from '@app/shared/service/modals/modals.service';
 import { FormControl } from '@angular/forms';
 import { GroupFacade } from '@app/store/group';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ResponsiveService } from '@app/shared/service/responsive/responsive.service';
+import { NoteMenuFacade } from '@app/store/ui/note-menu';
 
 const queryParamNoteName = 'noteId';
 
@@ -43,6 +44,11 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
 
   private destroy$ = new Subject();
 
+  isMenuOpen$ = combineLatest([this.menu.state$, this.checkedNote$]).pipe(
+    map(([a, b]) => a.isOpen && !!b),
+    distinctUntilChanged()
+  )
+
   menuWidth = 320;
   windowSize$ = this.responsive.resize$.pipe(
     map(size => size >= 600 ? this.menuWidth : size)
@@ -55,7 +61,8 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private modals: ModalsService,
-    private responsive: ResponsiveService
+    private responsive: ResponsiveService,
+    private menu: NoteMenuFacade
   ) {
   }
 
@@ -85,6 +92,8 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams
+    }).then(() => {
+      this.menu.open()
     });
   }
 
@@ -153,11 +162,7 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   closeNoteMenu() {
-    const queryParams: Params = {[queryParamNoteName]: null};
-    this.router.navigate(['.'], {
-      relativeTo: this.route,
-      queryParams,
-    });
+    this.menu.close();
   }
 
   ngOnDestroy() {
