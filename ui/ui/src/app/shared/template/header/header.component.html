@@ -9,31 +9,10 @@
 
         <div class="spacer"></div>
 
-        <div class="flex-grow">
-            <input
-                type="text"
-                class="input-bordered input-ghost w-full"
-                amInput
-                placeholder="Найти заметку"
-                #searchNoteInput
-                [formControl]="control"
-                [amMenuTrigger]="menu"
-            >
-
-            <am-menu-panel #menu="amMenu">
-                <div class="overflow-y-auto"
-                     [style.max-height]="(48 * 4) + 'px'"
-                     [style.width]="searchNoteInput.offsetWidth + 'px'"
-                >
-                    <ng-container *ngIf="filteredNotes$ | async as notes">
-                        <am-option *ngIf="!notes.length">Нет заметок</am-option>
-                        <am-option *ngFor="let note of filteredNotes$ | async" (click)="checkNote(note)">
-                            <span class="truncate">{{note.title}}</span>
-                        </am-option>
-                    </ng-container>
-                </div>
-            </am-menu-panel>
-        </div>
+        <app-note-search
+            class="flex-grow"
+            (onCheckNote)="checkNote($event)">
+        </app-note-search>
 
         <div class="spacer"></div>
 

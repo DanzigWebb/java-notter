@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GroupsModule } from '@app/groups';
 import { TooltipModule } from '../components/tooltip/tooltip.module';
 import { RenameGroupDialog } from './sidebar/rename-group.dialog';
+import { NotesModule } from '@app/notes';
 
 
 @NgModule({
@@ -20,17 +21,18 @@ import { RenameGroupDialog } from './sidebar/rename-group.dialog';
     RenameGroupDialog,
     IndicatorDirective
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    NavbarModule,
-    ReactiveFormsModule,
-    GroupsModule,
-    MenuModule,
-    ModalModule,
-    TooltipModule,
-    FormGroupModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        NavbarModule,
+        ReactiveFormsModule,
+        GroupsModule,
+        MenuModule,
+        ModalModule,
+        TooltipModule,
+        FormGroupModule,
+        NotesModule,
+    ],
 })
 export class TemplateModule {
 }

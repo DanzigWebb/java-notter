@@ -12,6 +12,7 @@ import { FormGroupModule, MenuModule } from 'am-bulba';
 import { TagsModule } from '@app/shared/components/tags/tags.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RouterModule } from '@angular/router';
+import { NoteSearchComponent } from './note-search/note-search.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { RouterModule } from '@angular/router';
     CreateNoteFormComponent,
     NoteItemComponent,
     TodoItemComponent,
-    NoteMenuComponent
+    NoteMenuComponent,
+    NoteSearchComponent
   ],
     imports: [
         CommonModule,
@@ -37,7 +39,8 @@ import { RouterModule } from '@angular/router';
     CreateNoteFormComponent,
     NoteItemComponent,
     TodoItemComponent,
-    NoteMenuComponent
+    NoteMenuComponent,
+    NoteSearchComponent
   ]
 })
 export class NotesModule { }

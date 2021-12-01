@@ -2,9 +2,6 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { DOCUMENT } from '@angular/common';
 import { UserFacade } from '@app/store/user';
 import { GroupFacade } from '@app/store/group';
-import { map, startWith, switchMap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
 import { NoteDto } from '@app/models';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NoteMenuFacade } from '@app/store/ui/note-menu';
@@ -21,13 +18,6 @@ export class HeaderComponent implements OnInit {
 
   user$ = this.userFacade.state$;
 
-  control = new FormControl();
-
-  filteredNotes$: Observable<NoteDto[]> = new Subject<NoteDto[]>();
-  private notes$ = this.groupFacade.groups$.pipe(map(
-    (groups) => groups.flatMap(group => group.notes)
-  ));
-
   constructor(
     @Inject(DOCUMENT) private doc: Document,
     private userFacade: UserFacade,
@@ -39,14 +29,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filteredNotes$ = this.control.valueChanges.pipe(
-      startWith(''),
-      switchMap((value) => this.notes$.pipe(
-        map((notes) => notes.filter(
-          (n) => n.title.toLowerCase().includes(value?.toLowerCase() || '')
-        ))
-      ))
-    );
   }
 
   setTheme(theme: string) {
@@ -59,7 +41,6 @@ export class HeaderComponent implements OnInit {
       relativeTo: this.route,
       queryParams
     }).then(() => {
-      this.control.reset();
       this.menu.open();
     });
   }
