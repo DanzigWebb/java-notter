@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { GroupFacade } from '@app/store/group';
 import { Observable, Subject } from 'rxjs';
 import { NoteDto } from '@app/models';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-note-search',
@@ -35,7 +35,8 @@ export class NoteSearchComponent implements OnInit, OnDestroy {
         map((notes) => notes.filter(
           (n) => n.title.toLowerCase().includes(value?.toLowerCase() || '')
         ))
-      ))
+      )),
+      takeUntil(this.destroy$)
     );
   }
 
