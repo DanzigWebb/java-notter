@@ -76,7 +76,7 @@
     </div>
 
     <app-note-menu
-        [width]="(windowSize$ | async) || menuWidth"
+        [width]="((windowSize$ | async) || menuWidth)"
         [isOpen]="isMenuOpen$ | async"
         [note]="checkedNote$ | async"
         [tags]="(tags$ | async) || []"

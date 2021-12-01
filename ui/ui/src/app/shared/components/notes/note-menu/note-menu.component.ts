@@ -28,14 +28,14 @@ import { NoteMenuFacade } from '@app/store/ui/note-menu';
     trigger('slideInOut', [
       transition(':enter', [
         style({
-          width: 0,
           opacity: 0,
+          transform: 'translateX(100%)',
           overflow: 'hidden'
         }),
-        animate('160ms cubic-bezier(0.4, 0, 0.2, 1)', style({width: '*', opacity: 1}))
+        animate('340ms cubic-bezier(0.4, 0, 0.2, 1)', style({width: '*', opacity: 1, transform: 'translateX(0)'}))
       ]),
       transition(':leave', [
-        animate('160ms ease-in-out', style({width: 0, overflow: 'hidden'}))
+        animate('260ms ease-in-out', style({transform: 'translateX(100%)', overflow: 'hidden'}))
       ])
     ])
   ]
@@ -45,7 +45,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   @Input() note: NoteDto | null = null;
   @Input() tags: TagDto[] = [];
   @Input() isOpen: boolean | null = false;
-  @Input() width: number | undefined;
+  @Input() width: number | string | undefined;
 
   @Output() onUpdateNote = new EventEmitter<NoteDto>();
   @Output() onDeleteNote = new EventEmitter<NoteDto>();

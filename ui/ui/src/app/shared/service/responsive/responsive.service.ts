@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { auditTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 
@@ -12,14 +12,19 @@ export class ResponsiveService {
 
   constructor(
     @Inject(DOCUMENT) private doc: Document
-  ) { }
+  ) {
+  }
 
   private getWindowWidth() {
-    return fromEvent(this.doc.defaultView!, 'resize').pipe(
+    return merge(this.getResizeEvent()).pipe(
       auditTime(300), // || debounceTime
-      map((event: Event) => (event.target as Window).innerWidth),
+      map(() => this.doc.defaultView!.innerWidth),
       startWith(this.doc.defaultView!.innerWidth),
       distinctUntilChanged()
-    )
+    );
   }
+
+  private getResizeEvent() {
+    return fromEvent(this.doc.defaultView!, 'resize');
+  };
 }

@@ -1,12 +1,12 @@
 <div
-    [style.width]="width + 'px'"
-    class="h-full w-full overflow-hidden note-menu z-10"
+    [style.width.px]="width"
+    class="h-full w-full overflow-hidden note-menu z-20"
     *ngIf="isOpen"
     [@slideInOut]
 >
     <form
         class="p-4 sm:pt-0 pt-0 bg-base-200 shadow-lg relative overflow-y-scroll h-full w-full"
-        [style.width]="width + 'px'"
+        [style.width.px]="width"
         [formGroup]="form"
         *ngIf="note"
     >

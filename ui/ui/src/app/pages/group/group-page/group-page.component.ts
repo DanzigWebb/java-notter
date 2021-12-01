@@ -51,7 +51,7 @@ export class GroupPageComponent implements OnInit, OnChanges, OnDestroy {
 
   menuWidth = 320;
   windowSize$ = this.responsive.resize$.pipe(
-    map(size => size >= 600 ? this.menuWidth : size)
+    map(size => size >= 600 ? this.menuWidth : 'auto')
   );
 
   constructor(
