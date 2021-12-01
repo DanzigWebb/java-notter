@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class Note {
@@ -23,6 +24,7 @@ public class Note {
 
     List<Tag> tags;
     List<Todo> todos;
+    List<NoteRelated> relatedNotes;
 
     Integer groupId;
 
@@ -41,6 +43,7 @@ public class Note {
         n.setTags(Util.entityListToModel(entity.getTags(), Tag::toModel));
         n.setTodos(Util.entityListToModel(entity.getTodos(), Todo::toModel));
         n.setOrder(entity.getOrderIndex());
+        n.setRelatedNotes(getRelatedNotes(entity.getRelatedNotes()));
 
         if (entity.getGroup() != null) {
             n.setGroupId(entity.getGroup().getId());
@@ -49,6 +52,12 @@ public class Note {
         }
 
         return n;
+    }
+
+    static List<NoteRelated> getRelatedNotes(List<NoteEntity> list) {
+        return list
+                .stream().map(NoteRelated::fromEntity)
+                .collect(Collectors.toList());
     }
 
 }

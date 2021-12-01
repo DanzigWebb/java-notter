@@ -11,14 +11,15 @@ import java.util.List;
 public class NoteEntity extends BaseEntity {
 
     private String title;
-    private String description;
     private Boolean checked;
     private Long orderIndex;
+    @Lob
+    private String description;
 
     @ManyToOne
     private UserEntity user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private GroupEntity group;
 
     @OneToMany(mappedBy = "note", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -28,4 +29,8 @@ public class NoteEntity extends BaseEntity {
     @ManyToMany(cascade = CascadeType.DETACH)
     @ToString.Exclude
     private List<TagEntity> tags;
+
+    @ManyToMany(cascade = CascadeType.DETACH)
+    @ToString.Exclude
+    private List<NoteEntity> relatedNotes;
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,7 +46,7 @@ public class NoteService {
     }
 
     public Note update(Integer noteId, NoteRequest note, UserEntity user) {
-        NoteEntity n = noteRepo.findByUserAndId(user.getId(), noteId);
+        var n = noteRepo.findByUserAndId(user.getId(), noteId);
         if (n == null) {
             throw new EntityNotFoundException();
         }
@@ -73,6 +74,22 @@ public class NoteService {
         n.setChecked(note.getChecked());
 
         return Note.toModel(noteRepo.save(n));
+    }
+
+    public Note relate(Integer noteId, Integer relatedNote, UserEntity user) {
+        var note = noteRepo.findByUserAndId(user.getId(), noteId);
+        var related = noteRepo.findByUserAndId(user.getId(), relatedNote);
+        note.getRelatedNotes().add(related);
+        return Note.toModel(noteRepo.save(note));
+    }
+
+    public Note unRelate(Integer noteId, Integer relatedNote, UserEntity user) {
+        var note = noteRepo.findByUserAndId(user.getId(), noteId);
+        var newList = note.getRelatedNotes()
+                .stream().filter(n -> !Objects.equals(n.getId(), relatedNote))
+                .collect(Collectors.toList());
+        note.setRelatedNotes(newList);
+        return Note.toModel(noteRepo.save(note));
     }
 
     private static TodoEntity createTodo(Todo t, NoteEntity note) {
