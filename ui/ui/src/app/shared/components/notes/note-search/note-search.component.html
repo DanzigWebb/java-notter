@@ -2,7 +2,7 @@
     type="text"
     class="input-bordered input-ghost w-full"
     amInput
-    placeholder="Найти заметку"
+    [placeholder]="placeholder || 'Найти заметку'"
     #searchNoteInput
     [formControl]="control"
     [amMenuTrigger]="menu"

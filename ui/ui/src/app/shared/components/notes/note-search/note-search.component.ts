@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { GroupFacade } from '@app/store/group';
 import { Observable, Subject } from 'rxjs';
@@ -13,11 +13,16 @@ import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 })
 export class NoteSearchComponent implements OnInit, OnDestroy {
 
+  @Input() placeholder = '';
+  @Input() excludeNoteId = -1;
+
   @Output() onCheckNote = new EventEmitter<NoteDto>();
 
   filteredNotes$: Observable<NoteDto[]> = new Subject<NoteDto[]>();
   private notes$ = this.facade.groups$.pipe(map(
-    (groups) => groups.flatMap(group => group.notes)
+    (groups) => groups
+      .flatMap(g => g.notes)
+      .filter(g => g.id !== this.excludeNoteId)
   ));
 
   control = new FormControl();
