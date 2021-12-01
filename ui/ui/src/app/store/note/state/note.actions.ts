@@ -56,6 +56,26 @@ export namespace NoteActions {
     constructor(public payload: UpdateOrderDto[]) {
     }
   }
+
+  export class Relate {
+    static readonly type = '[Note] Relate with note';
+
+    constructor(
+      public noteId: number,
+      public relateId: number
+    ) {
+    }
+  }
+
+  export class UnRelate {
+    static readonly type = '[Note] UnRelate with note';
+
+    constructor(
+      public noteId: number,
+      public relateId: number
+    ) {
+    }
+  }
 }
 
 

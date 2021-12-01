@@ -82,4 +82,18 @@ export class NoteState {
       switchMap(() => this.groupFacade.getAll())
     );
   }
+
+  @Action(NoteActions.Relate)
+  relate({getState, setState}: StateContext<NoteStateModel>, {noteId, relateId}: NoteActions.Relate) {
+    return this.notes.relate(noteId, relateId).pipe(
+      switchMap(() => this.groupFacade.getAll())
+    );
+  }
+
+  @Action(NoteActions.UnRelate)
+  unRelate({getState, setState}: StateContext<NoteStateModel>, {noteId, relateId}: NoteActions.UnRelate) {
+    return this.notes.unRelate(noteId, relateId).pipe(
+      switchMap(() => this.groupFacade.getAll())
+    );
+  }
 }
