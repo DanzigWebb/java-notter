@@ -152,5 +152,18 @@
             </div>
         </div>
 
+        <div class="related">
+            <h3 class="mb-2 opacity-90">
+                <span>Связанные задачи</span>
+            </h3>
+            <ul class="menu">
+                <li *ngFor="let related of note.relatedNotes">
+                    <a [routerLink]="['.']" [queryParams]="{'noteId': related.id}">
+                        <span class="text-sm truncate">{{related.title}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
     </form>
 </div>

@@ -11,6 +11,7 @@ import { ContenteditableModule } from '@app/shared/contenteditable/contenteditab
 import { FormGroupModule, MenuModule } from 'am-bulba';
 import { TagsModule } from '@app/shared/components/tags/tags.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -20,17 +21,18 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TodoItemComponent,
     NoteMenuComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    TooltipModule,
-    TextareaAutoModule,
-    ContenteditableModule,
-    MenuModule,
-    TagsModule,
-    FormGroupModule,
-    DragDropModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        TooltipModule,
+        TextareaAutoModule,
+        ContenteditableModule,
+        MenuModule,
+        TagsModule,
+        FormGroupModule,
+        DragDropModule,
+        RouterModule
+    ],
   exports: [
     CreateNoteFormComponent,
     NoteItemComponent,

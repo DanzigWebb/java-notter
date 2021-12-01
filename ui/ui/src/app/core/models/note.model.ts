@@ -14,6 +14,14 @@ export interface NoteDto {
 
   tags: TagDto[];
   todos: TodoDto[];
+  relatedNotes: RelatedNoteDto[];
+}
+
+export interface RelatedNoteDto {
+  id: number;
+  title: string;
+  description: string;
+  checked: boolean;
 }
 
 export interface TodoDto {
