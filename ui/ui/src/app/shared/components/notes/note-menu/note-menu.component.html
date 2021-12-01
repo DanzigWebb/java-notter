@@ -166,7 +166,7 @@
 
             <ul class="menu py-2">
                 <li *ngFor="let related of note.relatedNotes">
-                    <a [routerLink]="['.']" [queryParams]="{'noteId': related.id}">
+                    <a [routerLink]="['/group', related.groupId]" [queryParams]="{'noteId': related.id}">
                         <span class="text-sm truncate">{{related.title}}</span>
                     </a>
                 </li>

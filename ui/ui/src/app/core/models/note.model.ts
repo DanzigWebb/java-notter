@@ -19,6 +19,7 @@ export interface NoteDto {
 
 export interface RelatedNoteDto {
   id: number;
+  groupId: number;
   title: string;
   description: string;
   checked: boolean;

@@ -9,6 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class NoteRelated {
     Integer id;
+    Integer groupId;
     String title;
     String description;
     Boolean checked;
@@ -16,6 +17,7 @@ public class NoteRelated {
     static NoteRelated fromEntity(NoteEntity note) {
         return new NoteRelated(
                 note.getId(),
+                note.getGroup().getId(),
                 note.getTitle(),
                 note.getDescription(),
                 note.getChecked()

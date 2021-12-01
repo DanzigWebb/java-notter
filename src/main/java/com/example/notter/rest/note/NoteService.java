@@ -11,9 +11,7 @@ import com.example.notter.rest.tag.model.Tag;
 import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,16 +78,30 @@ public class NoteService {
         var note = noteRepo.findByUserAndId(user.getId(), noteId);
         var related = noteRepo.findByUserAndId(user.getId(), relatedNote);
         note.getRelatedNotes().add(related);
+        related.getRelatedNotes().add(note);
         return Note.toModel(noteRepo.save(note));
     }
 
     public Note unRelate(Integer noteId, Integer relatedNote, UserEntity user) {
         var note = noteRepo.findByUserAndId(user.getId(), noteId);
-        var newList = note.getRelatedNotes()
-                .stream().filter(n -> !Objects.equals(n.getId(), relatedNote))
-                .collect(Collectors.toList());
-        note.setRelatedNotes(newList);
+        var related = noteRepo.findByUserAndId(user.getId(), relatedNote);
+
+        var newNoteList = excludeRelation(note.getRelatedNotes(), relatedNote);
+        var newRelatedList = excludeRelation(related.getRelatedNotes(), noteId);
+        note.setRelatedNotes(newNoteList);
+        related.setRelatedNotes(newRelatedList);
+
+        noteRepo.save(related);
         return Note.toModel(noteRepo.save(note));
+    }
+
+    private List<NoteEntity> excludeRelation(List<NoteEntity> list, Integer excludeId) {
+        if (list == null) {
+            return new ArrayList<>();
+        }
+        return list.stream()
+                .filter(n -> !Objects.equals(n.getId(), excludeId))
+                .collect(Collectors.toList());
     }
 
     private static TodoEntity createTodo(Todo t, NoteEntity note) {
@@ -157,7 +169,7 @@ public class NoteService {
                 notes.add(Note.toModel(noteRepo.save(note)));
             }
         });
-        
+
         return notes;
     }
 
