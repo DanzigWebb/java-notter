@@ -71,7 +71,7 @@
             </h3>
             <div class="todo-form flex items-center pb-2 transition-all">
                 <button
-                    class="btn btn-ghost sidebar-btn mr-1"
+                    class="btn btn-ghost mr-1"
                     (click)="addTodo(todoInput)"
                 >
                     <span class="icon is-small">
@@ -156,7 +156,15 @@
             <h3 class="mb-2 opacity-90">
                 <span>Связанные задачи</span>
             </h3>
-            <ul class="menu">
+
+            <app-note-search
+                class="flex-1"
+                placeholder="Добавить заметку"
+                [excludeNoteId]="note.id"
+                (onCheckNote)="relateNote($event)">
+            </app-note-search>
+
+            <ul class="menu py-2">
                 <li *ngFor="let related of note.relatedNotes">
                     <a [routerLink]="['.']" [queryParams]="{'noteId': related.id}">
                         <span class="text-sm truncate">{{related.title}}</span>
