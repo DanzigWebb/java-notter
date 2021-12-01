@@ -6,6 +6,7 @@ import com.example.notter.util.Util;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +56,10 @@ public class Note {
     }
 
     static List<NoteRelated> getRelatedNotes(List<NoteEntity> list) {
+        if (list == null) {
+            return new ArrayList<>();
+        }
+
         return list
                 .stream().map(NoteRelated::fromEntity)
                 .collect(Collectors.toList());
