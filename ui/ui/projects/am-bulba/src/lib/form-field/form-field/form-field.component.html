@@ -1,0 +1,9 @@
+<div class="form-control relative mb-6" [class.is-loading]="isLoading">
+    <ng-content></ng-content>
+
+    <ng-container *ngIf="control?.invalid && control?.touched">
+        <div [@error]>
+            <ng-content select="am-form-error"></ng-content>
+        </div>
+    </ng-container>
+</div>

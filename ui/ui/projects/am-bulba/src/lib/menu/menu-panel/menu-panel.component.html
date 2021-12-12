@@ -1,0 +1,14 @@
+<ng-template>
+    <div class="am-menu-panel" (click)="close()">
+        <div class="am-menu-panel-box">
+            <ul class="menu py-3 shadow-lg bg-base-200 rounded-box am-menu-panel-box__wrapper"
+                (click)="close()"
+                *ngIf="isShow"
+                [@slide]
+                (@slide.done)="!isShow && emitClose()"
+            >
+                <ng-content></ng-content>
+            </ul>
+        </div>
+    </div>
+</ng-template>

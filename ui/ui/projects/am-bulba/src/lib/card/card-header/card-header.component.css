@@ -1,0 +1,7 @@
+.card-header-icon {
+    transition: .3s ease all;
+}
+
+.card-header-icon.rotate-icon {
+    transform: rotate(180deg);
+}

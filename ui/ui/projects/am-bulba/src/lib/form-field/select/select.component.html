@@ -1,0 +1,26 @@
+<div class="select select-bordered w-full max-w-xs am-select"
+     [class.select-error]="control?.invalid && control?.touched"
+     (click)="open(dropdown, trigger)"
+     #trigger
+>
+    <div *ngIf="!valueAsString; else value"
+         class="am-select-content am-select-placeholder left-3 flex items-center text-xs opacity-60"
+         [innerHTML]="placeholder || ''">
+    </div>
+
+    <ng-template #value>
+        <div class="am-select-content flex items-center left-3">
+            <span class="am-select-value-text" [innerHTML]="valueAsString"></span>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #dropdown>
+    <div class="am-select-dropdown-overlay" (click)="close()">
+        <div class="am-select-dropdown shadow-lg" (click)="$event.stopPropagation()">
+            <ul class="menu py-3 bg-base-200 rounded-box" *ngIf="isDropdownShow" [@slide]>
+                <ng-content select="am-option"></ng-content>
+            </ul>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,4 @@
+.card-content-wrapper {
+    overflow: hidden;
+    transition: .3s ease all;
+}

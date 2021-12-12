@@ -1,0 +1,31 @@
+<div class="tabs" *ngIf="tabs" [class.tabs-boxed]="viewType === 'tabs-boxed'">
+    <a
+        *ngFor="let tab of tabs"
+        class="tab"
+
+        [class.tab-active]="tab.active"
+        [class.is-disabled]="tab.labelComponent?.disabled"
+        [class.tab-lifted]="viewType === 'tabs-lifted'"
+        [class.tab-bordered]="viewType === 'tabs-bordered'"
+
+        [class.tab-xs]="size === 'xs'"
+        [class.tab-sm]="size === 'sm'"
+        [class.tab-lg]="size === 'lg'"
+
+        (click)="!tab.labelComponent?.disabled && selectTab(tab)"
+    >
+        <ng-container *ngIf="tab.labelComponent?.labelContent; else defaultLabel">
+            <ng-container
+                *ngTemplateOutlet="tab.labelComponent?.labelContent || null">
+            </ng-container>
+        </ng-container>
+
+        <ng-template #defaultLabel>
+            {{tab.label}}
+        </ng-template>
+    </a>
+</div>
+
+<div class="pt-3 pb-3">
+    <ng-content></ng-content>
+</div>
