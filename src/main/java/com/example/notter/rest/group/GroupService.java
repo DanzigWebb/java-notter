@@ -30,7 +30,7 @@ public class GroupService {
     }
 
     public Group update(Integer groupId, GroupRequest group, UserEntity user) {
-        GroupEntity g = groupRepo.findByUserAndId(user.getId(), groupId);
+        GroupEntity g = groupRepo.findByUser(user.getId(), groupId);
         if (g == null) {
             throw new EntityNotFoundException();
         }
@@ -42,7 +42,7 @@ public class GroupService {
     }
 
     public void delete(UserEntity user, Integer groupId) {
-        GroupEntity g = groupRepo.findByUserAndId(user.getId(), groupId);
+        GroupEntity g = groupRepo.findByUser(user.getId(), groupId);
         groupRepo.delete(g);
     }
 
@@ -52,7 +52,7 @@ public class GroupService {
     }
 
     public Group getByUserAndId(UserEntity user, Integer groupId) {
-        GroupEntity g = groupRepo.findByUserAndId(user.getId(), groupId);
+        GroupEntity g = groupRepo.findByUser(user.getId(), groupId);
 
         if (g != null) {
             return Group.toModel(g);

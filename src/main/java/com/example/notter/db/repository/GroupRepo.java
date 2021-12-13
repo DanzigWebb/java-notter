@@ -11,5 +11,5 @@ public interface GroupRepo extends JpaRepository<GroupEntity, Integer> {
     List<GroupEntity> findAllByUser(Integer userId);
 
     @Query("SELECT g FROM note_group g WHERE g.user.id = ?1 AND g.id = ?2")
-    GroupEntity findByUserAndId(Integer userId, Integer noteId);
+    GroupEntity findByUser(Integer userId, Integer groupId);
 }
