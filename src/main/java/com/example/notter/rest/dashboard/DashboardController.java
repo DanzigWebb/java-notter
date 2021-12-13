@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("api/v1/dashboard")
@@ -30,6 +31,14 @@ public class DashboardController {
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         return dashboardService.create(dash, user.getUserEntity());
+    }
+
+    @GetMapping
+    public @ResponseBody
+    List<Dashboard> getAll(
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return dashboardService.getAll(user.getUserEntity());
     }
 
     @PutMapping("{dashboardId}")

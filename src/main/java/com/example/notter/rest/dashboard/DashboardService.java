@@ -8,7 +8,10 @@ import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.dashboard.model.Dashboard;
 import com.example.notter.rest.dashboard.model.DashboardCreateRequest;
 import com.example.notter.rest.dashboard.model.DashboardUpdateRequest;
+import com.example.notter.util.Util;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DashboardService {
@@ -47,5 +50,10 @@ public class DashboardService {
         }
 
         return Dashboard.toModel(dashboardRepo.save(dash));
+    }
+
+    public List<Dashboard> getAll(UserEntity user) {
+        var ds = dashboardRepo.findAllByUser(user.getId());
+        return Util.entityListToModel(ds, Dashboard::toModel);
     }
 }
