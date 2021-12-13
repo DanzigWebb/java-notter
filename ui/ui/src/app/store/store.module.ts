@@ -6,6 +6,7 @@ import { GroupFacade, GroupState } from '@app/store/group';
 import { TagFacade, TagState } from '@app/store/tag';
 import { NoteFacade, NoteState } from '@app/store/note';
 import { NoteMenuFacade, NoteMenuState } from '@app/store/ui/note-menu';
+import { DashboardFacade, DashboardState } from '@app/store/dashboard';
 
 @NgModule({
   providers: [
@@ -14,6 +15,7 @@ import { NoteMenuFacade, NoteMenuState } from '@app/store/ui/note-menu';
     TagFacade,
     NoteFacade,
     NoteMenuFacade,
+    DashboardFacade,
   ],
   imports: [
     NgxsModule.forRoot([
@@ -21,7 +23,8 @@ import { NoteMenuFacade, NoteMenuState } from '@app/store/ui/note-menu';
         GroupState,
         TagState,
         NoteState,
-        NoteMenuState
+        NoteMenuState,
+        DashboardState,
       ],
       {
         developmentMode: !environment.production,
