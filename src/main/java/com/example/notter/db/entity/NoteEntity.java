@@ -11,8 +11,11 @@ import java.util.List;
 public class NoteEntity extends BaseEntity {
 
     private String title;
+
     private Boolean checked;
+
     private Long orderIndex;
+
     @Lob
     private String description;
 
@@ -29,8 +32,4 @@ public class NoteEntity extends BaseEntity {
     @ManyToMany(cascade = CascadeType.DETACH)
     @ToString.Exclude
     private List<TagEntity> tags;
-
-    @ManyToMany(cascade = CascadeType.DETACH)
-    @ToString.Exclude
-    private List<NoteEntity> relatedNotes;
 }

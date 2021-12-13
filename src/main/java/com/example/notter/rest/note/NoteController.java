@@ -47,26 +47,6 @@ public class NoteController {
         return noteService.update(noteId, note, user.getUserEntity());
     }
 
-    @PostMapping("/{noteId}/relate/{relatedNote}")
-    public @ResponseBody
-    Note relate(
-            @PathVariable Integer noteId,
-            @PathVariable Integer relatedNote,
-            @AuthenticationPrincipal CustomUserDetails user
-    ) {
-        return noteService.relate(noteId, relatedNote, user.getUserEntity());
-    }
-
-    @PostMapping("/{noteId}/un-relate/{relatedNote}")
-    public @ResponseBody
-    Note unRelate(
-            @PathVariable Integer noteId,
-            @PathVariable Integer relatedNote,
-            @AuthenticationPrincipal CustomUserDetails user
-    ) {
-        return noteService.unRelate(noteId, relatedNote, user.getUserEntity());
-    }
-
     @DeleteMapping("/{noteId}")
     public @ResponseBody
     DeleteEntityResponse delete(

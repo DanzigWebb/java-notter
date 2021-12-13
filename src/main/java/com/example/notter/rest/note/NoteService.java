@@ -36,7 +36,7 @@ public class NoteService {
         n.setDescription(note.getDescription());
 
         if (note.getGroupId() != null) {
-            GroupEntity g = groupRepo.findByUserAndId(user.getId(), note.getGroupId());
+            GroupEntity g = groupRepo.findByUser(user.getId(), note.getGroupId());
             n.setGroup(g);
         }
 
@@ -72,27 +72,6 @@ public class NoteService {
         n.setChecked(note.getChecked());
 
         return Note.toModel(noteRepo.save(n));
-    }
-
-    public Note relate(Integer noteId, Integer relatedNote, UserEntity user) {
-        var note = noteRepo.findByUserAndId(user.getId(), noteId);
-        var related = noteRepo.findByUserAndId(user.getId(), relatedNote);
-        note.getRelatedNotes().add(related);
-        related.getRelatedNotes().add(note);
-        return Note.toModel(noteRepo.save(note));
-    }
-
-    public Note unRelate(Integer noteId, Integer relatedNote, UserEntity user) {
-        var note = noteRepo.findByUserAndId(user.getId(), noteId);
-        var related = noteRepo.findByUserAndId(user.getId(), relatedNote);
-
-        var newNoteList = excludeRelation(note.getRelatedNotes(), relatedNote);
-        var newRelatedList = excludeRelation(related.getRelatedNotes(), noteId);
-        note.setRelatedNotes(newNoteList);
-        related.setRelatedNotes(newRelatedList);
-
-        noteRepo.save(related);
-        return Note.toModel(noteRepo.save(note));
     }
 
     private List<NoteEntity> excludeRelation(List<NoteEntity> list, Integer excludeId) {
