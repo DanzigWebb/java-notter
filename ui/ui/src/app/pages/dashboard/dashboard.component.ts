@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GroupDto } from '@app/models';
+import { DashboardDto } from '@app/models';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { GroupFacade } from '@app/store/group';
 import { ActivatedRoute } from '@angular/router';
+import { DashboardFacade } from '@app/store/dashboard';
 
 @Component({
   template: `
-    <div class="page" *ngIf="group$ | async as group">
-      <ng-container *ngIf="group">
+    <div class="page p-4" *ngIf="dashboard$ | async as dashboard">
+      <ng-container *ngIf="dashboard">
         <app-dashboard-page
-          [group]="group">
+          [dashboard]="dashboard">
         </app-dashboard-page>
       </ng-container>
     </div>
@@ -19,23 +19,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DashboardComponent {
 
-  group$: Observable<GroupDto | null> = this.route.paramMap.pipe(
+  dashboard$: Observable<DashboardDto | null> = this.route.paramMap.pipe(
     map(map => map.get('id') || ''),
     filter(id => !!id),
-    switchMap((id: string) => this.groupFacade.groups$.pipe(
-      map((groups) => this.findGroupById(groups, Number(id)))
+    switchMap((id: string) => this.dash.state$.pipe(
+      map((state) => this.findGroupById(state.items, Number(id)))
     )),
   );
 
   constructor(
-    private groupFacade: GroupFacade,
+    private dash: DashboardFacade,
     private route: ActivatedRoute,
   ) {
   }
 
-  private findGroupById(groups: GroupDto[], id: number): GroupDto | null {
-    return groups.find(group => group.id === Number(id)) || null;
+  private findGroupById(dashboards: DashboardDto[], id: number): DashboardDto | null {
+    return dashboards.find(d => d.id === Number(id)) || null;
   }
-
-
 }

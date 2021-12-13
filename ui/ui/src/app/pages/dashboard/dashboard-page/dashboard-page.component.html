@@ -1,51 +1,11 @@
 <div class="board h-full">
-    <div class="board-table h-full overflow-hidden" cdkDropListGroup>
-        <div class="board-col flex overflow-y-scroll h-full p-2 border-l border-gray-400 border-opacity-25">
-            <div
-                class="note-list flex-1"
-                cdkDropList
-                [cdkDropListData]="notesMap.get('active')  || []"
-                (cdkDropListDropped)="dropNote($event)"
-            >
-                <div class="note-box overflow-x-hidden rounded-md bg-base-200 p-2 mb-2 flex items-center w-full"
-                     *ngFor="let note of notesMap.get('active')"
-                     cdkDrag
-                >
-                    <app-note-item
-                        class="w-full"
-                        [note]="note"
-                        (click)="checkNote(note)">
-                    </app-note-item>
+    <h2>{{dashboard.name}}</h2>
 
-                    <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
-                        <i class="fas fa-grip-vertical"></i>
-                    </button>
-                </div>
-            </div>
+    <!-- Todo: создать компонент <app-group/> -->
+    <ng-container *ngIf="groups.length">
+        <div *ngFor="let group of groups">
+            {{group.title}}
         </div>
+    </ng-container>
 
-        <div class="board-col flex overflow-y-scroll h-full p-2 border-l border-gray-400 border-opacity-25">
-            <div
-                class="note-list flex-1"
-                cdkDropList
-                [cdkDropListData]="notesMap.get('done') || []"
-                (cdkDropListDropped)="dropNote($event)"
-            >
-                <div class="note-box overflow-x-hidden rounded-md bg-base-200 p-2 mb-2 flex items-center w-full"
-                     *ngFor="let note of notesMap.get('done')"
-                     cdkDrag
-                >
-                    <app-note-item
-                        class="w-full"
-                        [note]="note"
-                        (click)="checkNote(note)">
-                    </app-note-item>
-
-                    <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
-                        <i class="fas fa-grip-vertical"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

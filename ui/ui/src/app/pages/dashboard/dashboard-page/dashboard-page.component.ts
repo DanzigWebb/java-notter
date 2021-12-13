@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { GroupDto, NoteDto } from '@app/models';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { DashboardDto } from '@app/models';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -8,44 +7,16 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./dashboard-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardPageComponent implements OnInit, OnChanges {
+export class DashboardPageComponent implements OnInit {
 
-  @Input() group!: GroupDto;
+  @Input() dashboard!: DashboardDto;
 
-  notesMap = new Map<string, NoteDto[]>();
+  get groups() {
+    return this.dashboard.groups;
+  }
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.group) {
-      this.categorizeNotes()
-    }
-  }
-
-  categorizeNotes() {
-    const map = new Map<string, NoteDto[]>();
-    map.set('active', this.group.notes.filter(n => !n.checked));
-    map.set('done', this.group.notes.filter(n => n.checked));
-    this.notesMap = map;
-  }
-
-  checkNote(note: NoteDto) {
-
-  }
-
-  dropNote(event: CdkDragDrop<NoteDto[], any>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
   }
 }
