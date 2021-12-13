@@ -42,12 +42,4 @@ export class NoteFacade {
   updateNoteOrder(dto: UpdateOrderDto[]) {
     return this.store.dispatch(new NoteActions.UpdateNoteOrder(dto));
   }
-
-  relate(noteId: number, relateId: number) {
-    return this.store.dispatch(new NoteActions.Relate(noteId, relateId));
-  }
-
-  unRelate(noteId: number, relateId: number) {
-    return this.store.dispatch(new NoteActions.UnRelate(noteId, relateId));
-  }
 }

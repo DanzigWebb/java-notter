@@ -211,10 +211,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.menu.close();
   }
 
-  relateNote(dto: NoteDto) {
-    this.noteFacade.relate(this.note!.id, dto.id)
-  }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

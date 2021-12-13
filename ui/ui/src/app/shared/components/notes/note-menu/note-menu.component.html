@@ -151,27 +151,5 @@
                 </am-menu-panel>
             </div>
         </div>
-
-        <div class="related">
-            <h3 class="mb-2 opacity-90">
-                <span>Связанные задачи</span>
-            </h3>
-
-            <app-note-search
-                class="flex-1"
-                placeholder="Добавить заметку"
-                [excludeNoteId]="note.id"
-                (onCheckNote)="relateNote($event)">
-            </app-note-search>
-
-            <ul class="menu py-2">
-                <li *ngFor="let related of note.relatedNotes">
-                    <a [routerLink]="['/group', related.groupId]" [queryParams]="{'noteId': related.id}">
-                        <span class="text-sm truncate">{{related.title}}</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
     </form>
 </div>

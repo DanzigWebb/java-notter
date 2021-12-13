@@ -68,14 +68,4 @@ export class NotesService {
     const url = `${this.url}order`;
     return this.http.post(url, dto);
   }
-
-  relate(noteId: number, relateId: number) {
-    const url = `${this.url}${noteId}/relate/${relateId}`;
-    return this.http.post(url, null);
-  }
-
-  unRelate(noteId: number, relateId: number) {
-    const url = `${this.url}${noteId}/un-relate/${relateId}`;
-    return this.http.post(url, null);
-  }
 }
