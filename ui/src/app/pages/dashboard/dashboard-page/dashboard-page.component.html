@@ -3,9 +3,10 @@
 
     <!-- Todo: создать компонент <app-group/> -->
     <ng-container *ngIf="groups.length">
-        <div *ngFor="let group of groups">
-            {{group.title}}
-        </div>
+        <app-group-card
+            *ngFor="let group of groups"
+            [group]="group">
+        </app-group-card>
     </ng-container>
 
 </div>

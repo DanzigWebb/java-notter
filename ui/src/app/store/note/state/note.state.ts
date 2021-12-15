@@ -3,7 +3,7 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { NoteDto } from '@app/models';
 import { NoteActions } from '@app/store/note/state/note.actions';
 import { NotesService } from '@app/notes';
-import { switchMap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { GroupFacade } from '@app/store/group';
 
 export interface NoteStateModel {
@@ -30,56 +30,44 @@ export class NoteState {
   @Action(NoteActions.Create)
   create({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.Create) {
     return this.notes.create(payload).pipe(
-      switchMap(() => this.groupFacade.getAll())
+      tap((dto) => {
+
+      })
     );
   }
 
   @Action(NoteActions.Update)
   update({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.Update) {
-    return this.notes.update(payload).pipe(
-      switchMap(() => this.groupFacade.getAll())
-    );
+    return this.notes.update(payload);
   }
 
   @Action(NoteActions.Remove)
   remove({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.Remove) {
-    return this.notes.delete(payload).pipe(
-      switchMap(() => this.groupFacade.getAll())
-    );
+    return this.notes.delete(payload);
   }
 
   @Action(NoteActions.AddTodo)
   addTodo({getState, setState}: StateContext<NoteStateModel>, {payload, noteId}: NoteActions.AddTodo) {
-    return this.notes.addTodo(payload, noteId).pipe(
-      switchMap(() => this.groupFacade.getAll())
-    );
+    return this.notes.addTodo(payload, noteId);
   }
 
   @Action(NoteActions.UpdateTodo)
   updateTodo({getState, setState}: StateContext<NoteStateModel>, {payload, noteId}: NoteActions.UpdateTodo) {
-    return this.notes.updateTodo(payload, noteId).pipe(
-      switchMap(() => this.groupFacade.getAll())
-    );
+    return this.notes.updateTodo(payload, noteId);
   }
 
   @Action(NoteActions.DeleteTodo)
   deleteTodo({getState, setState}: StateContext<NoteStateModel>, {todoId, noteId}: NoteActions.DeleteTodo) {
-    return this.notes.deleteTodo(todoId, noteId).pipe(
-      switchMap(() => this.groupFacade.getAll())
-    );
+    return this.notes.deleteTodo(todoId, noteId);
   }
 
   @Action(NoteActions.UpdateTodoOrder)
   updateTodoOrder({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.UpdateTodoOrder) {
-    return this.notes.updateTodoOrder(payload).pipe(
-      switchMap(() => this.groupFacade.getAll())
-    );
+    return this.notes.updateTodoOrder(payload);
   }
 
   @Action(NoteActions.UpdateNoteOrder)
   updateNoteOrder({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.UpdateNoteOrder) {
-    return this.notes.updateNoteOrder(payload).pipe(
-      switchMap(() => this.groupFacade.getAll())
-    );
+    return this.notes.updateNoteOrder(payload);
   }
 }

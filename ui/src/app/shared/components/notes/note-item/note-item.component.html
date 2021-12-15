@@ -1,23 +1,7 @@
 <div class="note flex rounded-md w-full" *ngIf="note">
-
-    <label class="cursor-pointer label mr-2" (click)="$event.stopPropagation()">
-        <input
-            type="checkbox"
-            class="checkbox checkbox-primary checkbox-sm"
-            #noteChecked [checked]="note.checked"
-            (change)="onCheckedChange(noteChecked.checked)"
-        >
-    </label>
-
     <div class="note-content w-full overflow-hidden">
-        <div class="note-head leading-3">
-            <h4 class="note-title text-base leading-5 truncate">{{note.title}}</h4>
-            <span class="text-xs font-light opacity-80">
-                {{note.updateAt | date: "dd.MM.YYYY"}}
-            </span>
-        </div>
-
-        <span class="tag" *ngIf="!!note.tags.length">
+        <header class="note-header">
+            <span class="tag" *ngIf="!!note.tags.length">
             <span
                 *ngFor="let tag of note.tags"
                 class="inline-flex"
@@ -27,32 +11,35 @@
                 <span class="text-xs">{{tag.name}}</span>
             </span>
         </span>
+        </header>
 
-        <div class="note-meta text-xs">
+        <div class="note-data">
+            <div class="note-head leading-3">
+                <h4 class="note-title text-base leading-5 truncate">{{note.title}}</h4>
+                <span class="text-xs font-light opacity-80">
+                {{note.updateAt | date: "dd.MM.YYYY"}}
+            </span>
+            </div>
+
+            <div class="note-meta text-xs">
             <span class="note-meta-item">
                 <span class="opacity-80">Задача</span>
             </span>
-            <span
-                class="note-meta-item"
-                *ngIf="!!note.description"
-                amTooltip="Есть описание"
-            >
+                <span
+                    class="note-meta-item"
+                    *ngIf="!!note.description"
+                    amTooltip="Есть описание"
+                >
                 <i class="far fa-comment-alt text-xs"></i>
             </span>
-            <span
-                class="note-meta-item"
-                *ngIf="!!note.todos.length"
-                [amTooltip]="checkedTodos.length + '/' + note.todos.length"
-            >
+                <span
+                    class="note-meta-item"
+                    *ngIf="!!note.todos.length"
+                    [amTooltip]="checkedTodos.length + '/' + note.todos.length"
+                >
                 <i class="fas fa-tasks"></i>
             </span>
+            </div>
         </div>
-    </div>
-
-    <div class="note-action flex items-center">
-<!--        <button class="btn btn-ghost btn-circle btn-sm"-->
-<!--                (click)="$event.stopPropagation(); onDeleteEmit()">-->
-<!--            <i class="fas fa-trash text-error"></i>-->
-<!--        </button>-->
     </div>
 </div>

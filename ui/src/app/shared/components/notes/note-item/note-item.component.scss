@@ -14,4 +14,10 @@
       padding: 0 4px;
     }
   }
+
+  &-data {
+    display: grid;
+    grid-template-columns: minmax(auto, 120px) 1fr;
+    align-items: center;
+  }
 }

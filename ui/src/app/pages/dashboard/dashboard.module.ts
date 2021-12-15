@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NotesModule } from '@app/notes';
+import { GroupsModule } from '@app/groups';
 
 
 @NgModule({
@@ -13,11 +14,12 @@ import { NotesModule } from '@app/notes';
     DashboardComponent,
     DashboardPageComponent
   ],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    DragDropModule,
-    NotesModule
-  ]
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        DragDropModule,
+        NotesModule,
+        GroupsModule
+    ]
 })
 export class DashboardModule { }
