@@ -7,6 +7,7 @@ export interface GroupCreateDto {
 
 export interface GroupDto {
   id: number;
+  dashboardId: number;
   title: string;
   description?: string;
 

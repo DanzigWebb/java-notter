@@ -1,8 +1,7 @@
 <div class="board h-full">
     <h2>{{dashboard.name}}</h2>
 
-    <!-- Todo: создать компонент <app-group/> -->
-    <ng-container *ngIf="groups.length">
+    <ng-container *ngIf="groups$ | async as groups">
         <app-group-card
             *ngFor="let group of groups"
             [group]="group">

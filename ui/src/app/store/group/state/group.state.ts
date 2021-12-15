@@ -44,6 +44,21 @@ export class GroupState {
     );
   }
 
+  @Action(GroupActions.GetOne)
+  getOne({getState, setState}: StateContext<GroupStateModel>, {id}: GroupActions.GetOne) {
+    return this.groups.getOne(id).pipe(
+      tap((group) => {
+        const groups = [...getState().groups];
+        const current = groups.findIndex(g => g.id === id);
+        if (current >= 0) {
+          groups[current] = group;
+        }
+
+        setState({groups});
+      }),
+    );
+  }
+
   @Action(GroupActions.Create)
   create({getState, setState}: StateContext<GroupStateModel>, {payload}: GroupActions.Create) {
     return this.groups.create(payload).pipe(

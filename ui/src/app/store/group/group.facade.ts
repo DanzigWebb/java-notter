@@ -18,6 +18,10 @@ export class GroupFacade {
     return this.store.dispatch(new GroupActions.GetAll());
   }
 
+  getOne(id: number) {
+    return this.store.dispatch(new GroupActions.GetOne(id));
+  }
+
   create(group: GroupCreateDto) {
     return this.store.dispatch(new GroupActions.Create(group));
   }

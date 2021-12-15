@@ -5,6 +5,12 @@ export namespace GroupActions {
     static readonly type = '[Group] Get items';
   }
 
+  export class GetOne {
+    static readonly type = '[Group] Get item';
+
+    constructor(public id: number) { }
+  }
+
   export class Create {
     static readonly type = '[Group] Add item';
 

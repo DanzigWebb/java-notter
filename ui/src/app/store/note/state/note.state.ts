@@ -3,8 +3,8 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { NoteDto } from '@app/models';
 import { NoteActions } from '@app/store/note/state/note.actions';
 import { NotesService } from '@app/notes';
-import { tap } from 'rxjs/operators';
 import { GroupFacade } from '@app/store/group';
+import { switchMap } from 'rxjs/operators';
 
 export interface NoteStateModel {
   notes: NoteDto[];
@@ -30,9 +30,7 @@ export class NoteState {
   @Action(NoteActions.Create)
   create({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.Create) {
     return this.notes.create(payload).pipe(
-      tap((dto) => {
-
-      })
+      switchMap(() => this.groupFacade.getOne(payload.groupId || -1))
     );
   }
 

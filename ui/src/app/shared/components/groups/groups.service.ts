@@ -28,7 +28,7 @@ export class GroupsService {
     return this.http.get<GroupDto[]>(url);
   }
 
-  getOne(id: string) {
+  getOne(id: number) {
     const url = this.url + id;
     return this.http.get<GroupDto>(url);
   }

@@ -3,6 +3,7 @@ import { GroupDto, NoteCreateDto, NoteDto, UpdateOrderDto } from '@app/models';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NoteFacade } from '@app/store/note';
 import { tap } from 'rxjs/operators';
+import { Actions } from '@ngxs/store';
 
 @Component({
   selector: 'app-group-card',
@@ -17,11 +18,15 @@ export class GroupCardComponent implements OnInit, OnChanges {
   notes: NoteDto[] = [];
 
   constructor(
-    private noteFacade: NoteFacade
+    private noteFacade: NoteFacade,
+    private actions$: Actions
   ) {
   }
 
   ngOnInit(): void {
+    this.actions$.subscribe(data => {
+      console.log(data);
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
