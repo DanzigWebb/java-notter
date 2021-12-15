@@ -1,11 +1,9 @@
 .note-menu {
-  @media (max-width: 600px) {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    z-index: 1;
+  max-height: 80vh;
+  overflow-y: scroll;
+
+  @media (max-width: 500px) {
+    width: 92vw;
   }
 }
 

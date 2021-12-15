@@ -1,4 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { GroupDto, NoteCreateDto, NoteDto, UpdateOrderDto } from '@app/models';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NoteFacade } from '@app/store/note';
@@ -14,6 +23,8 @@ import { Actions } from '@ngxs/store';
 export class GroupCardComponent implements OnInit, OnChanges {
 
   @Input() group: GroupDto | undefined;
+
+  @Output() onClickNote = new EventEmitter<NoteDto>();
 
   notes: NoteDto[] = [];
 

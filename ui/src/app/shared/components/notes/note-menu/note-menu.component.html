@@ -1,30 +1,14 @@
 <div
-    [style.width.px]="width"
     class="h-full w-full overflow-hidden note-menu z-20"
     *ngIf="isOpen"
-    [@slideInOut]
 >
     <form
-        class="p-4 sm:pt-0 pt-0 bg-base-200 shadow-lg relative overflow-y-scroll h-full w-full"
+        class="sm:pt-0 pt-0 shadow-lg relative overflow-y-scroll h-full w-full"
         [style.width.px]="width"
         [formGroup]="form"
         *ngIf="note"
     >
-        <div class="flex justify-end items-center mb-2 sticky top-0 py-3 z-10 bg-base-200">
-            <button
-                class="btn btn-ghost btn-sm"
-                amTooltip="Закрыть"
-                placement="bottom"
-                type="button"
-                (click)="onClose.emit()"
-            >
-                <i class="fas fa-chevron-right"
-                   [class.text-warning]="form.touched">
-                </i>
-            </button>
-
-            <div class="flex-1"></div>
-
+        <div class="flex justify-end bg-base-100 items-center mb-2 sticky top-0 py-3 z-10">
             <button
                 class="btn btn-ghost btn-sm"
                 amTooltip="Сохранить"
@@ -42,6 +26,18 @@
                 (click)="deleteNote()"
             >
                 <i class="fas fa-trash text-error"></i>
+            </button>
+            <div class="flex-1"></div>
+            <button
+                class="btn btn-ghost btn-sm"
+                amTooltip="Закрыть"
+                placement="bottom"
+                type="button"
+                (click)="onClose.emit()"
+            >
+                <i class="fas fa-times"
+                   [class.text-warning]="form.touched">
+                </i>
             </button>
         </div>
 
@@ -134,7 +130,7 @@
                         [placeholder]="tags.length ? 'Тэги' : 'Созданных тэгов нет'"
                     >
                         <am-option
-                            *ngFor="let tag of tags"
+                            *ngFor="let tag of (tags$ | async)"
                             [value]="tag.id"
                         >
                             {{tag.name}}

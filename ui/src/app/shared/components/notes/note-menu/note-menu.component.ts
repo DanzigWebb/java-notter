@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -15,7 +15,6 @@ import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NoteMenuFacade } from '@app/store/ui/note-menu';
 
@@ -24,21 +23,6 @@ import { NoteMenuFacade } from '@app/store/ui/note-menu';
   templateUrl: './note-menu.component.html',
   styleUrls: ['./note-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({
-          opacity: 0,
-          transform: 'translateX(100%)',
-          overflow: 'hidden'
-        }),
-        animate('340ms cubic-bezier(0.4, 0, 0.2, 1)', style({width: '*', opacity: 1, transform: 'translateX(0)'}))
-      ]),
-      transition(':leave', [
-        animate('260ms ease-in-out', style({transform: 'translateX(100%)', overflow: 'hidden'}))
-      ])
-    ])
-  ]
 })
 export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -59,6 +43,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   isShow = true;
   todos: TodoDto[] = [];
+  tags$ = this.tagFacade.tags$
 
   get checkedTodos() {
     return this.note?.todos.filter(t => t.checked) || [];
@@ -71,7 +56,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     private fb: FormBuilder,
     private tagFacade: TagFacade,
     private noteFacade: NoteFacade,
-    private ref: ChangeDetectorRef,
   ) {
   }
 
@@ -116,8 +100,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.tags.length
       ? this.form.get('tags')?.enable()
       : this.form.get('tags')?.disable();
-
-    this.ref.markForCheck();
   }
 
   private updateControl<T>(controlName: string, value: T) {

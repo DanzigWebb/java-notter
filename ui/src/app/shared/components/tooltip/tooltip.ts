@@ -49,6 +49,7 @@ export class Tooltip implements OnDestroy {
     const div = <HTMLElement>this.rendered.createElement('div');
     this.rendered.setAttribute(div, 'class', 'bg-base-200 p-1 px-3 shadow-lg z-10');
     this.rendered.setProperty(div, 'innerHTML', this.amTooltip);
+    this.rendered.setStyle(div, 'z-index', 999);
     this.messageRef = div;
 
     this.rendered.appendChild(this.doc.body, this.messageRef);

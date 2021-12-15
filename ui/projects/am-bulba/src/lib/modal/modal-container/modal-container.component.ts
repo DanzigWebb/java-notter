@@ -44,7 +44,7 @@ const animations = [
 @Component({
   template: `
       <div class="modal modal-open" [@backdrop] (click)="close()">
-          <div [@box] class="modal-box" (click)="$event.stopPropagation()">
+          <div [@box] class="modal-box rounded-md" style="width: initial; padding: 0.6rem;" (click)="$event.stopPropagation()">
               <ng-template #modalContainer></ng-template>
           </div>
       </div>

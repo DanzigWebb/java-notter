@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { DashboardDto } from '@app/models';
+import { DashboardDto, NoteDto } from '@app/models';
 import { GroupFacade } from '@app/store/group';
 import { map } from 'rxjs/operators';
+import { ModalService } from 'am-bulba';
+import { NoteMenuModalComponent } from '@app/shared/components/notes/note-menu-modal/note-menu-modal.component';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -18,9 +20,14 @@ export class DashboardPageComponent implements OnInit {
   );
 
   constructor(
-    private facade: GroupFacade
+    private facade: GroupFacade,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
+  }
+
+  editNote(note: NoteDto) {
+    this.modalService.open(NoteMenuModalComponent, note)
   }
 }

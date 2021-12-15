@@ -28,7 +28,8 @@
                     <i class="fas fa-grip-vertical"></i>
                 </button>
                 <app-note-item
-                    [note]="note">
+                    [note]="note"
+                    (click)="onClickNote.emit(note)">
                 </app-note-item>
             </div>
         </div>
