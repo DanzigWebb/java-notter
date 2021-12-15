@@ -39,7 +39,8 @@ public class NoteService {
             GroupEntity g = groupRepo.findByUser(user.getId(), note.getGroupId());
             n.setGroup(g);
         }
-
+        var noteEntity = noteRepo.save(n);
+        noteEntity.setOrderIndex(Long.valueOf(noteEntity.getId()));
         return Note.toModel(noteRepo.save(n));
     }
 
@@ -72,15 +73,6 @@ public class NoteService {
         n.setChecked(note.getChecked());
 
         return Note.toModel(noteRepo.save(n));
-    }
-
-    private List<NoteEntity> excludeRelation(List<NoteEntity> list, Integer excludeId) {
-        if (list == null) {
-            return new ArrayList<>();
-        }
-        return list.stream()
-                .filter(n -> !Objects.equals(n.getId(), excludeId))
-                .collect(Collectors.toList());
     }
 
     private static TodoEntity createTodo(Todo t, NoteEntity note) {
