@@ -1,0 +1,52 @@
+<div class="card shadow p-2" *ngIf="group">
+    <header class="card-header flex justify-between items-center">
+        <h2 class="card-title">{{group.title}}</h2>
+        <button class="btn btn-circle btn-ghost" [amMenuTrigger]="menu">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+    </header>
+
+    <div class="card-content">
+        <div
+            class="note-list"
+            cdkDropList
+            [cdkDropListData]="notes"
+            (cdkDropListDropped)="dropNote($event)"
+        >
+            <div
+                cdkDrag
+                class="note-box rounded-md cursor-pointer hover:bg-base-300 py-1 mb-1 flex items-center w-full"
+                *ngFor="let note of notes"
+            >
+                <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
+                    <i class="fas fa-grip-vertical"></i>
+                </button>
+                <app-note-item
+                    [note]="note">
+                </app-note-item>
+            </div>
+        </div>
+        <div class="card-create my-2">
+            <app-create-note-form (onCreateNote)="createNote($event)"></app-create-note-form>
+        </div>
+    </div>
+</div>
+
+<am-menu-panel #menu="amMenu">
+    <li>
+        <a>
+             <span class="inline-block w-6 h-6 mr-2 stroke-current">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span>Редактировать</span>
+        </a>
+    </li>
+    <li>
+        <a>
+             <span class="inline-block w-6 h-6 mr-2 stroke-current">
+                <i class="fas fa-trash"></i>
+            </span>
+            <span>Удалить</span>
+        </a>
+    </li>
+</am-menu-panel>
