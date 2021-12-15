@@ -1,5 +1,11 @@
 <div class="board h-full">
-    <h2>{{dashboard.name}}</h2>
+    <textarea-auto>
+        <textarea
+            appTextareaAuto
+            class="text-2xl mb-4 py-2"
+            [value]="dashboard.name"
+        ></textarea>
+    </textarea-auto>
 
     <ng-container *ngIf="groups$ | async as groups">
         <app-group-card

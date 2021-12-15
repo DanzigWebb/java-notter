@@ -7,6 +7,7 @@ import { MenuModule } from 'am-bulba';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { NotesModule } from '@app/notes';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
 
 
 
@@ -15,14 +16,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     CreateGroupFormComponent,
     GroupCardComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MenuModule,
-    TooltipModule,
-    NotesModule,
-    DragDropModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MenuModule,
+        TooltipModule,
+        NotesModule,
+        DragDropModule,
+        TextareaAutoModule
+    ],
     exports: [
         CreateGroupFormComponent,
         GroupCardComponent

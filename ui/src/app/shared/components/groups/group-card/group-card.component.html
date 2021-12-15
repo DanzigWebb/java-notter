@@ -1,6 +1,12 @@
 <div class="card shadow p-2" *ngIf="group">
     <header class="card-header flex justify-between items-center">
-        <h2 class="card-title">{{group.title}}</h2>
+        <textarea-auto>
+            <textarea
+                appTextareaAuto
+                class="text-xl py-2"
+                [value]="group.title"
+            ></textarea>
+        </textarea-auto>
         <button class="btn btn-circle btn-ghost" [amMenuTrigger]="menu">
             <i class="fas fa-ellipsis-v"></i>
         </button>
@@ -15,7 +21,7 @@
         >
             <div
                 cdkDrag
-                class="note-box rounded-md cursor-pointer bg-base-200 hover:bg-base-300 py-1 mb-1 flex items-center w-full"
+                class="note-box rounded-md cursor-pointer bg-base-200 hover:bg-base-300 transition-colors py-1 mb-1 flex items-center w-full"
                 *ngFor="let note of notes"
             >
                 <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>

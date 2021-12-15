@@ -7,6 +7,8 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NotesModule } from '@app/notes';
 import { GroupsModule } from '@app/groups';
+import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,12 +16,14 @@ import { GroupsModule } from '@app/groups';
     DashboardComponent,
     DashboardPageComponent
   ],
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        DragDropModule,
-        NotesModule,
-        GroupsModule
-    ]
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    DragDropModule,
+    NotesModule,
+    GroupsModule,
+    TextareaAutoModule,
+    FormsModule
+  ]
 })
 export class DashboardModule { }
