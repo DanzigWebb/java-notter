@@ -12,6 +12,7 @@ import java.util.List;
 public class Group {
 
     Integer id;
+    Integer dashboardId;
     String title;
     String description;
     LocalDateTime createAt;
@@ -26,6 +27,7 @@ public class Group {
 
         var g = new Group();
         g.setId(entity.getId());
+        g.setDashboardId(entity.getDashboard().getId());
         g.setTitle(entity.getTitle());
         g.setDescription(entity.getDescription());
         g.setCreateAt(entity.getCreatedAt());
