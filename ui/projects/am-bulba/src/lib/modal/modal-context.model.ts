@@ -5,6 +5,7 @@ import { Subject } from "rxjs";
 export class ModalContext<T, Y = any> {
 
   opened$ = new Subject<Y>();
+  closeEmit$ = new Subject();
 
   componentRef!: ComponentRef<any>;
   containerRef!: ViewContainerRef;
@@ -20,6 +21,11 @@ export class ModalContext<T, Y = any> {
   }
 
   close(...args: any[]) {
+    this.closeEmit$.next(...args);
+    this.closeEmit$.complete();
+  }
+
+  destroy(...args: any[]) {
     this.opened$.next(...args);
     this.hide();
   }

@@ -1,8 +1,16 @@
-import { Component, HostBinding, Inject, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
-import { ModalContainer } from "../modal-container.model";
-import { ModalContext } from "../modal-context.model";
-import { animate, animateChild, query, style, transition, trigger } from "@angular/animations";
-import { DOCUMENT } from "@angular/common";
+import {
+  Component,
+  HostBinding,
+  Inject,
+  Input,
+  OnDestroy,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
+import { ModalContainer } from '../modal-container.model';
+import { ModalContext } from '../modal-context.model';
+import { animate, animateChild, query, style, transition, trigger } from '@angular/animations';
+import { DOCUMENT } from '@angular/common';
 
 const animations = [
   trigger('host', [
@@ -20,12 +28,22 @@ const animations = [
   trigger('box', [
     transition(':enter', [
       style({
-        transform: 'translateY(40px)',
+        transform: 'translateY(80px)',
         opacity: 0
       }),
-      animate('160ms cubic-bezier(.4,0,.2,1)', style({
+      animate('220ms cubic-bezier(.4,0,.2,1)', style({
         transform: 'translateY(0)',
         opacity: 1,
+      })),
+    ]),
+    transition(':leave', [
+      style({
+        transform: 'translateY(0)',
+        opacity: 1,
+      }),
+      animate('140ms cubic-bezier(.4,0,.2,1)', style({
+        transform: 'translateY(40px)',
+        opacity: 0
       })),
     ]),
   ]),
@@ -38,20 +56,41 @@ const animations = [
         opacity: 1,
       })),
     ]),
+    transition(':leave', [
+      style({
+        opacity: 1,
+      }),
+      animate('90ms ease-in', style({
+        opacity: 0,
+      })),
+    ]),
   ]),
 ];
 
 @Component({
   template: `
-      <div class="modal modal-open" [@backdrop] (click)="close()">
-          <div [@box] class="modal-box rounded-md" style="width: initial; padding: 0.6rem;" (click)="$event.stopPropagation()">
-              <ng-template #modalContainer></ng-template>
-          </div>
+    <div class="modal modal-open" [@backdrop] (click)="close()">
+      <div
+        class="modal-box rounded-md"
+        [ngClass]="bgClass"
+        (click)="$event.stopPropagation()"
+
+        [@box]
+        *ngIf="isShow"
+        (@box.done)="!isShow && emitClose()"
+      >
+        <ng-template #modalContainer></ng-template>
       </div>
+    </div>
   `,
+  styleUrls: ['./modal-container.component.scss'],
   animations,
 })
 export class ModalContainerComponent implements ModalContainer, OnDestroy {
+
+  isShow = true;
+
+  @Input() bgClass = 'bg-base-100';
 
   @HostBinding('@host')
   host: any;
@@ -60,6 +99,7 @@ export class ModalContainerComponent implements ModalContainer, OnDestroy {
   container!: ViewContainerRef;
 
   context!: ModalContext<any>;
+  closeData: any;
 
   constructor(
     @Inject(DOCUMENT) private doc: Document
@@ -67,8 +107,13 @@ export class ModalContainerComponent implements ModalContainer, OnDestroy {
     this.doc.documentElement.classList.add('overflow-hidden');
   }
 
-  close() {
-    return this.context?.close()
+  close(data?: any) {
+    this.closeData = data;
+    this.isShow = false;
+  }
+
+  emitClose() {
+    return this.context?.destroy(this.closeData);
   }
 
   ngOnDestroy() {

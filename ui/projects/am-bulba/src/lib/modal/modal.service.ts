@@ -6,13 +6,14 @@ import {
   ReflectiveInjector,
   Type,
 } from '@angular/core';
-import { ModalContainerComponent } from "./modal-container/modal-container.component";
-import { ModalContext } from "./modal-context.model";
-import { Observable } from "rxjs";
+import { ModalContainerComponent } from './modal-container/modal-container.component';
+import { ModalContext } from './modal-context.model';
+import { Observable } from 'rxjs';
 
 interface ModalOptions {
   hideOnBackdropClick?: boolean;
-  containerType: Type<any>;
+  containerType?: Type<any>;
+  backgroundClass?: string;
 }
 
 const defaultOptions = {
@@ -35,8 +36,8 @@ export class ModalService {
     this.setupModalContainerFactory();
   }
 
-  open<T = any>(type: Type<any>, data?: any, options: ModalOptions = defaultOptions): Observable<T> {
-
+  open<T = any>(type: Type<any>, data?: any, modalOptions: ModalOptions = defaultOptions): Observable<T> {
+    const options = Object.assign(defaultOptions, modalOptions);
     this.setupModalContainer();
 
     const modalContainerRef = this.appRef.bootstrap(this.modalContainerFactory, this.modalContainer);
@@ -58,6 +59,14 @@ export class ModalService {
     if (!options || options.hideOnBackdropClick) {
       modalContainerRef.instance.context = context;
     }
+
+    if (options.backgroundClass) {
+      modalContainerRef.instance.bgClass = options.backgroundClass;
+    }
+
+    context.closeEmit$.subscribe(() => {
+      modalContainerRef.instance.close();
+    });
 
     return <Observable<T>>context.opened$.asObservable();
   }
