@@ -64,8 +64,10 @@ export class ModalService {
       modalContainerRef.instance.bgClass = options.backgroundClass;
     }
 
-    context.closeEmit$.subscribe(() => {
-      modalContainerRef.instance.close();
+    // Сообщаем обертке модального окна, что пора закрываться
+    // Модальное окно будет закрыто после проигрывания анимации
+    context.closeEmit$.subscribe((...data) => {
+      modalContainerRef.instance.close(...data);
     });
 
     return <Observable<T>>context.opened$.asObservable();

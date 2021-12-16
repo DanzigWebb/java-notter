@@ -41,8 +41,8 @@ const animations = [
         transform: 'translateY(0)',
         opacity: 1,
       }),
-      animate('140ms cubic-bezier(.4,0,.2,1)', style({
-        transform: 'translateY(40px)',
+      animate('100ms cubic-bezier(.4,0,.2,1)', style({
+        transform: 'translateY(-40px)',
         opacity: 0
       })),
     ]),
@@ -108,7 +108,9 @@ export class ModalContainerComponent implements ModalContainer, OnDestroy {
   }
 
   close(data?: any) {
-    this.closeData = data;
+    if (data) {
+      this.closeData = data;
+    }
     this.isShow = false;
   }
 
