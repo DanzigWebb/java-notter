@@ -21,4 +21,11 @@ export class NoteMenuModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  close() {
+    this.context.close(this.note);
+  }
+
+  saveNote() {
+
+  }
 }

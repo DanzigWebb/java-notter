@@ -28,6 +28,8 @@ export class DashboardPageComponent implements OnInit {
   }
 
   editNote(note: NoteDto) {
-    this.modalService.open(NoteMenuModalComponent, note)
+    this.modalService.open(NoteMenuModalComponent, note, {
+      backgroundClass: 'bg-base-200'
+    })
   }
 }
