@@ -12,7 +12,8 @@ import { Subject } from 'rxjs';
 })
 export class TodoItemComponent implements OnInit, OnDestroy {
 
-  @Input() todo: TodoDto | null = null;
+  @Input() todo!: TodoDto;
+  @Output() todoChange = new EventEmitter<TodoDto>();
 
   @Output() onToggle = new EventEmitter<boolean>();
   @Output() onDelete = new EventEmitter<TodoDto>();

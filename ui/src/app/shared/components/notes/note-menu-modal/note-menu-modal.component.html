@@ -4,18 +4,10 @@
             class="btn btn-ghost btn-sm"
             amTooltip="Сохранить"
             placement="bottom"
-            (click)="saveNote()"
+            (click)="saveNote(this.note)"
         >
-            <i class="fas fa-save transition-colors"></i>
+            <i class="fas fa-save"></i>
         </button>
-<!--        <button-->
-<!--            class="btn btn-ghost btn-sm"-->
-<!--            amTooltip="Удалить"-->
-<!--            placement="bottom"-->
-<!--            (click)="deleteNote()"-->
-<!--        >-->
-<!--            <i class="fas fa-trash text-error"></i>-->
-<!--        </button>-->
         <div class="flex-1"></div>
         <button
             class="btn btn-ghost btn-sm"
@@ -27,5 +19,8 @@
             <i class="fas fa-times"></i>
         </button>
     </header>
-    <app-note-menu [note]="note" (onClose)="close()"></app-note-menu>
+    <app-note-menu
+        [(note)]="note"
+        (onClose)="close()">
+    </app-note-menu>
 </div>

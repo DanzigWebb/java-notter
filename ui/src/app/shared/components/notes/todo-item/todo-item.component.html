@@ -14,7 +14,7 @@
             <textarea
                 appTextareaAuto
                 (blur)="changeEmit(control.value)"
-                [formControl]="control"
+                [(ngModel)]="todo.title"
             >{{todo.title}}</textarea>
         </textarea-auto>
     </div>

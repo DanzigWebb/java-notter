@@ -12,7 +12,6 @@ import {
 import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto, UpdateOrderDto } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
 import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -27,6 +26,8 @@ import { NoteMenuFacade } from '@app/store/ui/note-menu';
 export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() note: NoteDto | null = null;
+  @Output() noteChange = new EventEmitter();
+
   @Input() tags: TagDto[] = [];
   @Input() isOpen: boolean | null = false;
   @Input() width: number | string | undefined;
@@ -43,7 +44,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   isShow = true;
   todos: TodoDto[] = [];
-  tags$ = this.tagFacade.tags$
+  tags$ = this.tagFacade.tags$;
 
   get checkedTodos() {
     return this.note?.todos.filter(t => t.checked) || [];
@@ -60,18 +61,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.form.valueChanges.pipe(
-      debounceTime(1500),
-      filter(() => this.form.touched),
-      tap(() => {
-        if (this.form.valid && this.note) {
-          const note = this.updateNoteByForm();
-          this.onUpdateNote.emit(note);
-        }
-      }),
-      takeUntil(this.destroy$),
-    ).subscribe();
-
     this.getTodos();
   }
 
@@ -87,7 +76,9 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   getTodos() {
     const todos = this.note ? [...this.note.todos] : [];
-    this.todos = todos.sort((a, b) => (a.order || 0) - (b.order || 0));
+    this.todos = todos.sort(
+      (a, b) => (a.order || 0) - (b.order || 0)
+    );
   }
 
   private updateForm() {

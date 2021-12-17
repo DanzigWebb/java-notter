@@ -2,18 +2,18 @@
     <form
         class="sm:pt-0 pt-0 shadow-lg relative bg-base-200 overflow-y-scroll h-full w-full"
         [style.width.px]="width"
-        [formGroup]="form"
         *ngIf="note"
     >
         <textarea-auto class="w-full block">
-            <textarea appTextareaAuto formControlName="title" class="text-xl py-2 mb-1"></textarea>
+            <textarea appTextareaAuto [(ngModel)]="note.title" name="title" class="text-xl py-2 mb-1"></textarea>
         </textarea-auto>
 
         <div class="form-control">
             <div
                 class="textarea textarea-ghost p-1 max-w-xl leading-5"
                 contenteditable
-                formControlName="description"
+                [(ngModel)]="note.description"
+                name="description"
                 placeholder="...">
             </div>
         </div>
@@ -46,10 +46,11 @@
                 >
 
             </div>
-            <div class="todo-list pl-2"
-                 cdkDropList
-                 [cdkDropListData]="todos"
-                 (cdkDropListDropped)="dropTodo($event)"
+            <div
+                class="todo-list pl-2"
+                cdkDropList
+                [cdkDropListData]="todos"
+                (cdkDropListDropped)="dropTodo($event)"
             >
                 <div
                     *ngFor="let todo of todos, index as i"
@@ -59,13 +60,15 @@
                     <button class="btn btn-circle btn-sm btn-ghost cursor-move" cdkDragHandle>
                         <i class="fas fa-grip-vertical"></i>
                     </button>
-                    <app-todo-item
-                        class="flex-1"
-                        [todo]="todo"
-                        (onToggle)="completeTodo($event, todo)"
-                        (onDelete)="deleteTodo(todo)"
-                        (onChange)="updateTodo($event, todo)">
-                    </app-todo-item>
+                    <ng-container *ngIf="note.todos[i]">
+                        <app-todo-item
+                            class="flex-1"
+                            [(todo)]="note.todos[i]"
+                            (onToggle)="completeTodo($event, todo)"
+                            (onDelete)="deleteTodo(todo)"
+                            (onChange)="updateTodo($event, todo)">
+                        </app-todo-item>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -89,7 +92,8 @@
                     <am-select
                         style="width: 100%; overflow: hidden;"
                         [multiply]="true"
-                        formControlName="tags"
+                        [(ngModel)]="note.tags"
+                        name="tags"
                         [placeholder]="tags.length ? 'Тэги' : 'Созданных тэгов нет'"
                     >
                         <am-option
