@@ -106,10 +106,8 @@ export class SelectComponent implements OnInit, AfterContentInit, ControlValueAc
 
   control: NgControl;
 
-  opened = false;
   selectModel = new SelectModel();
   value: any = null;
-  isInvalid: boolean | null | undefined;
   isTouched: boolean | null | undefined;
 
   isDropdownShow = false;
