@@ -23,20 +23,20 @@ export class NoteFacade {
     return this.store.dispatch(new NoteActions.Remove(id));
   }
 
-  addTodo(dto: TodoCreateDto, noteId: number) {
-    return this.store.dispatch(new NoteActions.AddTodo(dto, noteId));
+  addTodo(dto: TodoCreateDto, note: NoteDto) {
+    return this.store.dispatch(new NoteActions.AddTodo(dto, note));
   }
 
-  updateTodo(dto: TodoDto, noteId: number) {
-    return this.store.dispatch(new NoteActions.UpdateTodo(dto, noteId));
+  updateTodo(dto: TodoDto, note: NoteDto) {
+    return this.store.dispatch(new NoteActions.UpdateTodo(dto, note));
   }
 
-  deleteTodo(todoId: number, noteId: number) {
-    return this.store.dispatch(new NoteActions.DeleteTodo(todoId, noteId));
+  deleteTodo(todoId: number, note: NoteDto) {
+    return this.store.dispatch(new NoteActions.DeleteTodo(todoId, note));
   }
 
-  updateTodoOrder(dto: UpdateOrderDto[]) {
-    return this.store.dispatch(new NoteActions.UpdateTodoOrder(dto));
+  updateTodoOrder(dto: UpdateOrderDto[], note: NoteDto) {
+    return this.store.dispatch(new NoteActions.UpdateTodoOrder(dto, note));
   }
 
   updateNoteOrder(dto: UpdateOrderDto[]) {

@@ -6,6 +6,8 @@ import { FormFieldComponent } from './form-field/form-field.component';
 import { FormFieldErrorComponent } from './form-field-error/form-field-error.component';
 import { SelectComponent } from './select/select.component';
 import { OptionComponent } from './option/option.component';
+import { AutocompleteDirective } from './autocomplete/autocomplete.directive';
+import { AutocompletePanel } from './autocomplete/autocomplete-panel';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { OptionComponent } from './option/option.component';
     FormFieldErrorComponent,
     SelectComponent,
     OptionComponent,
+    AutocompleteDirective,
+    AutocompletePanel
   ],
   imports: [
     CommonModule,
@@ -27,6 +31,8 @@ import { OptionComponent } from './option/option.component';
     FormFieldErrorComponent,
     SelectComponent,
     OptionComponent,
+    AutocompleteDirective,
+    AutocompletePanel
   ],
 })
 export class FormGroupModule {

@@ -14,6 +14,7 @@ import { DOCUMENT } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgControl } from '@angular/forms';
+import { OptionComponent } from '../option/option.component';
 
 @Directive({
   selector: '[amAutocomplete]',
@@ -27,6 +28,7 @@ export class AutocompleteDirective implements OnInit, OnDestroy {
   @Input() amAutocomplete!: AutocompletePanel;
 
   @Output() onChange = new EventEmitter<any>();
+  @Output() onOptionCheck = new EventEmitter<OptionComponent>()
 
   private view: EmbeddedViewRef<any> | null = null;
   private panelRef: HTMLElement | null = null;
@@ -55,8 +57,11 @@ export class AutocompleteDirective implements OnInit, OnDestroy {
     this.amAutocomplete.onChange
       .pipe(takeUntil(this.destroy$))
       .subscribe((option) => {
-        this.onChange.emit(option);
-        this.setValue(option.value || option.elementRef.nativeElement.innerText);
+        const value = option.value || option.elementRef.nativeElement.innerText
+        this.setValue(value);
+
+        this.onChange.emit(value);
+        this.onOptionCheck.emit(option);
         this.destroy();
       });
   }
@@ -64,8 +69,6 @@ export class AutocompleteDirective implements OnInit, OnDestroy {
   setValue(value: any) {
     if (this.control) {
       this.control.control?.setValue(value);
-    } else {
-      this.el.nativeElement.value = value;
     }
   }
 

@@ -10,12 +10,13 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto, UpdateOrderDto } from '@app/models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
-import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NoteMenuFacade } from '@app/store/ui/note-menu';
+import { OptionComponent } from 'am-bulba';
 
 @Component({
   selector: 'app-note-menu',
@@ -25,7 +26,7 @@ import { NoteMenuFacade } from '@app/store/ui/note-menu';
 })
 export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() note: NoteDto | null = null;
+  @Input() note!: NoteDto;
   @Output() noteChange = new EventEmitter();
 
   @Input() tags: TagDto[] = [];
@@ -45,6 +46,8 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   isShow = true;
   todos: TodoDto[] = [];
   tags$ = this.tagFacade.tags$;
+
+  tagSearchControl = new FormControl();
 
   get checkedTodos() {
     return this.note?.todos.filter(t => t.checked) || [];
@@ -97,36 +100,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     this.form.get(controlName)?.setValue(value);
   }
 
-  saveNote() {
-    const note = this.updateNoteByForm();
-    this.onUpdateNote.emit(note);
-  }
-
-  private updateNoteByForm(): NoteDto {
-    const data = this.form.value;
-
-    const title: string = data.title || '';
-    const description: string = data.description || '';
-    const tags = this.findTags(data.tags) || [];
-
-    return {...this.note!, title, description, tags};
-  }
-
-  private findTags(ids: number[]): TagDto[] {
-    if (!Array.isArray(ids)) {
-      return [];
-    }
-
-    return ids.reduce((acc, id) => {
-      const tag = this.tags.find(t => t.id === id);
-      if (tag) {
-        acc.push(tag);
-      }
-
-      return acc;
-    }, [] as TagDto[]);
-  }
-
   createTag(dto: TagCreateDto) {
     this.tagFacade.create(dto).subscribe();
   }
@@ -137,7 +110,7 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
         title: input.value
       };
 
-      this.noteFacade.addTodo(dto, this.note.id)
+      this.noteFacade.addTodo(dto, this.note)
         .subscribe(() => {
           input.value = '';
         });
@@ -147,17 +120,18 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteTodo(todo: TodoDto) {
-    this.noteFacade.deleteTodo(todo.id, this.note!.id);
+    this.noteFacade.deleteTodo(todo.id, this.note!);
   }
 
   completeTodo(checked: boolean, todo: TodoDto) {
     const updated: TodoDto = {...todo, checked};
-    this.noteFacade.updateTodo(updated, this.note!.id);
+    this.noteFacade.updateTodo(updated, this.note!);
   }
 
   updateTodo(title: string, todo: TodoDto) {
     const updated: TodoDto = {...todo, title};
-    this.noteFacade.updateTodo(updated, this.note!.id);
+    console.log(updated);
+    this.noteFacade.updateTodo(updated, this.note!);
   }
 
   deleteNote() {
@@ -165,19 +139,35 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   dropTodo(event: CdkDragDrop<TodoDto[], any>) {
-    transferArrayItem(
-      event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex,
-    );
+    moveItemInArray(this.todos, event.previousIndex, event.currentIndex);
 
-    const dto: UpdateOrderDto[] = this.todos.map((todo, index) => ({
-      entityId: todo.id,
-      order: index
-    }));
+    console.log(this.todos);
 
-    this.noteFacade.updateTodoOrder(dto);
+    const dto: UpdateOrderDto[] = [];
+    this.todos.forEach((todo, index) => {
+      dto.push({
+        entityId: todo.id,
+        order: index
+      })
+    })
+
+    this.noteFacade.updateTodoOrder(dto, this.note);
+  }
+
+  onCheckTag(option: OptionComponent<TagDto>) {
+    const tag = option.getValue();
+    this.addTag(tag);
+    this.noteChange.emit(this.note);
+    this.tagSearchControl.reset();
+  }
+
+  addTag(tag: TagDto) {
+    this.note.tags.push(tag);
+  }
+
+  removeTag(tag: TagDto) {
+    this.note.tags = this.note?.tags.filter(t => t !== tag);
+    this.noteChange.emit(this.note);
   }
 
   close() {

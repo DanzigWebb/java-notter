@@ -25,19 +25,19 @@ import { NoteMenuModalComponent } from './note-menu-modal/note-menu-modal.compon
     NoteSearchComponent,
     NoteMenuModalComponent
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        TooltipModule,
-        TextareaAutoModule,
-        ContenteditableModule,
-        MenuModule,
-        TagsModule,
-        FormGroupModule,
-        DragDropModule,
-        RouterModule,
-        FormsModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TooltipModule,
+    TextareaAutoModule,
+    ContenteditableModule,
+    MenuModule,
+    TagsModule,
+    FormGroupModule,
+    DragDropModule,
+    RouterModule,
+    FormsModule,
+  ],
   exports: [
     CreateNoteFormComponent,
     NoteItemComponent,
@@ -46,4 +46,5 @@ import { NoteMenuModalComponent } from './note-menu-modal/note-menu-modal.compon
     NoteSearchComponent
   ]
 })
-export class NotesModule { }
+export class NotesModule {
+}

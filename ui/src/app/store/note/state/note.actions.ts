@@ -25,28 +25,28 @@ export namespace NoteActions {
   export class AddTodo {
     static readonly type = '[Note] Add todo';
 
-    constructor(public payload: TodoCreateDto, public noteId: number) {
+    constructor(public payload: TodoCreateDto, public note: NoteDto) {
     }
   }
 
   export class UpdateTodo {
     static readonly type = '[Note] Update todo';
 
-    constructor(public payload: TodoDto, public noteId: number) {
+    constructor(public payload: TodoDto, public note: NoteDto) {
     }
   }
 
   export class DeleteTodo {
     static readonly type = '[Note] Delete todo';
 
-    constructor(public todoId: number, public noteId: number) {
+    constructor(public todoId: number, public note: NoteDto) {
     }
   }
 
   export class UpdateTodoOrder {
     static readonly type = '[Note] Update todo order';
 
-    constructor(public payload: UpdateOrderDto[]) {
+    constructor(public payload: UpdateOrderDto[], public note: NoteDto) {
     }
   }
 

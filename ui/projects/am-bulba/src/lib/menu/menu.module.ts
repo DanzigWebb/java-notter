@@ -4,7 +4,6 @@ import { MenuTriggerDirective } from './menu-trigger.directive';
 import { MenuPanelComponent } from './menu-panel/menu-panel.component';
 
 
-
 @NgModule({
   declarations: [
     MenuTriggerDirective,
@@ -18,4 +17,5 @@ import { MenuPanelComponent } from './menu-panel/menu-panel.component';
     MenuPanelComponent,
   ]
 })
-export class MenuModule { }
+export class MenuModule {
+}

@@ -1,9 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalContext } from 'am-bulba';
 import { NoteDto, TagDto } from '@app/models';
 import { NoteFacade } from '@app/store/note';
 import { TagFacade } from '@app/store/tag';
-import { take } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
+import { GroupFacade } from '@app/store/group';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-note-menu-modal',
@@ -11,15 +13,19 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./note-menu-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NoteMenuModalComponent implements OnInit {
+export class NoteMenuModalComponent implements OnInit, OnDestroy {
 
   note: NoteDto;
   tags: TagDto[] = [];
 
+  private destroy$ = new Subject();
+
   constructor(
     private context: ModalContext<NoteDto>,
     private notes: NoteFacade,
+    private groupFacade: GroupFacade,
     private tagFacade: TagFacade,
+    private ref: ChangeDetectorRef
   ) {
     this.note = this.cloneNote(context.data!);
   }
@@ -27,7 +33,21 @@ export class NoteMenuModalComponent implements OnInit {
   ngOnInit(): void {
     this.tagFacade.tags$.pipe(
       take(1)
-    ).subscribe(tags => this.tags = tags)
+    ).subscribe(tags => this.tags = tags);
+
+    this.groupFacade.groups$.pipe(
+      tap(groups => {
+        const group = groups.find(g => g.id === this.note.groupId);
+        if (group) {
+          const note = group.notes.find(n => n.id === this.note.id);
+          if (note) {
+            this.note = this.cloneNote(note);
+            this.ref.detectChanges();
+          }
+        }
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe()
   }
 
   close() {
@@ -35,27 +55,15 @@ export class NoteMenuModalComponent implements OnInit {
   }
 
   saveNote(dto: NoteDto) {
-    this.note.tags = this.normalizeTags(this.note.tags)
     this.notes.update(dto);
   }
 
-  private normalizeTags(ids: any[]): TagDto[] {
-    if (!Array.isArray(ids)) {
-      return [];
-    }
-
-    return ids.reduce((acc, id) => {
-      const tag = this.tags.find(t => t.id === id);
-      if (tag) {
-        acc.push(tag);
-      }
-
-      return acc;
-    }, [] as TagDto[]);
+  private cloneNote(note: NoteDto) {
+    return JSON.parse(JSON.stringify(note));
   }
 
-  private cloneNote(note: NoteDto) {
-    const todos = note.todos.map(t => ({...t}));
-    return {...note, todos};
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

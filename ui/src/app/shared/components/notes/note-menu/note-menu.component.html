@@ -63,7 +63,7 @@
                     <ng-container *ngIf="note.todos[i]">
                         <app-todo-item
                             class="flex-1"
-                            [(todo)]="note.todos[i]"
+                            [todo]="todo"
                             (onToggle)="completeTodo($event, todo)"
                             (onDelete)="deleteTodo(todo)"
                             (onChange)="updateTodo($event, todo)">
@@ -73,11 +73,11 @@
             </div>
         </div>
 
-        <div class="tags overflow-hidden">
+        <div class="tags pb-2">
             <h3 class="mb-2 opacity-90">
                 <span>Тэги</span>
             </h3>
-            <div class="flex">
+            <div class="flex pr-1">
                 <button
                     class="btn btn-ghost mr-1"
                     amTooltip="Создать новый тэг"
@@ -88,22 +88,22 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <am-form-field class="block w-full">
-                    <am-select
-                        style="width: 100%; overflow: hidden;"
-                        [multiply]="true"
-                        [(ngModel)]="note.tags"
-                        name="tags"
-                        [placeholder]="tags.length ? 'Тэги' : 'Созданных тэгов нет'"
-                    >
-                        <am-option
-                            *ngFor="let tag of (tags$ | async)"
-                            [value]="tag.id"
-                        >
-                            {{tag.name}}
-                        </am-option>
-                    </am-select>
-                </am-form-field>
+                <input
+                    type="text"
+                    class="w-full input-ghost"
+                    name="tagControl"
+                    placeholder="Выбрать тэг"
+                    amInput
+                    [formControl]="tagSearchControl"
+                    (onOptionCheck)="onCheckTag($event)"
+                    [amAutocomplete]="auto"
+                >
+
+                <am-autocomplete-panel #auto="autocompletePanel">
+                    <am-option *ngFor="let tag of tags$ | async" [value]="tag">
+                        <span [ngClass]="'text-' + tag.color?.type">{{tag.name}}</span>
+                    </am-option>
+                </am-autocomplete-panel>
 
                 <am-menu-panel #menu="amMenu">
                     <div class="create-tag py-2 p-4" style="width: 300px;" (click)="$event.stopPropagation()">
@@ -113,6 +113,18 @@
                     </div>
                 </am-menu-panel>
             </div>
+
+            <div class="tag-list p-1 my-2">
+                <div class="tag-badge" *ngFor="let tag of note.tags">
+                    <button class="btn btn-sm btn-ghost btn-circle" (click)="removeTag(tag)">
+                        <i class="fas fa-times text-error"></i>
+                    </button>
+                    <span [ngClass]="'text-' + tag.color?.type">
+                        {{tag.name}}
+                    </span>
+                </div>
+            </div>
+
         </div>
     </form>
 </div>

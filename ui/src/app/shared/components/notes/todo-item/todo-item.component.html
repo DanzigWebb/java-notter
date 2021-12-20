@@ -13,8 +13,8 @@
         <textarea-auto class="flex-1">
             <textarea
                 appTextareaAuto
+                [formControl]="control"
                 (blur)="changeEmit(control.value)"
-                [(ngModel)]="todo.title"
             >{{todo.title}}</textarea>
         </textarea-auto>
     </div>

@@ -2,12 +2,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   Inject,
   InjectionToken,
   Input,
   OnInit,
-  Optional,
+  Optional, Output,
 } from '@angular/core';
 import { AmOptionGroup } from './option.group';
 
@@ -19,10 +19,16 @@ export const AM_OPTION_GROUP = new InjectionToken<AmOptionGroup>('AmOptionGroup'
   styleUrls: ['./option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OptionComponent implements OnInit {
+export class OptionComponent<T = any> implements OnInit {
 
   @Input() checked = false;
   @Input() value: any = '';
+
+  @Output() onCheck = new EventEmitter<OptionComponent>();
+
+  getValue(): T {
+    return this.value as T;
+  }
 
   constructor(
     @Optional() @Inject(AM_OPTION_GROUP) public group: AmOptionGroup,
@@ -36,6 +42,7 @@ export class OptionComponent implements OnInit {
 
   onClick($event: MouseEvent) {
     $event.preventDefault();
+    this.onCheck.emit(this);
     if (this.group) {
       this.group.onOptionCheck(this);
     }
