@@ -37,7 +37,7 @@ export class ModalService {
   }
 
   open<T = any>(type: Type<any>, data?: any, modalOptions: ModalOptions = defaultOptions): Observable<T> {
-    const options = Object.assign(defaultOptions, modalOptions);
+    const options = Object.assign(modalOptions, defaultOptions);
     this.setupModalContainer();
 
     const modalContainerRef = this.appRef.bootstrap(this.modalContainerFactory, this.modalContainer);
