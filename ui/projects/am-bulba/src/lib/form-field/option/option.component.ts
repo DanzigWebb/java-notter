@@ -23,6 +23,7 @@ export class OptionComponent<T = any> implements OnInit {
 
   @Input() checked = false;
   @Input() value: any = '';
+  @Input() disabled = false;
 
   @Output() onCheck = new EventEmitter<OptionComponent>();
 

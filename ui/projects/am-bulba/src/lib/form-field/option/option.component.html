@@ -1,5 +1,5 @@
-<li>
-    <a (click)="onClick($event)" [class.active]="checked">
+<li [class.disabled]="disabled">
+    <a (click)="!disabled && onClick($event)" [class.active]="checked">
         <ng-content></ng-content>
     </a>
 </li>
