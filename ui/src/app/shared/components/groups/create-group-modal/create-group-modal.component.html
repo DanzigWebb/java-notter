@@ -1,0 +1,21 @@
+<div class="p-4">
+    <header class="flex items-center justify-between">
+        <span class="text-xl md:text-2xl font-medium">Создание новой группы</span>
+        <button class="btn btn-ghost btn-circle" (click)="close()">
+            <i class="fas fa-times"></i>
+        </button>
+    </header>
+
+    <div class="pt-4">
+        <am-form-field>
+            <input type="text" amInput placeholder="Название" [formControl]="control">
+            <am-form-error>Обязательное поле</am-form-error>
+        </am-form-field>
+    </div>
+
+    <div class="modal-action">
+        <button class="btn btn-primary" (click)="submit()">Принять</button>
+        <button class="btn" (click)="close()">Закрыть</button>
+    </div>
+
+</div>
