@@ -1,27 +1,32 @@
-<div class="board h-full">
-    <textarea-auto>
-        <textarea
-            appTextareaAuto
-            class="text-2xl mb-4 py-2"
-            [value]="dashboard.name"
-        ></textarea>
-    </textarea-auto>
+<div class="board h-full flex flex-col">
+    <header class="board-header flex">
+        <textarea-auto>
+            <textarea
+                appTextareaAuto
+                class="text-2xl mb-4 py-2"
+                [value]="dashboard.name"
+            ></textarea>
+        </textarea-auto>
 
-    <div class="board-row">
-        <ng-container *ngIf="groups$ | async as groups">
-            <app-group-card
-                *ngFor="let group of groups"
-                [group]="group"
-                (onClickNote)="editNote($event)">
-            </app-group-card>
-        </ng-container>
+        <div class="flex-1"></div>
 
-        <div class="board-new p-2">
-            <button class="btn">
-                <i class="fas fa-plus mr-3"></i>
-                Новая группа
+        <div class="board-new">
+            <button class="btn btn-ghost btn-circle" amTooltip="Создать группу" (click)="openCreateGroupModal()">
+                <i class="fas fa-plus"></i>
             </button>
         </div>
+    </header>
+
+
+    <div class="board-row p-3 flex-1">
+        <ng-container *ngIf="groups$ | async as groups">
+            <div class="board-card mx-2" *ngFor="let group of groups">
+                <app-group-card
+                    [group]="group"
+                    (onClickNote)="editNote($event)">
+                </app-group-card>
+            </div>
+        </ng-container>
     </div>
 
 </div>
