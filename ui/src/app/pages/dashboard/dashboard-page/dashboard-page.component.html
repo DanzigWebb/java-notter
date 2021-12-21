@@ -7,11 +7,21 @@
         ></textarea>
     </textarea-auto>
 
-    <ng-container *ngIf="groups$ | async as groups">
-        <app-group-card
-            *ngFor="let group of groups"
-            [group]="group"
-            (onClickNote)="editNote($event)">
-        </app-group-card>
-    </ng-container>
+    <div class="board-row">
+        <ng-container *ngIf="groups$ | async as groups">
+            <app-group-card
+                *ngFor="let group of groups"
+                [group]="group"
+                (onClickNote)="editNote($event)">
+            </app-group-card>
+        </ng-container>
+
+        <div class="board-new p-2">
+            <button class="btn">
+                <i class="fas fa-plus mr-3"></i>
+                Новая группа
+            </button>
+        </div>
+    </div>
+
 </div>
