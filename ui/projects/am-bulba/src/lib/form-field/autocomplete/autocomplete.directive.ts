@@ -64,6 +64,8 @@ export class AutocompleteDirective implements OnInit, OnDestroy {
         this.onOptionCheck.emit(option);
         this.destroy();
       });
+
+    console.log(this.amAutocomplete);
   }
 
   setValue(value: any) {

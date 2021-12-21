@@ -88,22 +88,26 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <input
-                    type="text"
-                    class="w-full input-ghost"
-                    name="tagControl"
-                    placeholder="Выбрать тэг"
-                    amInput
-                    [formControl]="tagSearchControl"
-                    (onOptionCheck)="onCheckTag($event)"
-                    [amAutocomplete]="auto"
-                >
 
-                <am-autocomplete-panel #auto="autocompletePanel">
-                    <am-option *ngFor="let tag of tags$ | async" [value]="tag">
-                        <span [ngClass]="'text-' + tag.color?.type">{{tag.name}}</span>
-                    </am-option>
-                </am-autocomplete-panel>
+                <ng-container *ngIf="tags$ | async as tags">
+                    <input
+                        type="text"
+                        class="w-full input-ghost"
+                        name="tagControl"
+                        placeholder="Выбрать тэг"
+                        amInput
+                        [formControl]="tagSearchControl"
+                        (onOptionCheck)="onCheckTag($event)"
+                        [amAutocomplete]="auto"
+                    >
+
+                    <am-autocomplete-panel #auto="autocompletePanel">
+                        <am-option *ngFor="let tag of tags | searchTag:tagSearchControl.value" [value]="tag">
+                            <span [ngClass]="'text-' + tag.color?.type">{{tag.name}}</span>
+                        </am-option>
+                    </am-autocomplete-panel>
+                </ng-container>
+
 
                 <am-menu-panel #menu="amMenu">
                     <div class="create-tag py-2 p-4" style="width: 300px;" (click)="$event.stopPropagation()">
@@ -124,7 +128,6 @@
                     </span>
                 </div>
             </div>
-
         </div>
     </form>
 </div>

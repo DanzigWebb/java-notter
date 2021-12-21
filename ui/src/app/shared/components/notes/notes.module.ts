@@ -14,6 +14,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RouterModule } from '@angular/router';
 import { NoteSearchComponent } from './note-search/note-search.component';
 import { NoteMenuModalComponent } from './note-menu-modal/note-menu-modal.component';
+import { SearchTagPipe } from './note-menu/search-tag.pipe';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { NoteMenuModalComponent } from './note-menu-modal/note-menu-modal.compon
     TodoItemComponent,
     NoteMenuComponent,
     NoteSearchComponent,
-    NoteMenuModalComponent
+    NoteMenuModalComponent,
+    SearchTagPipe
   ],
   imports: [
     CommonModule,

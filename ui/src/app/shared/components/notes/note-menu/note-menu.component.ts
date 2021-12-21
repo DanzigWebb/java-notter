@@ -17,6 +17,7 @@ import { NoteFacade } from '@app/store/note';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NoteMenuFacade } from '@app/store/ui/note-menu';
 import { OptionComponent } from 'am-bulba';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-note-menu',
@@ -45,7 +46,9 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   isShow = true;
   todos: TodoDto[] = [];
-  tags$ = this.tagFacade.tags$;
+  tags$ = this.tagFacade.tags$.pipe(
+    map(tags => tags.filter(tag => !this.note.tags.some(t => t.id === tag.id)))
+  );
 
   tagSearchControl = new FormControl();
 
@@ -130,7 +133,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
 
   updateTodo(title: string, todo: TodoDto) {
     const updated: TodoDto = {...todo, title};
-    console.log(updated);
     this.noteFacade.updateTodo(updated, this.note!);
   }
 
