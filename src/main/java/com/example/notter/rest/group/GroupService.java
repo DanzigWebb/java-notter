@@ -2,6 +2,7 @@ package com.example.notter.rest.group;
 
 import com.example.notter.db.entity.GroupEntity;
 import com.example.notter.db.entity.UserEntity;
+import com.example.notter.db.repository.DashboardRepo;
 import com.example.notter.db.repository.GroupRepo;
 import com.example.notter.exception.EntityNotFoundException;
 import com.example.notter.rest.group.model.Group;
@@ -15,22 +16,30 @@ import java.util.List;
 public class GroupService {
 
     private final GroupRepo groupRepo;
+    private final DashboardRepo dashboardRepo;
 
-    public GroupService(GroupRepo groupRepo) {
+    public GroupService(GroupRepo groupRepo, DashboardRepo dashboardRepo) {
         this.groupRepo = groupRepo;
+        this.dashboardRepo = dashboardRepo;
     }
 
     public Group create(GroupRequest group, UserEntity user) {
-        GroupEntity g = new GroupEntity();
+        var d = dashboardRepo.findByUser(user.getId(), group.getDashboardId());
+        if (d == null) {
+            throw new EntityNotFoundException();
+        }
+
+        var g = new GroupEntity();
         g.setUser(user);
         g.setTitle(group.getTitle());
         g.setDescription(group.getDescription());
+        g.setDashboard(d);
 
         return Group.toModel(groupRepo.save(g));
     }
 
     public Group update(Integer groupId, GroupRequest group, UserEntity user) {
-        GroupEntity g = groupRepo.findByUser(user.getId(), groupId);
+        var g = groupRepo.findByUser(user.getId(), groupId);
         if (g == null) {
             throw new EntityNotFoundException();
         }
@@ -42,7 +51,7 @@ public class GroupService {
     }
 
     public void delete(UserEntity user, Integer groupId) {
-        GroupEntity g = groupRepo.findByUser(user.getId(), groupId);
+        var g = groupRepo.findByUser(user.getId(), groupId);
         groupRepo.delete(g);
     }
 
@@ -52,7 +61,7 @@ public class GroupService {
     }
 
     public Group getByUserAndId(UserEntity user, Integer groupId) {
-        GroupEntity g = groupRepo.findByUser(user.getId(), groupId);
+        var g = groupRepo.findByUser(user.getId(), groupId);
 
         if (g != null) {
             return Group.toModel(g);

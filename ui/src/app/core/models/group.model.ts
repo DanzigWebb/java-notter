@@ -2,6 +2,7 @@ import { NoteDto } from './note.model';
 
 export interface GroupCreateDto {
   title: string;
+  dashboardId?: number;
   description?: string;
 }
 

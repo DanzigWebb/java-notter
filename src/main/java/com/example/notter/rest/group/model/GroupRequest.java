@@ -10,5 +10,7 @@ public class GroupRequest {
     @NotBlank(message = "Обязательное поле")
     String title;
 
+    Integer dashboardId;
+
     String description;
 }
