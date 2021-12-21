@@ -102,8 +102,8 @@
                     >
 
                     <am-autocomplete-panel #auto="autocompletePanel">
-                        <am-option *ngFor="let tag of tags | searchTag:tagSearchControl.value" [value]="tag">
-                            <span [ngClass]="'text-' + tag.color?.type">{{tag.name}}</span>
+                        <am-option *ngFor="let tag of tags | searchTag:tagSearchControl.value" [value]="tag" [disabled]="checkedTagsIdSet.has(tag.id)">
+                            <span [ngClass]="!checkedTagsIdSet.has(tag.id) ? 'text-' + tag.color?.type : ''">{{tag.name}}</span>
                         </am-option>
                     </am-autocomplete-panel>
                 </ng-container>
