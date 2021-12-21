@@ -9,6 +9,7 @@ import { NotesModule } from '@app/notes';
 import { GroupsModule } from '@app/groups';
 import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
 import { FormsModule } from '@angular/forms';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import { FormsModule } from '@angular/forms';
     NotesModule,
     GroupsModule,
     TextareaAutoModule,
-    FormsModule
+    FormsModule,
+    TooltipModule
   ]
 })
-export class DashboardModule { }
+export class DashboardModule {
+}

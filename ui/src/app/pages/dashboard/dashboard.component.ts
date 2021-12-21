@@ -7,7 +7,7 @@ import { DashboardFacade } from '@app/store/dashboard';
 
 @Component({
   template: `
-    <div class="page p-4" *ngIf="dashboard$ | async as dashboard">
+    <div class="page pt-4 p-1" *ngIf="dashboard$ | async as dashboard">
       <ng-container *ngIf="dashboard">
         <app-dashboard-page
           [dashboard]="dashboard">

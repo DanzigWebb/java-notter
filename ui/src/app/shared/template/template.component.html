@@ -1,17 +1,6 @@
 <main class="main">
     <app-header></app-header>
     <div class="main-content">
-
-        <app-sidebar
-            [groups]="(groups$ | async) || []"
-            [isExpand]="isExpand"
-            (onExpand)="isExpand = $event"
-            (onCreateGroup)="createGroup($event)"
-            (onDeleteGroup)="deleteGroup($event)"
-            (onUpdateGroup)="updateGroup($event)"
-        >
-        </app-sidebar>
-
         <div class="main-page">
             <router-outlet></router-outlet>
         </div>

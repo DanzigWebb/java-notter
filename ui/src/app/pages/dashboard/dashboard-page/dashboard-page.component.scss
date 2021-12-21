@@ -9,12 +9,16 @@
     max-width: 400px;
   }
 
-  &-new {
-
-  }
-
   &-row {
     display: flex;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+  }
+
+  &-card {
+    min-width: 320px;
+    overflow: hidden;
+    overflow-y: scroll;
   }
 }
 
