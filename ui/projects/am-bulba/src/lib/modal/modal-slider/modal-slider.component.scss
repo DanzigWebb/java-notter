@@ -1,0 +1,25 @@
+.ms {
+  &-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+    max-width: 560px;
+
+    .control {
+      position: sticky;
+      top: 0;
+      z-index: 99999;
+    }
+  }
+}
