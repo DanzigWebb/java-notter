@@ -1,14 +1,17 @@
 import {
   ApplicationRef,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
+  Inject,
   Injectable,
-  ReflectiveInjector,
+  Injector,
   Type,
+  ViewContainerRef,
 } from '@angular/core';
 import { ModalContainerComponent } from './modal-container/modal-container.component';
 import { ModalContext } from './modal-context.model';
 import { Observable } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 interface ModalOptions {
   hideOnBackdropClick?: boolean;
@@ -26,39 +29,34 @@ const defaultOptions = {
 })
 export class ModalService {
 
-  private modalContainer!: HTMLElement;
-  private modalContainerFactory!: ComponentFactory<ModalContainerComponent>;
-
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private cfr: ComponentFactoryResolver,
     private appRef: ApplicationRef,
+    @Inject(DOCUMENT) private doc: Document,
   ) {
-    this.setupModalContainerFactory();
   }
 
   open<T = any>(type: Type<any>, data?: any, modalOptions: ModalOptions = defaultOptions): Observable<T> {
-    const options = Object.assign(modalOptions, defaultOptions);
-    this.setupModalContainer();
 
-    const modalContainerRef = this.appRef.bootstrap(this.modalContainerFactory, this.modalContainer);
-    const viewContainerRef = modalContainerRef.instance.container;
+    const options = Object.assign({...defaultOptions}, modalOptions);
 
-    // Todo: заменить на то что не устарело
-    const injector = ReflectiveInjector.resolveAndCreate([ModalContext], viewContainerRef.injector);
-    const context = <ModalContext<any, T>>injector.get(ModalContext);
+    const modalContainerRef: ComponentRef<any> = this.createWrapper(options.containerType);
+    const viewContainerRef: ViewContainerRef = modalContainerRef.instance.container;
+
+    const injector = Injector.create({
+      providers: [{provide: ModalContext, useClass: ModalContext}],
+      parent: viewContainerRef.injector
+    });
+    const context = injector.get(ModalContext);
     context.data = data;
 
-    // Create component of modal into modalContainer
     viewContainerRef.clear();
-    const factory = this.componentFactoryResolver.resolveComponentFactory(type);
+    const factory = this.cfr.resolveComponentFactory(type);
     viewContainerRef.createComponent(factory, 0, injector);
 
     context.componentRef = modalContainerRef;
     context.containerRef = viewContainerRef;
-
-    if (!options || options.hideOnBackdropClick) {
-      modalContainerRef.instance.context = context;
-    }
+    modalContainerRef.instance.context = context;
 
     if (options.backgroundClass) {
       modalContainerRef.instance.bgClass = options.backgroundClass;
@@ -73,12 +71,10 @@ export class ModalService {
     return <Observable<T>>context.opened$.asObservable();
   }
 
-  private setupModalContainer(): void {
-    this.modalContainer = document.createElement('div');
-    document.getElementsByTagName('body')[0].appendChild(this.modalContainer);
-  }
-
-  private setupModalContainerFactory(): void {
-    this.modalContainerFactory = this.componentFactoryResolver.resolveComponentFactory(ModalContainerComponent);
+  private createWrapper<T = unknown>(componentWrapper: Type<T>) {
+    const container = this.doc.createElement('div');
+    this.doc.body.appendChild(container);
+    const factory = this.cfr.resolveComponentFactory(componentWrapper);
+    return this.appRef.bootstrap(factory, container);
   }
 }
