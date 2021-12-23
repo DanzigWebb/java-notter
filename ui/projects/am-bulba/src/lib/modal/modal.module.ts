@@ -3,14 +3,17 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ModalContainerComponent } from './modal-container/modal-container.component';
 import { ModalService } from "./modal.service";
+import { ModalSliderComponent } from './modal-slider/modal-slider.component';
 
 
 @NgModule({
   declarations: [
     ModalContainerComponent,
+    ModalSliderComponent
   ],
   entryComponents: [
     ModalContainerComponent,
+    ModalSliderComponent
   ],
   providers: [
     ModalService,
@@ -21,6 +24,7 @@ import { ModalService } from "./modal.service";
   ],
   exports: [
     ModalContainerComponent,
+    ModalSliderComponent
   ],
 })
 export class ModalModule {

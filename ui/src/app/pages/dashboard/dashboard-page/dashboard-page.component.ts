@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 import { DashboardDto, GroupCreateDto, NoteDto } from '@app/models';
 import { GroupFacade } from '@app/store/group';
 import { map } from 'rxjs/operators';
-import { ModalService } from 'am-bulba';
+import { ModalService, ModalSliderComponent } from 'am-bulba';
 import { NoteMenuModalComponent } from '@app/shared/components/notes/note-menu-modal/note-menu-modal.component';
 import { CreateGroupModalComponent } from '@app/shared/components/groups/create-group-modal/create-group-modal.component';
 
@@ -31,13 +31,14 @@ export class DashboardPageComponent implements OnInit {
 
   editNote(note: NoteDto) {
     this.modalService.open(NoteMenuModalComponent, note, {
-      backgroundClass: 'bg-base-200'
+      backgroundClass: 'bg-base-200',
+      containerType: ModalSliderComponent,
     });
   }
 
   openCreateGroupModal() {
     this.modalService.open<string | undefined>(CreateGroupModalComponent, null, {
-      backgroundClass: 'bg-base-200'
+      backgroundClass: 'bg-base-200',
     }).subscribe((title) => {
       title && this.createGroup(title);
     });

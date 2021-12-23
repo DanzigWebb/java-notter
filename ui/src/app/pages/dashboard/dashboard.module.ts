@@ -25,7 +25,7 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
     GroupsModule,
     TextareaAutoModule,
     FormsModule,
-    TooltipModule
+    TooltipModule,
   ]
 })
 export class DashboardModule {
