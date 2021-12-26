@@ -27,7 +27,7 @@ import { ModalContainerAbstract } from '../modal-container';
     <div class="modal modal-open" (click)="close()" [@backdrop]>
       <div
         #box
-        class="ms-box bg-base-200 rounded-lg shadow-lg ring-1 ring-base-100 w-full md:w-8/12 lg:w-4/12"
+        class="ms-box bg-base-200 rounded-lg shadow-lg ring-1 ring-base-100 w-full md:w-6/12 lg:w-4/12"
         (click)="$event.stopPropagation()"
 
         [@modalSlide]

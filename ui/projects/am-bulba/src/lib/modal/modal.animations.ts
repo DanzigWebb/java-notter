@@ -29,7 +29,7 @@ export const modalSlide = trigger('modalSlide', [
       transform: 'translateY(100%)',
       opacity: '0',
     }),
-    animate('350ms cubic-bezier(0.6, -0.25, 0.2, 1.3)', style({
+    animate('450ms cubic-bezier(0.6, -0.25, 0.2, 1.3)', style({
       transform: 'translateY(0)',
       opacity: '1',
     })),
@@ -37,11 +37,9 @@ export const modalSlide = trigger('modalSlide', [
   transition(':leave', [
     style({
       transform: 'translateY(0)',
-      opacity: '1',
     }),
-    animate('140ms ease-out', style({
+    animate('340ms cubic-bezier(0.6, -0.25, 0.2, 1.3)', style({
       transform: 'translateY(100%)',
-      opacity: '0',
     })),
   ]),
 ]);
