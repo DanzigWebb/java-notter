@@ -2,43 +2,43 @@
     <div class="note-content w-full overflow-hidden">
         <header class="note-header">
             <span class="tag" *ngIf="!!note.tags.length">
-            <span
-                *ngFor="let tag of note.tags"
-                class="inline-flex"
-                [class]="'mr-2 text-' + tag.color?.type"
-            >
-                <i class="far fa-dot-circle text-xs mr-1"></i>
-                <span class="text-xs">{{tag.name}}</span>
+                <span
+                    *ngFor="let tag of note.tags"
+                    class="inline-flex"
+                    [class]="'mr-2 text-' + tag.color?.type"
+                >
+                    <i class="far fa-dot-circle text-xs mr-1"></i>
+                    <span class="text-xs">{{tag.name}}</span>
+                </span>
             </span>
-        </span>
         </header>
 
         <div class="note-data">
-            <div class="note-head leading-3">
-                <h4 class="note-title text-base leading-5 truncate">{{note.title}}</h4>
-                <span class="text-xs font-light opacity-80">
-                {{note.updateAt | date: "dd.MM.YYYY"}}
-            </span>
+            <div class="note-head leading-3 text-xs">
+                <h4 class="note-title leading-5 truncate">{{note.title}}</h4>
+                <span class="font-light opacity-80">
+                    {{note.updateAt | date: "dd.MM.YYYY"}}
+                </span>
             </div>
 
             <div class="note-meta text-xs">
-            <span class="note-meta-item">
-                <span class="opacity-80">Задача</span>
-            </span>
+                <span class="note-meta-item">
+                    <span class="opacity-80">Задача</span>
+                </span>
                 <span
                     class="note-meta-item"
                     *ngIf="!!note.description"
                     amTooltip="Есть описание"
                 >
-                <i class="far fa-comment-alt text-xs"></i>
-            </span>
+                    <i class="far fa-comment-alt text-xs"></i>
+                </span>
                 <span
                     class="note-meta-item"
                     *ngIf="!!note.todos.length"
                     [amTooltip]="checkedTodos.length + '/' + note.todos.length"
                 >
-                <i class="fas fa-tasks"></i>
-            </span>
+                    <i class="fas fa-tasks"></i>
+                </span>
             </div>
         </div>
     </div>
