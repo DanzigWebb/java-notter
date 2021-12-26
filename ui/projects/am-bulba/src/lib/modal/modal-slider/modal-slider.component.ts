@@ -41,6 +41,7 @@ import { ModalContainerAbstract } from '../modal-container';
           (pointerdown)="onMouseDown($event); control.setPointerCapture($event.pointerId)"
           (pointermove)="move($event)"
           (pointerup)="end()"
+          (dblclick)="setMaxHeight()"
         >
           <div class="border-2 rounded-md w-32"></div>
         </div>
@@ -105,7 +106,10 @@ export class ModalSliderComponent extends ModalContainerAbstract implements Afte
 
   end(): void {
     this.isDrag = false;
+    this.fixedState();
+  }
 
+  private fixedState() {
     if (this.currentHeight > this.windowHeight * 0.7) {
       this.lazyFixHeight(this.setMaxHeight);
     } else if (this.currentHeight <= this.windowHeight * 0.7 && this.currentHeight >= this.windowHeight * 0.25) {
