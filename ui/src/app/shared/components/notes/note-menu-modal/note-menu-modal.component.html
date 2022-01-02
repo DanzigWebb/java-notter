@@ -9,16 +9,8 @@
             <i class="fas fa-save"></i>
         </button>
         <div class="flex-1"></div>
-        <button
-            class="btn btn-ghost btn-sm"
-            amTooltip="Закрыть"
-            placement="bottom"
-            type="button"
-            (click)="close()"
-        >
-            <i class="fas fa-times"></i>
-        </button>
     </header>
+
     <app-note-menu
         [(note)]="note"
         (onClose)="close()">
