@@ -10,7 +10,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { NoteDto, TagCreateDto, TagDto, TodoCreateDto, TodoDto } from '@app/models';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { TagFacade } from '@app/store/tag';
 import { NoteFacade } from '@app/store/note';
@@ -47,7 +47,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
   todos: TodoDto[] = [];
   tags$ = this.tagFacade.tags$;
   checkedTagsIdSet = new Set<number>();
-  tagSearchControl = new FormControl();
 
   get checkedTodos() {
     return this.note?.todos.filter(t => t.checked) || [];
@@ -153,7 +152,6 @@ export class NoteMenuComponent implements OnInit, OnChanges, OnDestroy {
     const tag = option.getValue();
     this.note.tags.push(tag);
     this.noteChangeEmit();
-    this.tagSearchControl.reset();
   }
 
   removeTag(tag: TagDto) {

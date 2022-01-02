@@ -82,38 +82,41 @@
                     class="btn btn-ghost mr-1"
                     amTooltip="Создать новый тэг"
                     placement="bottom"
-                    [amMenuTrigger]="menu"
+                    [amMenuTrigger]="createTagMenu"
                     #menuTrigger="amMenuTrigger"
                 >
                     <i class="fas fa-plus"></i>
                 </button>
+                <button
+                    class="btn btn-primary btn-ghost normal-case flex-1 mr-1"
+                    [amMenuTrigger]="selectTagMenu"
+                    #selectTagBtn
+                >
+                    Добавить Тэг
+                </button>
 
-
-                <ng-container *ngIf="tags$ | async as tags">
-                    <input
-                        type="text"
-                        class="w-full input-ghost"
-                        name="tagControl"
-                        placeholder="Выбрать тэг"
-                        amInput
-                        [formControl]="tagSearchControl"
-                        (onOptionCheck)="onCheckTag($event)"
-                        [amAutocomplete]="auto"
-                    >
-
-                    <am-autocomplete-panel #auto="autocompletePanel">
-                        <am-option *ngFor="let tag of tags | searchTag:tagSearchControl.value" [value]="tag" [disabled]="checkedTagsIdSet.has(tag.id)">
-                            <span [ngClass]="!checkedTagsIdSet.has(tag.id) ? 'text-' + tag.color?.type : ''">{{tag.name}}</span>
-                        </am-option>
-                    </am-autocomplete-panel>
-                </ng-container>
-
-
-                <am-menu-panel #menu="amMenu">
+                <am-menu-panel #createTagMenu="amMenu">
                     <div class="create-tag py-2 p-4" style="width: 300px;" (click)="$event.stopPropagation()">
                         <app-create-tag-form
                             (onCreate)="createTag($event); menuTrigger.close()">
                         </app-create-tag-form>
+                    </div>
+                </am-menu-panel>
+
+                <am-menu-panel #selectTagMenu="amMenu">
+                    <div [style.width]="selectTagBtn.offsetWidth + 'px'">
+                        <ng-container *ngIf="tags$ | async as tags">
+                            <am-option
+                                *ngFor="let tag of tags"
+                                [value]="tag"
+                                (onCheck)="onCheckTag($event)"
+                                [disabled]="checkedTagsIdSet.has(tag.id)"
+                            >
+                                <span [ngClass]="!checkedTagsIdSet.has(tag.id) ? 'text-' + tag.color?.type : ''">
+                                    {{tag.name}}
+                                </span>
+                            </am-option>
+                        </ng-container>
                     </div>
                 </am-menu-panel>
             </div>
