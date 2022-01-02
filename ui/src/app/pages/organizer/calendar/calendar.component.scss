@@ -1,0 +1,25 @@
+.month {
+
+  &-head {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  &-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+
+.day {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  &-wrapper {
+    border: 1px solid rgba(0, 0, 0, .2)
+  }
+}
