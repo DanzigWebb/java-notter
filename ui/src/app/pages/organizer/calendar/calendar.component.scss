@@ -1,4 +1,6 @@
 .month {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
 
   &-head {
     display: grid;

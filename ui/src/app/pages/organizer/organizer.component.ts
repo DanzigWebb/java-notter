@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-organizer',
@@ -7,6 +8,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrganizerComponent implements OnInit {
+
+  month = dayjs()
 
   constructor() { }
 
