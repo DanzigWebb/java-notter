@@ -1,4 +1,4 @@
-<div class="form pb-4">
+<div class="form pb-10">
     <div class="form-field mb-3">
         <label class="mb-4 font-medium">Ситуация</label>
         <textarea-auto class="w-full block">
@@ -29,6 +29,11 @@
         <textarea-auto class="w-full block">
             <textarea appTextareaAuto placeholder="Опишите ощущения в теле" name="title" class="py-2 mb-1"></textarea>
         </textarea-auto>
+    </div>
+
+    <div class="flex justify-end">
+        <button class="btn btn-primary mr-1">Сохранить</button>
+        <button class="btn btn-ghost" (click)="close()">Закрыть</button>
     </div>
 </div>
 

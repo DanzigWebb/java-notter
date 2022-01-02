@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-organizer-table',
@@ -8,9 +8,14 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class OrganizerTableComponent implements OnInit {
 
+  @Output() onClose = new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  close() {
+    this.onClose.emit();
+  }
 }
