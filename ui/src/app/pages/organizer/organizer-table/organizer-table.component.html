@@ -1,41 +1,78 @@
-<div class="form pb-10">
-    <div class="form-field mb-3">
-        <label class="mb-4 font-medium">Ситуация</label>
-        <textarea-auto class="w-full block">
-            <textarea appTextareaAuto placeholder="Опишите ситуацию" name="title" class="py-2 mb-1"></textarea>
-        </textarea-auto>
-    </div>
+<h2 class="text-lg font-semibold sticky top-0 pb-4 bg-base-200 z-10">{{day.date.format('LL')}}</h2>
 
-    <div class="form-field mb-3">
-        <label class="mb-4 font-medium">Мысли</label>
-        <textarea-auto class="w-full block">
-            <textarea appTextareaAuto placeholder="Опишите мысли" name="title" class="py-2 mb-1"></textarea>
-        </textarea-auto>
-    </div>
-    <div class="form-field mb-3">
-        <label class="mb-4 font-medium">Эмоции</label>
-        <textarea-auto class="w-full block">
-            <textarea appTextareaAuto placeholder="Опишите эмоции" name="title" class="py-2 mb-1"></textarea>
-        </textarea-auto>
-    </div>
-    <div class="form-field mb-3">
-        <label class="mb-4 font-medium">Реакция</label>
-        <textarea-auto class="w-full block">
-            <textarea appTextareaAuto placeholder="Опишите реакцию" name="title" class="py-2 mb-1"></textarea>
-        </textarea-auto>
-    </div>
-    <div class="form-field mb-3">
-        <label class="mb-4 font-medium">Ощущения в теле</label>
-        <textarea-auto class="w-full block">
-            <textarea appTextareaAuto placeholder="Опишите ощущения в теле" name="title" class="py-2 mb-1"></textarea>
-        </textarea-auto>
-    </div>
+<am-tabs-group class="w-full mb-4" viewType="tabs-bordered" size="lg">
+    <am-tab>
+        <am-tab-label>
+            Создать
+        </am-tab-label>
+        <div class="form relative pb-10">
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Ситуация</label>
+                <textarea-auto class="w-full block">
+                    <textarea appTextareaAuto placeholder="Опишите ситуацию" name="situation" [(ngModel)]="diary.situation" class="py-2 mb-1"></textarea>
+                </textarea-auto>
+            </div>
 
-    <div class="flex justify-end">
-        <button class="btn btn-primary mr-1">Сохранить</button>
-        <button class="btn btn-ghost" (click)="close()">Закрыть</button>
-    </div>
-</div>
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Мысли</label>
+                <textarea-auto class="w-full block">
+                    <textarea appTextareaAuto placeholder="Опишите мысли" name="think" [(ngModel)]="diary.think" class="py-2 mb-1"></textarea>
+                </textarea-auto>
+            </div>
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Эмоции</label>
+                <textarea-auto class="w-full block">
+                    <textarea appTextareaAuto placeholder="Опишите эмоции" name="emotions" [(ngModel)]="diary.emotions" class="py-2 mb-1"></textarea>
+                </textarea-auto>
+            </div>
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Реакция</label>
+                <textarea-auto class="w-full block">
+                    <textarea appTextareaAuto placeholder="Опишите реакцию" name="reaction" [(ngModel)]="diary.reaction" class="py-2 mb-1"></textarea>
+                </textarea-auto>
+            </div>
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Ощущения в теле</label>
+                <textarea-auto class="w-full block">
+                    <textarea appTextareaAuto placeholder="Опишите ощущения в теле" name="bodySensation" [(ngModel)]="diary.bodySensation" class="py-2 mb-1"></textarea>
+                </textarea-auto>
+            </div>
+
+            <div class="flex justify-end">
+                <button class="btn btn-primary mr-1" (click)="save()">Сохранить</button>
+                <button class="btn btn-ghost" (click)="close()">Закрыть</button>
+            </div>
+        </div>
+    </am-tab>
+    <am-tab *ngIf="items | async as diaries">
+        <am-tab-label>
+            Созданные
+        </am-tab-label>
+        <div class="form relative pb-10" *ngFor="let item of diaries">
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Ситуация</label>
+                <p class="opacity-75 text-sm">{{item.situation}}</p>
+            </div>
+
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Мысли</label>
+                <p class="opacity-75 text-sm">{{item.think}}</p>
+            </div>
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Эмоции</label>
+                <p class="opacity-75 text-sm">{{item.emotions}}</p>
+            </div>
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Реакция</label>
+                <p class="opacity-75 text-sm">{{item.reaction}}</p>
+            </div>
+            <div class="form-field mb-3">
+                <label class="mb-4 font-medium">Ощущения в теле</label>
+                <p class="opacity-75 text-sm">{{item.bodySensation}}</p>
+            </div>
+        </div>
+    </am-tab>
+</am-tabs-group>
 
 
 

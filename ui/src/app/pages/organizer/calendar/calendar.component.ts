@@ -96,15 +96,17 @@ export class CalendarComponent implements OnInit {
   openDay(day: Day) {
     this.modalService.open(DayModalComponent, day, {
       containerType: ModalSliderComponent
-    })
+    });
   }
 }
 
 @Component({
   template: `
     <div class="p-3 pb-6 relative">
-      <h2 class="text-lg font-semibold sticky top-0 pb-4 bg-base-200 z-10">{{day.date.format('LL')}}</h2>
-      <app-organizer-table (onClose)="close()"></app-organizer-table>
+      <app-organizer-table
+        [day]="day"
+        (onClose)="close()">
+      </app-organizer-table>
     </div>
   `
 })

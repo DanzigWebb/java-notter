@@ -6,6 +6,9 @@ import { OrganizerComponent } from './organizer.component';
 import { OrganizerTableComponent } from './organizer-table/organizer-table.component';
 import { TextareaAutoModule } from '@app/shared/components/textarea-auto/textarea-auto.module';
 import { CalendarComponent, DayModalComponent } from './calendar/calendar.component';
+import { FormsModule } from '@angular/forms';
+import { TabsModule } from 'am-bulba';
+import { ContenteditableModule } from '@app/shared/contenteditable/contenteditable.module';
 
 
 @NgModule({
@@ -18,7 +21,10 @@ import { CalendarComponent, DayModalComponent } from './calendar/calendar.compon
   imports: [
     CommonModule,
     OrganizerRoutingModule,
-    TextareaAutoModule
+    TextareaAutoModule,
+    FormsModule,
+    TabsModule,
+    ContenteditableModule
   ]
 })
 export class OrganizerModule { }
