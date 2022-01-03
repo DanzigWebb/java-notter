@@ -3,8 +3,14 @@
 <div class="month flex h-full flex-col" [style.padding-bottom]="isIos ? '80px' : '0'">
     <h2 class="text-2xl font-medium text-center p-1">Календарь психа</h2>
 
-    <div class="flex justify-center">
-        <span class="text-lg font-bold py-2">{{month.format('LL')}}</span>
+    <div class="flex justify-center items-center py-2">
+        <button class="btn btn-sm btn-ghost btn-circle" (click)="onPrev.emit()">
+            <i class="fas fa-angle-left text-lg"></i>
+        </button>
+        <span class="text-lg font-bold px-1">{{month.format('MMMM YYYY')}}</span>
+        <button class="btn btn-sm btn-ghost btn-circle" (click)="onNext.emit()">
+            <i class="fas fa-angle-right text-lg"></i>
+        </button>
     </div>
 
     <header class="month-head py-1">

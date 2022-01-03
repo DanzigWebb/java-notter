@@ -1,4 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  ChangeDetectorRef,
+  OnDestroy,
+  Output,
+  EventEmitter, OnChanges, SimpleChanges
+} from '@angular/core';
 import * as dayjs from 'dayjs';
 import * as isoWeek from 'dayjs/plugin/isoWeek';
 import * as localizedFormat from 'dayjs/plugin/localizedFormat';
@@ -23,7 +32,10 @@ dayjs.locale('ru');
   styleUrls: ['./calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CalendarComponent implements OnInit, OnDestroy {
+export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
+
+  @Output() onPrev = new EventEmitter()
+  @Output() onNext = new EventEmitter()
 
   @Input() month = dayjs();
 
@@ -45,18 +57,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.init();
-
     this.diaryService.lastMonth$
       .pipe(takeUntil(this.destroy$))
       .subscribe((map) => {
         this.data = map;
         this.ref.detectChanges();
-        console.log(this.data);
       });
   }
 
-  init() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.month) {
+      this.renderMonth()
+    }
+  }
+
+  renderMonth() {
     const month = this.month.clone();
     const monthDays = this.getDaysOfMonth(month);
     const daysBefore = this.getDaysBefore(monthDays[0].date);

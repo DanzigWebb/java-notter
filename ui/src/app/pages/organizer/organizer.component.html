@@ -1,3 +1,7 @@
 <!--<app-organizer-table></app-organizer-table>-->
 
-<app-calendar [month]="month"></app-calendar>
+<app-calendar
+    [month]="month"
+    (onPrev)="prev()"
+    (onNext)="next()">
+</app-calendar>
