@@ -1,0 +1,12 @@
+<div
+    class="day"
+    [class.disabled]="!day.fromCurrentMonth"
+    [class.bg-error]="day.isWeekend"
+    [class.bg-base-200]="!day.isWeekend"
+>
+    {{day.date.format('D')}}
+
+    <div class="day-status bg-accent-focus" *ngIf="data">
+        {{data.length}}
+    </div>
+</div>

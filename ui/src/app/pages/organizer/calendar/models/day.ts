@@ -9,5 +9,7 @@ export class Day {
   ) {
   }
 
-
+  get isWeekend() {
+    return this.date.isoWeekday() === 7 || this.date.isoWeekday() === 6;
+  }
 }
