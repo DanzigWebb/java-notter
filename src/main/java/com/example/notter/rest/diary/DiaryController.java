@@ -22,7 +22,8 @@ public class DiaryController {
         this.diaryService = diaryService;
     }
 
-    @PostMapping
+    @PostMapping()
+    public @ResponseBody
     Diary create(
             @Valid @RequestBody DiaryCreateRequest diary,
             @AuthenticationPrincipal CustomUserDetails user
@@ -30,14 +31,13 @@ public class DiaryController {
         return diaryService.create(diary, user.getUserEntity());
     }
 
-    @GetMapping
+    @GetMapping()
+    public @ResponseBody
     List<Diary> getByRange(
-            @Valid @RequestParam Long from,
-            @Valid @RequestParam Long to,
+            @Valid @RequestParam Date from,
+            @Valid @RequestParam Date to,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
-        var fromDate = new Date(from);
-        var toDate = new Date(to);
-        return diaryService.getByRange(fromDate, toDate, user.getUserEntity());
+        return diaryService.getByRange(from, to, user.getUserEntity());
     }
 }
