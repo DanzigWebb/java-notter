@@ -34,10 +34,10 @@ public class DiaryController {
     @GetMapping()
     public @ResponseBody
     List<Diary> getByRange(
-            @Valid @RequestParam Date from,
-            @Valid @RequestParam Date to,
+            @Valid @RequestParam Long from,
+            @Valid @RequestParam Long to,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
-        return diaryService.getByRange(from, to, user.getUserEntity());
+        return diaryService.getByRange(new Date(from), new Date(to), user.getUserEntity());
     }
 }
