@@ -1,6 +1,6 @@
 <h2 class="text-lg font-semibold sticky top-0 pb-4 bg-base-200 z-10">{{day.date.format('LL')}}</h2>
 
-<am-tabs-group class="w-full mb-4" viewType="tabs-bordered" size="lg">
+<am-tabs-group class="w-full mb-4" viewType="tabs-boxed" size="sm">
     <am-tab>
         <am-tab-label>
             Создать
@@ -39,21 +39,24 @@
             </div>
 
             <div class="flex justify-end">
-                <button class="btn btn-primary mr-1" (click)="save()">Сохранить</button>
-                <button class="btn btn-ghost" (click)="close()">Закрыть</button>
+                <button class="btn btn-sm btn-primary mr-1" (click)="save()">Сохранить</button>
+                <button class="btn btn-sm btn-ghost" (click)="close()">Закрыть</button>
             </div>
         </div>
     </am-tab>
-    <am-tab *ngIf="items | async as diaries">
+    <am-tab *ngFor="let item of items">
         <am-tab-label>
-            Созданные
+            {{
+            item.situation.length >= 12
+                ? (item.situation | slice:0:9).trim() + '...'
+                : item.situation
+            }}
         </am-tab-label>
-        <div class="form relative pb-10" *ngFor="let item of diaries">
+        <div class="form relative pb-10">
             <div class="form-field mb-3">
                 <label class="mb-4 font-medium">Ситуация</label>
                 <p class="opacity-75 text-sm">{{item.situation}}</p>
             </div>
-
             <div class="form-field mb-3">
                 <label class="mb-4 font-medium">Мысли</label>
                 <p class="opacity-75 text-sm">{{item.think}}</p>

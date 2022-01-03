@@ -10,7 +10,7 @@ import { tap } from 'rxjs/operators';
 })
 export class DiaryService {
 
-  private _lastMonth$ = new BehaviorSubject<Map<Number, DiaryDto[]>>(new Map<Number, DiaryDto[]>());
+  private _lastMonth$ = new BehaviorSubject<Map<number, DiaryDto[]>>(new Map<number, DiaryDto[]>());
   lastMonth$ = this._lastMonth$.asObservable();
 
   get url() {

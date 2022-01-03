@@ -9,6 +9,7 @@ import { CalendarComponent, DayModalComponent } from './calendar/calendar.compon
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'am-bulba';
 import { ContenteditableModule } from '@app/shared/contenteditable/contenteditable.module';
+import { DayComponent } from './calendar/day/day.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ContenteditableModule } from '@app/shared/contenteditable/contenteditab
     OrganizerComponent,
     OrganizerTableComponent,
     CalendarComponent,
-    DayModalComponent
+    DayModalComponent,
+    DayComponent
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,6 @@ import {
 import { DiaryCreateDto, DiaryDto } from '@app/models';
 import { Day } from '../calendar/models/day';
 import { DiaryService } from '../diary.service';
-import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-organizer-table',
@@ -22,12 +21,9 @@ import { filter, map } from 'rxjs/operators';
 export class OrganizerTableComponent implements OnInit, OnChanges {
 
   @Input() day!: Day;
-  @Output() onClose = new EventEmitter();
+  @Input() items: DiaryDto[] = [];
 
-  items = this.diaryService.lastMonth$.pipe(
-    map((map) => map.get(this.day.date.toDate().getTime())),
-    filter<DiaryDto[] | undefined>(Boolean)
-  )
+  @Output() onClose = new EventEmitter();
 
   diary: DiaryCreateDto = {
     bodySensation: '',

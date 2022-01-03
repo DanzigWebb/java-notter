@@ -1,23 +1,29 @@
+
+
 <div class="month flex h-full flex-col" [style.padding-bottom]="isIos ? '80px' : '0'">
+    <h2 class="text-2xl font-medium text-center p-1">Календарь психа</h2>
+
     <div class="flex justify-center">
         <span class="text-lg font-bold py-2">{{month.format('LL')}}</span>
     </div>
 
-    <header class="month-head py-2">
-        <div class="justify-self-center self-center">пн</div>
-        <div class="justify-self-center self-center">вт</div>
-        <div class="justify-self-center self-center">ср</div>
-        <div class="justify-self-center self-center">чт</div>
-        <div class="justify-self-center self-center">пт</div>
-        <div class="justify-self-center self-center">сб</div>
-        <div class="justify-self-center self-center">вс</div>
+    <header class="month-head py-1">
+        <div class="justify-self-center self-center font-semibold text-sm">пн</div>
+        <div class="justify-self-center self-center font-semibold text-sm">вт</div>
+        <div class="justify-self-center self-center font-semibold text-sm">ср</div>
+        <div class="justify-self-center self-center font-semibold text-sm">чт</div>
+        <div class="justify-self-center self-center font-semibold text-sm">пт</div>
+        <div class="justify-self-center self-center font-semibold text-sm">сб</div>
+        <div class="justify-self-center self-center font-semibold text-sm">вс</div>
     </header>
 
     <div class="month-days flex-1">
         <div *ngFor="let day of days" class="day-wrapper">
-            <div class="day" [class.opacity-10]="!day.fromCurrentMonth" (click)="openDay(day)">
-                {{day.date.format('D')}}
-            </div>
+            <app-day
+                [day]="day"
+                [data]="data.get(day.date.toDate().getTime())"
+                (click)="openDay(day)">
+            </app-day>
         </div>
     </div>
 </div>
