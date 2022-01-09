@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   ContentChild,
   OnDestroy,
+  AfterViewChecked,
 } from '@angular/core';
 import { TextareaAutoDirective } from '@app/shared/components/textarea-auto/textarea-auto.directive';
 import { Subject } from 'rxjs';
@@ -17,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./textarea-auto.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaAutoComponent implements AfterViewInit, OnDestroy {
+export class TextareaAutoComponent implements AfterViewInit, AfterViewChecked, OnDestroy {
 
   @ViewChild('textClone') cloneRef!: ElementRef;
   @ContentChild(TextareaAutoDirective) textareaAutoDirective!: TextareaAutoDirective;
@@ -27,12 +28,16 @@ export class TextareaAutoComponent implements AfterViewInit, OnDestroy {
   }
 
   get clone(): HTMLDivElement {
-    return this.cloneRef.nativeElement;
+    return this.cloneRef?.nativeElement;
   }
 
   private destroy$ = new Subject();
 
   constructor() {
+  }
+
+  ngAfterViewChecked() {
+    this.updateHeight();
   }
 
   ngAfterViewInit() {
@@ -51,8 +56,10 @@ export class TextareaAutoComponent implements AfterViewInit, OnDestroy {
   }
 
   private updateHeight() {
-    const height = this.cloneRef.nativeElement.offsetHeight;
-    this.textarea.style.height = height + 'px';
+    if (this.clone && this.textarea) {
+      const height = this.clone.offsetHeight;
+      this.textarea.style.height = height + 'px';
+    }
   }
 
   private setInitialValue() {
