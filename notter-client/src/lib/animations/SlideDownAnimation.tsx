@@ -1,5 +1,5 @@
 import { Transition, TransitionStatus } from 'react-transition-group';
-import { CSSProperties, MouseEvent, ReactNode } from 'react';
+import { CSSProperties, MouseEvent, ReactNode, useRef } from 'react';
 import { Properties } from 'csstype';
 
 // Todo (1) добавить анимацию через namespace (если возможно) <Animation.SlideDown>
@@ -41,8 +41,10 @@ export const SlideDownAnimation = (props: MenuAnimationProps) => {
         exited: {opacity: 0, transform: `translateY(${length}px)`},
     };
 
+    const nodeRef = useRef(null)
+
     return (
-        <Transition in={inProp} timeout={duration}>
+        <Transition in={inProp} timeout={duration} nodeRef={nodeRef}>
             {state => (
                 <div
                     className={className}
