@@ -1,0 +1,9 @@
+.am-select {
+
+}
+
+.am-select input {
+    width: 1px;
+    background: inherit;
+    outline: none;
+}
