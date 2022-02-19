@@ -6,3 +6,19 @@
     display: grid;
     grid-template-rows: auto 1fr;
 }
+
+.container {
+    @apply m-auto px-2
+}
+
+.page {
+    @apply h-full flex-1
+}
+
+.form-control {
+    @apply relative mb-2
+}
+
+.form-control-error {
+    @apply absolute left-0 -bottom-5 text-2xs text-error
+}
