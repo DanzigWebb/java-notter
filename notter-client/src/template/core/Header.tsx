@@ -1,4 +1,13 @@
+import { useAuth } from '../../services/user/authContext';
+
 export const Header = () => {
+
+    const [isAuth, setAuth] = useAuth();
+
+    function signOut() {
+        setAuth({type: 'LOGOUT'});
+    }
+
     return (
         <header className="navbar bg-base-200">
             <div className="navbar-start">
@@ -39,7 +48,7 @@ export const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Login</a>
+                {isAuth && <a className="btn" onClick={signOut}>Logout</a>}
             </div>
         </header>
     );

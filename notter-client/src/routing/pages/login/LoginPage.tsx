@@ -1,11 +1,16 @@
 import { LoginForm } from './LoginForm';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../../services/user/authContext';
 
 export const LoginPage = () => {
-    const navigate = useNavigate();
+    const [auth, setAuth] = useAuth();
+
+    if (auth) {
+        return <Navigate to="/"/>
+    }
 
     async function onLogin() {
-        navigate('/');
+        setAuth({type: 'LOGIN'});
     }
 
     return (

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AuthService } from '../../services/user/auth';
+import { useAuth } from '../../services/user/authContext';
 
 export const Home = () => {
-    const isAuth = AuthService.isAuth;
+    const [isAuth] = useAuth();
 
     return (
         <div className="hero min-h-full">

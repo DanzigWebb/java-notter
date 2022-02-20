@@ -7,18 +7,23 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home, NotFound } from './template';
 import { LoginPage } from './routing/pages';
 import { LoginGuard } from './routing/guards/LoginGuard';
+import { AuthProvider } from './services/user/authContext';
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App/>}>
-                    <Route index element={<Home/>}/>
-                    <Route path="/login" element={<LoginGuard><LoginPage/></LoginGuard>}/>
 
-                    <Route path="*" element={<NotFound/>}/>
-                </Route>
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/" element={<App/>}>
+                        <Route index element={<Home/>}/>
+                        <Route path="/login" element={<LoginGuard><LoginPage/></LoginGuard>}/>
+
+                        <Route path="*" element={<NotFound/>}/>
+                    </Route>
+                </Routes>
+            </AuthProvider>
+
         </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')

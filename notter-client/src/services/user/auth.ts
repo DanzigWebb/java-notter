@@ -10,7 +10,7 @@ class Auth {
         if (this._isAuth === undefined) {
             this.checkIsAuth();
         }
-        return this._isAuth;
+        return !!this._isAuth;
     }
 
     get user() {
