@@ -4,8 +4,13 @@ import { LoginRequestDto, LoginResponseDto } from '../api/dto/user.model';
 import { AxiosError } from 'axios';
 
 class Auth {
+    private _isAuth: boolean | undefined;
+
     get isAuth() {
-        return !!userStorage.get('isAuth');
+        if (this._isAuth === undefined) {
+            this.checkIsAuth();
+        }
+        return this._isAuth;
     }
 
     get user() {
@@ -14,6 +19,10 @@ class Auth {
 
     get token() {
         return userStorage.get('token');
+    }
+
+    constructor() {
+
     }
 
     async login(loginDto: LoginRequestDto) {
@@ -28,6 +37,10 @@ class Auth {
                 console.error(e);
                 throw new Error(e.message);
             });
+    }
+
+    private checkIsAuth() {
+        this._isAuth = !!userStorage.get('isAuth');
     }
 }
 
