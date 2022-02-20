@@ -2,6 +2,7 @@ package com.example.notter.rest.auth;
 
 import com.example.notter.config.security.jwt.JwtProvider;
 import com.example.notter.db.entity.UserEntity;
+import com.example.notter.exception.UserNotFoundException;
 import com.example.notter.rest.auth.model.AuthSigninRequest;
 import com.example.notter.rest.auth.model.AuthSigninResponse;
 import com.example.notter.rest.auth.model.AuthSignupRequest;
@@ -36,10 +37,15 @@ public class AuthController {
 
     @PostMapping("auth/sign-in")
     public AuthSigninResponse auth(@Valid @RequestBody AuthSigninRequest request) {
-        UserEntity userEntity = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
-        String token = jwtProvider.generateToken(userEntity.getEmail());
+        var userEntity = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
 
-        User u = User.toModel(userEntity);
+        if (userEntity == null) {
+            throw new UserNotFoundException();
+        }
+
+        var token = jwtProvider.generateToken(userEntity.getEmail());
+
+        var u = User.toModel(userEntity);
         return new AuthSigninResponse(token, u);
     }
 }

@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { AuthService } from '../user/auth';
 
 const httpClient = axios.create({
-    baseURL: '/',
+    baseURL: '/app',
 });
 
 httpClient.interceptors.request.use((config) => {

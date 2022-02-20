@@ -2,20 +2,29 @@ import { FormField } from '../../../lib/components/form/controls/FormField';
 import { UnpackNestedValue, useForm } from 'react-hook-form';
 import { FormError } from '../../../lib/components/form/controls/FormError';
 import { LoginInputs } from './login.type';
+import { AuthService } from '../../../services/user/auth';
 
 type Props = {
     onSubmit?: (data: LoginInputs) => void;
 }
 
 export const LoginForm = (props: Props) => {
-    const {handleSubmit, register, formState: {errors}} = useForm<LoginInputs>();
+    const {handleSubmit, register, setError, formState: {errors}} = useForm<LoginInputs>();
 
     const {
         onSubmit = () => {}
     } = props;
 
-    function onSubmitForm(data: UnpackNestedValue<LoginInputs>) {
-        onSubmit(data);
+    async function onSubmitForm(data: UnpackNestedValue<LoginInputs>) {
+        try {
+            await AuthService.login(data);
+            onSubmit(data);
+        } catch (e) {
+            setError('login', {
+                type: 'wrongLogin',
+                message: 'Неверный логин или пароль'
+            });
+        }
     }
 
     return (
@@ -34,7 +43,12 @@ export const LoginForm = (props: Props) => {
                         {...register('login', {required: true})}
                     />
 
-                    <FormError isShow={!!errors.login}>Обязательное поле</FormError>
+                    <FormError isShow={!!errors.login}>
+                        {errors.login?.type === 'wrongLogin'
+                            ? errors.login.message
+                            : 'Обязательное поле'
+                        }
+                    </FormError>
                 </FormField>
                 <FormField>
                     <label className="label">

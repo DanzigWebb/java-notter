@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './template/core/Home';
 import { LoginPage } from './routing/pages';
+import { LoginGuard } from './routing/guards/LoginGuard';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -13,7 +14,13 @@ ReactDOM.render(
             <Routes>
                 <Route path="/" element={<App/>}>
                     <Route index element={<Home/>}/>
-                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/login"
+                           element={
+                               <LoginGuard>
+                                   <LoginPage/>
+                               </LoginGuard>
+                           }
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>

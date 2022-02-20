@@ -1,9 +1,11 @@
 import { LoginForm } from './LoginForm';
-import { LoginInputs } from './login.type';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
-    function onLogin(data: LoginInputs) {
-        console.log(data);
+    const navigate = useNavigate();
+
+    async function onLogin() {
+        navigate('/');
     }
 
     return (
