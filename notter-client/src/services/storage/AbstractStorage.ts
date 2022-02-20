@@ -1,8 +1,8 @@
-type StorageState<T> = Partial<Record<keyof T, T[keyof T]>>
+type StorageState<T> = Partial<T>
 
 export abstract class AbstractStorage<T extends Object> {
 
-    state: StorageState<T> = this.getLocal();
+    private state: StorageState<T> = this.getLocal();
 
     constructor(
         public storage: Storage = localStorage,
@@ -14,7 +14,16 @@ export abstract class AbstractStorage<T extends Object> {
         this.update();
     }
 
-    get(key: keyof T): T[keyof T] | undefined {
+    setState(state: T) {
+        this.state = state;
+        this.update();
+    }
+
+    getState() {
+        return this.state;
+    }
+
+    get<K extends keyof T>(key: K) {
         return this.state[key];
     }
 

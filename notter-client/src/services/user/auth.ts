@@ -1,6 +1,8 @@
+import { userStorage } from '../storage';
+
 class Auth {
     get isAuth() {
-        return !!localStorage.getItem('isAuth');
+        return !!userStorage.get('isAuth')
     }
 }
 
