@@ -4,6 +4,8 @@ import { DashboardCreateDto, DashboardDto } from '../../../services/api/dto';
 import { DashboardNav } from './DashboardNav';
 import { Modal } from '../../../lib/components/modal';
 import { DashboardCreateModal } from './modals/DashboardCreateModal';
+import { UnpackNestedValue } from 'react-hook-form';
+import { DashboardFilerInputs } from './models/dashboard.models';
 
 export const DashboardPage = () => {
 
@@ -25,10 +27,14 @@ export const DashboardPage = () => {
         setDashboards(state => [...state, dashboard]);
     }
 
+    function onFilterChange(data: UnpackNestedValue<DashboardFilerInputs>) {
+        console.log(data);
+    }
+
     return (
         <div className="page">
             <div className="container">
-                <DashboardNav/>
+                <DashboardNav onFilterChange={onFilterChange}/>
 
                 <div className="flex gap-3">
                     {dashboards.map(ds =>

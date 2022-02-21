@@ -16,7 +16,7 @@
 }
 
 .form-control {
-    @apply relative mb-2
+    @apply relative
 }
 
 .form-control-error {
