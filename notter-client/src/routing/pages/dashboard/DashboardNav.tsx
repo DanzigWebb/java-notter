@@ -1,24 +1,38 @@
 import { FormField } from '../../../lib/components/form/controls/FormField';
 import { UnpackNestedValue, useForm } from 'react-hook-form';
 import { DashboardFilerInputs } from './models/dashboard.models';
-import { debounce } from '../../../lib/utils/decorators/debounce';
+import { debounce } from '../../../lib/utils';
 import { useEffect } from 'react';
 
 type Props = {
+    defaultFilters?: Partial<DashboardFilerInputs>,
     onFilterChange?: (data: UnpackNestedValue<DashboardFilerInputs>) => void;
 }
 
 export const DashboardNav = (props: Props) => {
-    const {register, watch} = useForm<DashboardFilerInputs>();
-
     const {
-        onFilterChange = () => {}
+        onFilterChange = () => {},
+        defaultFilters = {}
     } = props;
 
+    const {register, watch, reset} = useForm<DashboardFilerInputs>({
+        defaultValues: defaultFilters
+    });
+
+    /*
+    * Обновляем значение формы при обновлении пропса
+    */
+    useEffect(() => {
+        reset(defaultFilters);
+    }, [defaultFilters]);
+
+    /*
+    * Ставим debounce при изменении состояния формы
+    */
     useEffect(() => {
         watch(debounce((value) => {
             onFilterChange(value);
-        }, 400));
+        }, 200));
     }, [watch]);
 
     return (
@@ -46,7 +60,9 @@ export const DashboardNav = (props: Props) => {
                     </FormField>
                 </form>
             </div>
+
             <div className="flex-1"/>
+
             <div className="flex-none">
                 <button className="btn btn-circle btn-ghost">
                     <i className="fa-solid fa-ellipsis-vertical"/>
