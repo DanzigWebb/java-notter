@@ -1,4 +1,4 @@
-import { useAuth } from '../../services/user/authContext';
+import { useAuth } from '../../services/auth/authContext';
 
 export const Header = () => {
 

@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useReducer } from 'react';
-import { AuthService } from './auth';
+import { authService } from '../api/auth.service';
 
 type Action = { type: 'LOGIN' } | { type: 'LOGOUT' };
 type Dispatch = (action: Action) => void;
@@ -19,7 +19,7 @@ const AuthStateContext = createContext<State | undefined>(undefined);
 const AuthDispatchContext = createContext<Dispatch | undefined>(undefined)
 
 function AuthProvider({children}: { children: ReactNode }) {
-    const [state, dispatch] = useReducer(authReducer, AuthService.isAuth);
+    const [state, dispatch] = useReducer(authReducer, authService.isAuth);
 
     return (
         <AuthStateContext.Provider value={state}>

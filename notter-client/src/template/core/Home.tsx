@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../services/user/authContext';
+import { useAuth } from '../../services/auth/authContext';
 
 export const Home = () => {
     const [isAuth] = useAuth();

@@ -2,7 +2,7 @@ import { FormField } from '../../../lib/components/form/controls/FormField';
 import { UnpackNestedValue, useForm } from 'react-hook-form';
 import { FormError } from '../../../lib/components/form/controls/FormError';
 import { LoginInputs } from './login.type';
-import { AuthService } from '../../../services/user/auth';
+import { authService } from '../../../services/api/auth.service';
 
 type Props = {
     onSubmit?: (data: LoginInputs) => void;
@@ -17,7 +17,7 @@ export const LoginForm = (props: Props) => {
 
     async function onSubmitForm(data: UnpackNestedValue<LoginInputs>) {
         try {
-            await AuthService.login(data);
+            await authService.login(data);
             onSubmit(data);
         } catch (e) {
             setError('login', {

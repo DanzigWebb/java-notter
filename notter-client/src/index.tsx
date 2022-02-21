@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home, NotFound } from './template';
 import { LoginPage } from './routing/pages';
 import { LoginGuard } from './routing/guards/LoginGuard';
-import { AuthProvider } from './services/user/authContext';
+import { AuthProvider } from './services/auth/authContext';
 
 ReactDOM.render(
     <React.StrictMode>

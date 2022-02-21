@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../services/user/authContext';
+import { useAuth } from '../../services/auth/authContext';
 
 type Props = {
     children: JSX.Element;

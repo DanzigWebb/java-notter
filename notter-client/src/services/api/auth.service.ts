@@ -1,9 +1,9 @@
 import { userStorage, UserStorageState } from '../storage';
 import httpClient from '../http/httpClient';
 import { AxiosError } from 'axios';
-import { LoginDto, LoginResponseDto } from '../api/dto';
+import { LoginDto, LoginResponseDto } from './dto';
 
-class Auth {
+class AuthService {
     private _isAuth: boolean | undefined;
 
     get isAuth() {
@@ -22,7 +22,6 @@ class Auth {
     }
 
     constructor() {
-
     }
 
     async login(loginDto: LoginDto) {
@@ -44,4 +43,4 @@ class Auth {
     }
 }
 
-export const AuthService = new Auth();
+export const authService = new AuthService();

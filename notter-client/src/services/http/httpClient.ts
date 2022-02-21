@@ -1,12 +1,12 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { AuthService } from '../user/auth';
+import { authService } from '../api/auth.service';
 
 const httpClient = axios.create({
     baseURL: '/app',
 });
 
 httpClient.interceptors.request.use((config) => {
-    const token = AuthService.token;
+    const token = authService.token;
     if (token) {
         setAuthHeader(token, config);
     }
