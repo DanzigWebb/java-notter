@@ -8,6 +8,8 @@ import { Home, NotFound } from './template';
 import { LoginPage } from './routing/pages';
 import { LoginGuard } from './routing/guards/LoginGuard';
 import { AuthProvider } from './services/auth/authContext';
+import { AuthGuard } from './routing/guards/AuthGuard';
+import { DashboardPage } from './routing/pages/dashboard/DashboardPage';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -18,6 +20,8 @@ ReactDOM.render(
                     <Route path="/" element={<App/>}>
                         <Route index element={<Home/>}/>
                         <Route path="/login" element={<LoginGuard><LoginPage/></LoginGuard>}/>
+
+                        <Route path="/dashboard" element={<AuthGuard><DashboardPage/></AuthGuard>}/>
 
                         <Route path="*" element={<NotFound/>}/>
                     </Route>

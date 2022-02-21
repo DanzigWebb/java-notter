@@ -1,23 +1,19 @@
-import { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../services/auth/authContext';
 
 type Props = {
-    children: ReactNode;
+    children: JSX.Element;
 }
 
 export const AuthGuard = (props: Props) => {
     const [isAuth] = useAuth();
-    const navigate = useNavigate();
 
     if (!isAuth) {
-        navigate('/login', {
-            replace: true,
-        })
+        return <Navigate to="/login" replace={true}/>;
     }
 
     const {
-        children = ''
+        children
     } = props;
 
     return children;

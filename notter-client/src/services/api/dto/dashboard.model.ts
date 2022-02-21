@@ -11,3 +11,8 @@ export interface DashboardDto {
 
   groups: GroupDto[];
 }
+
+export interface DashboardCreateDto {
+  name: string;
+  description?: string;
+}

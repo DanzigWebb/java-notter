@@ -8,7 +8,7 @@ export const FormField = (props: FormFieldProps) => {
     const {children} = props;
 
     return (
-        <div className="form-control">
+        <div className="form-control pb-2">
             {children}
         </div>
     );
