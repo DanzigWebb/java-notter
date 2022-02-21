@@ -1,6 +1,6 @@
 import { AbstractStorage } from '../AbstractStorage';
 import { StorageKeyEnum } from '../StorageKeyEnum';
-import { UserDto } from '../../api/dto/user.model';
+import { UserDto } from '../../api/dto';
 
 export type UserStorageState = {
     isAuth: boolean;

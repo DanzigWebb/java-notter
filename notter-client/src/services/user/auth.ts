@@ -1,7 +1,7 @@
 import { userStorage, UserStorageState } from '../storage';
 import httpClient from '../http/httpClient';
-import { LoginRequestDto, LoginResponseDto } from '../api/dto/user.model';
 import { AxiosError } from 'axios';
+import { LoginDto, LoginResponseDto } from '../api/dto';
 
 class Auth {
     private _isAuth: boolean | undefined;
@@ -25,7 +25,7 @@ class Auth {
 
     }
 
-    async login(loginDto: LoginRequestDto) {
+    async login(loginDto: LoginDto) {
         return httpClient.post<LoginResponseDto>('/auth/sign-in', loginDto)
             .then((res) => {
                 const {token, user} = res.data;
