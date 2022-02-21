@@ -2,7 +2,7 @@ import { Menu } from '../../../menu';
 import { SelectDropdown } from './SelectDropdown';
 import { ReactNode, useState } from 'react';
 import './Select.css';
-import { SelectionModel } from '../../../../utils/selection/SelectionModel';
+import { SelectionModel } from '../../../../utils';
 
 class Selection extends SelectionModel<any> {
 

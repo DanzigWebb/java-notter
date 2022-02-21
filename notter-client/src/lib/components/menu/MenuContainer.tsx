@@ -4,7 +4,7 @@ import { Menu } from './Menu';
 import './Menu.css';
 import { usePopper } from 'react-popper';
 import { SlideDownAnimation } from '../../animations/SlideDownAnimation';
-import { EventEmitter } from '../../utils/emitter/EventEmitter';
+import { EventEmitter } from '../../utils';
 
 interface MenuContainerProps<T = any> {
     children: ReactNode;

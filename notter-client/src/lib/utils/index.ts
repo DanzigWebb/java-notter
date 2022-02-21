@@ -1,4 +1,4 @@
-export * from './Portal.class';
-export * from './selection/SelectionModel';
-export * from './emitter/EventEmitter';
+export * from './portal.class';
+export * from './selection/selection-model.class';
+export * from './emitter/event-emitter.class';
 export * from './debounce';

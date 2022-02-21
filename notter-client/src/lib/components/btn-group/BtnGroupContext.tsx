@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { SelectionModel } from '../../utils/selection/SelectionModel';
+import { SelectionModel } from '../../utils';
 
 export interface BtnGroupContextState<T = any> {
     btnGroupSelection: SelectionModel<T>;

@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { EventEmitter } from '../../utils/emitter/EventEmitter';
+import { EventEmitter } from '../../utils';
 
 export interface MenuContextState<T = any> {
     onSelectItem: (value?: T) => void;
