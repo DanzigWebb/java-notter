@@ -1,12 +1,10 @@
 import { ReactNode, useLayoutEffect, useState } from 'react';
-import { Modal } from './Modal';
 import { ModalContext } from './ModalContext';
 import { SlideDownAnimation } from '../../animations/SlideDownAnimation';
 
 export interface ModalContainerProps {
     children: ReactNode;
     onClose: () => void;
-    context: Modal;
     className?: string;
 }
 

@@ -21,7 +21,6 @@ export class Modal extends AmPortal {
                 return (
                     <ModalContainer
                         onClose={() => this.close()}
-                        context={this}
                         className={this.containerWidthClass}
                     >
                         {this.node}
