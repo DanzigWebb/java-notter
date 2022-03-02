@@ -4,10 +4,13 @@ import { render } from 'solid-js/web';
 import './index.css';
 import App from './App';
 import { Router } from 'solid-app-router';
+import { AppProvider } from '@root/src/providers/AppProvider';
 
 render(() => (
         <Router>
-            <App/>
+            <AppProvider>
+                <App/>
+            </AppProvider>
         </Router>
     ),
     document.getElementById('root') as HTMLElement
