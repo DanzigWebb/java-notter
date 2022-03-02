@@ -2,6 +2,7 @@ import { Component } from 'solid-js';
 import { Page } from '@root/src/pages/Page';
 import { useApp } from '@root/src/providers/AppProvider';
 import { Link } from 'solid-app-router';
+import { PagesPathEnum } from '@root/src/pages/pages.type';
 
 export const NotFound: Component = () => {
     const app = useApp();
@@ -15,7 +16,10 @@ export const NotFound: Component = () => {
                         <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
                             exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
 
-                        <Link href={app.auth() ? '/' : '/login'}>
+                        <Link href={app.auth()
+                            ? PagesPathEnum.HOME
+                            : PagesPathEnum.SIGNIN
+                        }>
                             <button class="btn btn-primary">
                                 {app.auth()
                                     ? 'Get started'
