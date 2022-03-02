@@ -1,34 +1,26 @@
 import { Accessor, Component, createContext, createSignal, useContext } from 'solid-js';
+import { UserDto } from '@root/src/services/api/dto';
 
 type AppContextType = {
-    showDrawer: Accessor<boolean>;
-    toggleDrawer: (v?: boolean) => void;
+    auth: Accessor<boolean>;
+    setAuth: (isAuth: boolean) => void;
+    user: Accessor<UserDto | null>
+    setUser: (u: UserDto | null) => void;
 }
 
 export const AppContext = createContext<AppContextType>();
 
 export const AppProvider: Component = (props) => {
 
-    const [showDrawer, setDrawer] = createSignal(true);
+    const [user, setUser] = createSignal<UserDto | null>(null);
+    const [auth, setAuth] = createSignal(false);
 
     const store: AppContextType = {
-        showDrawer,
-        toggleDrawer
+        user,
+        setUser,
+        auth,
+        setAuth,
     };
-
-    function toggleDrawer(value?: boolean) {
-        switch (value) {
-            case true:
-                setDrawer(true);
-                break;
-            case false:
-                setDrawer(false);
-                break;
-            default:
-                setDrawer(!showDrawer());
-                break;
-        }
-    }
 
     return (
         <AppContext.Provider value={store}>
