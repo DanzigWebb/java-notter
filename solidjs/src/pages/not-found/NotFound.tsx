@@ -1,6 +1,6 @@
 import { Component } from 'solid-js';
 import { Page } from '@root/src/pages/Page';
-import { useApp } from '@root/src/providers/AppProvider';
+import { useApp } from '@root/src/shared/providers/AppProvider';
 import { Link } from 'solid-app-router';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 

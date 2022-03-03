@@ -4,7 +4,7 @@ import { render } from 'solid-js/web';
 import './index.css';
 import App from './App';
 import { Router } from 'solid-app-router';
-import { AppProvider } from '@root/src/providers/AppProvider';
+import { AppProvider } from '@root/src/shared/providers/AppProvider';
 
 render(() => (
         <Router>

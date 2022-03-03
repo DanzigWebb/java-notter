@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import { Header } from '@root/src/views/header/Header';
+import { Header } from '@root/src/shared/views/header/Header';
 import { JSX } from 'solid-js';
 import { Route, Routes } from 'solid-app-router';
 import { Home, SigninPage, NotFound, SignupPage } from '@root/src/pages';
