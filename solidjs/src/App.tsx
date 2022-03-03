@@ -4,14 +4,24 @@ import { JSX } from 'solid-js';
 import { Route, Routes } from 'solid-app-router';
 import { Home, SigninPage, NotFound, SignupPage } from '@root/src/pages';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
+import { PrivateGuard, PublicGuard } from '@root/src/shared/guards';
 
 
 const Routers: Component = () => {
     return (
         <Routes>
-            <Route path={`/${PagesPathEnum.HOME}`} element={<Home/>}/>
-            <Route path={`/${PagesPathEnum.SIGNIN}`} element={<SigninPage/>}/>
-            <Route path={`/${PagesPathEnum.SIGNUP}`} element={<SignupPage/>}/>
+            <Route
+                path={`/${PagesPathEnum.HOME}`}
+                element={<PrivateGuard children={<Home/>}/>}
+            />
+            <Route
+                path={`/${PagesPathEnum.SIGNIN}`}
+                element={<PublicGuard children={<SigninPage/>}/>}
+            />
+            <Route
+                path={`/${PagesPathEnum.SIGNUP}`}
+                element={<PublicGuard children={<SignupPage/>}/>}
+            />
             <Route path="/*all" element={<NotFound/>}/>
         </Routes>
     );
