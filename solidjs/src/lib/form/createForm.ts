@@ -1,15 +1,31 @@
-import { FormControl, FormError, FormOptions } from '@root/src/lib/form/form.type';
 import { createStore } from 'solid-js/store';
-import { SetControlValue } from '@root/src/lib/form/utils/utils';
+import { FormControl, FormError, FormOptions } from '@root/src/lib/form/form.type';
+import { Entries, getControlValue, SetControlValue, validate } from '@root/src/lib/form/utils/utils';
 import { CUSTOM_EVENT_NAME } from '@root/src/lib/form/utils/constants';
 
 const customEvent = new CustomEvent(CUSTOM_EVENT_NAME);
 
-export function createForm<Inputs extends {}>(options: FormOptions<Inputs> = {}) {
-    const refs: { [key in keyof Inputs]?: FormControl } = {};
-    const [errors, setErrors] = createStore<FormError<Inputs>>({});
+export function createForm<Controls extends {}>(options: FormOptions<Controls> = {}) {
+    const refs: { [key in keyof Controls]?: FormControl } = {};
+    const [errors, setErrors] = createStore<FormError<Controls>>({});
 
-    const register = (name: keyof Inputs) => ({
+    /**
+     * Get all values of control
+     */
+    const getValues = (): Controls => {
+        const controls: Partial<Controls> = {};
+        Entries(refs).forEach(([name, controlRef]) => (
+            controls[name] = controlRef
+                ? getControlValue(controlRef!)
+                : ''
+        ));
+        return controls as Controls;
+    };
+
+    /**
+     * Registration control
+     */
+    const register = (name: keyof Controls) => ({
         ref: (ref: FormControl) => {
             const controlRef = (refs[name] = ref);
 
@@ -26,13 +42,45 @@ export function createForm<Inputs extends {}>(options: FormOptions<Inputs> = {})
         name
     });
 
-    const setValue = <Name extends keyof Inputs, Value extends Inputs[keyof Inputs]>(
+    /**
+     * Set new value to registered control
+     */
+    const setValue = <Name extends keyof Controls, Value extends Controls[Name]>(
         name: Name,
         value: Value,
     ) => SetControlValue(refs[name]!, value, customEvent);
 
+    /**
+     * Get value of registered control
+     */
+    const getValue = <Name extends keyof Controls, Value extends Controls[Name]>(
+        name: Name
+    ) => getControlValue(refs[name]!);
+
+    /**
+     * @internal
+     * Validate current controls
+     */
+    const _validate = (values: Controls) => validate(values, options.validators, setErrors);
+
+    /**
+     * Form submit wrapper with validation
+     */
+    const submit = (e?: Event) => {
+        e?.preventDefault();
+        const onSubmit = options.onSubmit;
+        const values = getValues();
+
+        if (_validate(values) && onSubmit) {
+            onSubmit(values);
+        }
+    };
+
     return {
         register,
+        setValue,
+        getValue,
+        submit,
         errors,
     };
 }

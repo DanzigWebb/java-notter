@@ -10,9 +10,19 @@ type Inputs = {
 }
 
 export const SigninPage: Component = () => {
-    const {register} = createForm<Inputs>({
+    const {register, errors, submit} = createForm<Inputs>({
         defaultValues: {
             login: 'email@ma.com'
+        },
+        validators: {
+            password: (v) => {
+                if (v.length === 0) {
+                    return 'Обязательное поле';
+                }
+            }
+        },
+        onSubmit: (values) => {
+            console.log(values);
         }
     });
 
@@ -26,7 +36,7 @@ export const SigninPage: Component = () => {
                             exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                     </div>
                     <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <div class="card-body">
+                        <form onSubmit={submit} class="card-body">
                             <div class="form-control">
                                 <label class="label">
                                     <span class="label-text">Email</span>
@@ -38,17 +48,26 @@ export const SigninPage: Component = () => {
                                 <label class="label">
                                     <span class="label-text">Password</span>
                                 </label>
-                                <input type="text" placeholder="password"
-                                       class="input input-bordered" {...register('password')}/>
+                                <input type="text"
+                                       placeholder="password"
+                                       class="input input-bordered"
+                                       classList={{'input-error': !!errors.password}}
+                                       {...register('password')}
+                                />
+                                {errors.password && <i class="text-xs text-error">{errors.password}</i>}
                                 <label class="label">
-                                    <Link href={`/${PagesPathEnum.SIGNUP}`} class="label-text-alt link link-hover">Еще
-                                        не зарегистрированы?</Link>
+                                    <Link
+                                        href={`/${PagesPathEnum.SIGNUP}`}
+                                        class="label-text-alt link link-hover"
+                                    >
+                                        Еще не зарегистрированы?
+                                    </Link>
                                 </label>
                             </div>
                             <div class="form-control mt-6">
                                 <button class="btn btn-primary">Login</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
