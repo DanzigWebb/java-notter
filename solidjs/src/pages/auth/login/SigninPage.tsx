@@ -3,6 +3,7 @@ import { Page } from '@root/src/pages/Page';
 import { Link } from 'solid-app-router';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { createForm } from '@root/src/lib/form/createForm';
+import { Validators } from '@root/src/lib/form/validators/validators';
 
 type Inputs = {
     login: string;
@@ -11,16 +12,6 @@ type Inputs = {
 
 export const SigninPage: Component = () => {
     const {register, errors, submit} = createForm<Inputs>({
-        defaultValues: {
-            login: 'email@ma.com'
-        },
-        validators: {
-            password: (v) => {
-                if (v.length === 0) {
-                    return 'Обязательное поле';
-                }
-            }
-        },
         onSubmit: (values) => {
             console.log(values);
         }
@@ -41,18 +32,36 @@ export const SigninPage: Component = () => {
                                 <label class="label">
                                     <span class="label-text">Email</span>
                                 </label>
-                                <input type="text" placeholder="email"
-                                       class="input input-bordered" {...register('login')}/>
+                                <input
+                                    type="text"
+                                    placeholder="email"
+                                    class="input input-bordered"
+                                    classList={{'input-error': !!errors.login}}
+                                    {...register('login', {
+                                        validators: [
+                                            Validators.required(),
+                                            Validators.emailValidator()
+                                        ]
+                                    })}
+                                />
+                                {errors.login && <i class="text-xs text-error">{errors.login}</i>}
                             </div>
                             <div class="form-control">
                                 <label class="label">
                                     <span class="label-text">Password</span>
                                 </label>
-                                <input type="text"
-                                       placeholder="password"
-                                       class="input input-bordered"
-                                       classList={{'input-error': !!errors.password}}
-                                       {...register('password')}
+                                <input
+                                    type="text"
+                                    placeholder="password"
+                                    class="input input-bordered"
+                                    classList={{'input-error': !!errors.password}}
+                                    {...register('password', {
+                                        validators: [
+                                            Validators.required(),
+                                            Validators.minLength(6),
+                                            Validators.maxLength(10)
+                                        ]
+                                    })}
                                 />
                                 {errors.password && <i class="text-xs text-error">{errors.password}</i>}
                                 <label class="label">

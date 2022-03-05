@@ -1,15 +1,19 @@
 export type FormControl = HTMLInputElement | HTMLSelectElement;
 
-export type FormError<Inputs> = { [key in keyof Inputs]?: string };
+export type FormError<Controls> = { [Name in keyof Controls]?: string };
 
-export type FormValidator<T> = (value: T) => string | void;
+export type FormValidator<T> = (value: T | undefined | null) => string | void;
 
-export type FormValidatorsOption<Values> = {
-    [key in keyof Partial<Values>]: FormValidator<Values[key]> | Array<FormValidator<Values[key]>>;
+export type FormValidatorsOption<Controls> = {
+    [Name in keyof Partial<Controls>]: FormValidator<Controls[Name]> | Array<FormValidator<Controls[Name]>>;
 };
 
-export interface FormOptions<Inputs> {
-    defaultValues?: Partial<Inputs>;
-    validators?: FormValidatorsOption<Inputs>;
-    onSubmit?: (values: Inputs) => void | Promise<void>;
+export interface FormOptions<Controls> {
+    defaultValues?: Partial<Controls>;
+    validators?: FormValidatorsOption<Controls>;
+    onSubmit?: (values: Controls) => void | Promise<void>;
+}
+
+export type RegisterOptions<Controls> = {
+    validators?: Array<FormValidator<Controls[keyof Partial<Controls>]>>;
 }

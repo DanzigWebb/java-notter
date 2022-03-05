@@ -1,5 +1,11 @@
 import { createStore } from 'solid-js/store';
-import { FormControl, FormError, FormOptions } from '@root/src/lib/form/form.type';
+import {
+    FormControl,
+    FormError,
+    FormOptions,
+    FormValidatorsOption,
+    RegisterOptions
+} from '@root/src/lib/form/form.type';
 import { Entries, getControlValue, SetControlValue, validate } from '@root/src/lib/form/utils/utils';
 import { CUSTOM_EVENT_NAME } from '@root/src/lib/form/utils/constants';
 
@@ -25,22 +31,40 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
     /**
      * Registration control
      */
-    const register = (name: keyof Controls) => ({
-        ref: (ref: FormControl) => {
-            const controlRef = (refs[name] = ref);
+    const register = <Name extends keyof Partial<Controls>, Value extends Controls[Name]>(
+        name: Name,
+        registerOptions: RegisterOptions<Controls> = {}
+    ) => {
 
-            /**
-             * Set default value to control with init register props
-             */
-            const {defaultValues} = options;
-            if (defaultValues && defaultValues[name]) {
-                setValue(name, defaultValues[name]!);
+        /**
+         * Init validators for control
+         */
+        if (registerOptions.validators) {
+            if (options.validators) {
+                options.validators[name] = registerOptions.validators;
+            } else {
+                options.validators = {} as FormValidatorsOption<Controls>;
+                options.validators[name] = registerOptions.validators;
             }
+        }
 
-            return controlRef;
-        },
-        name
-    });
+        return {
+            ref: (ref: FormControl) => {
+                const controlRef = (refs[name] = ref);
+
+                /**
+                 * Set default value to control with init register props
+                 */
+                const {defaultValues} = options;
+                if (defaultValues && defaultValues[name]) {
+                    setValue(name, defaultValues[name]!);
+                }
+
+                return controlRef;
+            },
+            name
+        };
+    };
 
     /**
      * Set new value to registered control
