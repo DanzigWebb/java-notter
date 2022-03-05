@@ -1,4 +1,6 @@
-export type FormElement = HTMLInputElement | HTMLSelectElement;
+export type FormControl = HTMLInputElement | HTMLSelectElement;
+
+export type FormError<Inputs> = { [key in keyof Inputs]?: string };
 
 export type FormValidator<T> = (value: T) => string | void;
 
@@ -7,7 +9,7 @@ export type FormValidatorsOption<Values> = {
 };
 
 export interface FormOptions<Inputs> {
-    initialValues?: Partial<Inputs>;
+    defaultValues?: Partial<Inputs>;
     validators?: FormValidatorsOption<Inputs>;
     onSubmit?: (values: Inputs) => void | Promise<void>;
 }

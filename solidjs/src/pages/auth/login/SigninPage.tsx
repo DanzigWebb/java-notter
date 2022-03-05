@@ -10,7 +10,11 @@ type Inputs = {
 }
 
 export const SigninPage: Component = () => {
-    const {register} = createForm<Inputs>();
+    const {register} = createForm<Inputs>({
+        defaultValues: {
+            login: 'email@ma.com'
+        }
+    });
 
     return (
         <Page full>

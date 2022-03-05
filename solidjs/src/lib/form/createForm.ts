@@ -1,78 +1,38 @@
-import { FormElement, FormOptions } from '@root/src/lib/form/form.type';
+import { FormControl, FormError, FormOptions } from '@root/src/lib/form/form.type';
+import { createStore } from 'solid-js/store';
+import { SetControlValue } from '@root/src/lib/form/utils/utils';
+import { CUSTOM_EVENT_NAME } from '@root/src/lib/form/utils/constants';
 
-const _setManuallyEvent = new CustomEvent('set-manually');
-
-/**
- * @internal
- * Set value to html control
- */
-const setInputValue = (input: FormElement, value: any, event: Event) => {
-    if (input.type === 'checkbox') {
-        (input as HTMLInputElement).checked = Boolean(value);
-    } else {
-        input.value = value;
-    }
-    input.dispatchEvent(event);
-};
-
-/**
- * @internal
- * Parse value from html control
- */
-const getInputValue = (input: FormElement): any => {
-    switch (input.type) {
-        case 'number':
-            return Number(input.value);
-        case 'checkbox':
-            return Boolean(input.value);
-        default:
-            return input.value;
-    }
-};
+const customEvent = new CustomEvent(CUSTOM_EVENT_NAME);
 
 export function createForm<Inputs extends {}>(options: FormOptions<Inputs> = {}) {
-    const inputs: { [key in keyof Inputs]?: FormElement } = {};
+    const refs: { [key in keyof Inputs]?: FormControl } = {};
+    const [errors, setErrors] = createStore<FormError<Inputs>>({});
 
-    /**
-     * Registration form control
-     * @example
-     * <input type="text" {...register('text')}/>
-     */
     const register = (name: keyof Inputs) => ({
-        ref: (ref: FormElement) => {
-            const instance = (inputs[name] = ref);
-            if (options?.initialValues) {
-                setValue(name, options.initialValues[name]!);
+        ref: (ref: FormControl) => {
+            const controlRef = (refs[name] = ref);
+
+            /**
+             * Set default value to control with init register props
+             */
+            const {defaultValues} = options;
+            if (defaultValues && defaultValues[name]) {
+                setValue(name, defaultValues[name]!);
             }
 
-            return instance;
+            return controlRef;
         },
-        name,
+        name
     });
 
-    const setValue = <Name extends keyof Inputs, Value extends Inputs[Name]>(name: Name, value: Value) => (
-        setInputValue(inputs[name]!, value, _setManuallyEvent)
-    );
-
-    const getValue = <Name extends keyof Inputs, Value extends Inputs[Name]>(name: Name): Value => (
-        getInputValue(inputs[name]!)
-    );
+    const setValue = <Name extends keyof Inputs, Value extends Inputs[keyof Inputs]>(
+        name: Name,
+        value: Value,
+    ) => SetControlValue(refs[name]!, value, customEvent);
 
     return {
-        /**
-         * Registration form control
-         * @example
-         * <input type="text" {...register('text')}/>
-         */
         register,
-        /**
-         * Set value to control by name
-         */
-        setValue,
-        /**
-         * Get value of control by name
-         */
-        getValue
+        errors,
     };
-
 }
