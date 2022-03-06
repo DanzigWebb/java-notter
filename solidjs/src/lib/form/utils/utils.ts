@@ -71,25 +71,31 @@ export const validateForm = <Controls>(
     return Object.keys(validationErrors).length === 0;
 };
 
+
+/**
+ * @internal
+ * Validate control by validators
+ */
 export const validateControl = <Controls extends {}, Name extends keyof Partial<Controls>, Value extends Controls[Name]>(
     controlName: Name,
-    value: Value,
-    validators: FormValidatorsOption<Controls | undefined>,
-) => {
-    if (!validators) {
-        return true;
+    controlValue: Value,
+    validatorOptions: FormValidatorsOption<Controls | undefined>,
+): string | void => {
+
+    if (!validatorOptions) {
+        return;
     }
 
-    const validator = validators[controlName];
-    if (Array.isArray(validator)) {
-        for (let i = 0; i < validator.length; i++) {
-            const validatorCallback = validator[i];
-            const error = validatorCallback(value);
+    const validators = validatorOptions[controlName];
+    if (Array.isArray(validators)) {
+        for (let i = 0; i < validators.length; i++) {
+            const validatorCallback = validators[i];
+            const error = validatorCallback(controlValue);
             if (error) {
                 return error;
             }
         }
     } else {
-        return validator(value);
+        return validators(controlValue);
     }
 };
