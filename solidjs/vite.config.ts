@@ -13,5 +13,13 @@ export default defineConfig({
             '@root': __dirname,
             '@components': path.resolve(__dirname, 'src', 'lib', 'components')
         }
+    },
+    server: {
+        proxy: {
+            '/app': {
+                target: 'http://localhost:8080/',
+                rewrite: (path) => path.replace(/^\/app/, '')
+            },
+        }
     }
 });
