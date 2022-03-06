@@ -44,7 +44,7 @@ export const getControlValue = (input: FormControl): any => {
  * Validate controls by validators
  * and update errors store
  */
-export const validate = <Controls>(
+export const validateForm = <Controls>(
     controls: Controls,
     validators: FormValidatorsOption<Controls | undefined>,
     setError: SetStoreFunction<FormError<Controls>>
@@ -56,27 +56,40 @@ export const validate = <Controls>(
     }
 
     /**
-     * Enumeration validators and call validation function/s
-     * to current form values
+     * Validate all controls
      */
-    Entries(validators).forEach(([name, validators]) => {
-        if (Array.isArray(validators)) {
-            for (let i = 0; i < validators.length; i++) {
-                const validator = validators[i];
-                const error = validator(controls[name]);
-                if (error) {
-                    validationErrors[name] = error;
-                    return;
-                }
-            }
+    Entries(controls).forEach(([name, value]) => {
+        const error = validateControl(name, value, validators);
+        if (error) {
+            validationErrors[name] = error;
         } else {
-            const error = validators(controls[name]);
-            if (error) {
-                validationErrors[name] = error;
-            }
+            delete validationErrors[name];
         }
     });
 
     setError(reconcile(validationErrors));
     return Object.keys(validationErrors).length === 0;
+};
+
+export const validateControl = <Controls extends {}, Name extends keyof Partial<Controls>, Value extends Controls[Name]>(
+    controlName: Name,
+    value: Value,
+    validators: FormValidatorsOption<Controls | undefined>,
+) => {
+    if (!validators) {
+        return true;
+    }
+
+    const validator = validators[controlName];
+    if (Array.isArray(validator)) {
+        for (let i = 0; i < validator.length; i++) {
+            const validatorCallback = validator[i];
+            const error = validatorCallback(value);
+            if (error) {
+                return error;
+            }
+        }
+    } else {
+        return validator(value);
+    }
 };

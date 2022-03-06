@@ -1,4 +1,4 @@
-import { createStore } from 'solid-js/store';
+import { createStore, reconcile } from 'solid-js/store';
 import {
     FormControl,
     FormError,
@@ -6,7 +6,13 @@ import {
     FormValidatorsOption,
     RegisterOptions
 } from '@root/src/lib/form/form.type';
-import { Entries, getControlValue, SetControlValue, validate } from '@root/src/lib/form/utils/utils';
+import {
+    Entries,
+    getControlValue,
+    SetControlValue,
+    validateControl,
+    validateForm
+} from '@root/src/lib/form/utils/utils';
 import { CUSTOM_EVENT_NAME } from '@root/src/lib/form/utils/constants';
 
 const customEvent = new CustomEvent(CUSTOM_EVENT_NAME);
@@ -62,8 +68,22 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
 
                 return controlRef;
             },
+            onChange: (e: Event) => {
+                const value = (e.target as FormControl).value;
+                // @ts-ignore
+                onControlChange(value, name);
+            },
             name
         };
+    };
+
+    const onControlChange = <Name extends keyof Partial<Controls>, Value extends Controls[Name]>(
+        value: Value,
+        name: Name
+    ) => {
+        const errorMessage = validateControl(name, value, options.validators) as string;
+        const state = {...errors, [name]: errorMessage};
+        setErrors(reconcile(state));
     };
 
     /**
@@ -85,7 +105,7 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
      * @internal
      * Validate current controls
      */
-    const _validate = (values: Controls) => validate(values, options.validators, setErrors);
+    const _validate = (values: Controls) => validateForm(values, options.validators, setErrors);
 
     /**
      * Form submit wrapper with validation

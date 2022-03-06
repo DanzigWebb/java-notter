@@ -37,6 +37,7 @@ export const SigninPage: Component = () => {
                                     placeholder="email"
                                     class="input input-bordered"
                                     classList={{'input-error': !!errors.login}}
+                                    autocomplete="off"
                                     {...register('login', {
                                         validators: [
                                             Validators.required(),
@@ -55,6 +56,7 @@ export const SigninPage: Component = () => {
                                     placeholder="password"
                                     class="input input-bordered"
                                     classList={{'input-error': !!errors.password}}
+                                    autocomplete="off"
                                     {...register('password', {
                                         validators: [
                                             Validators.required(),
