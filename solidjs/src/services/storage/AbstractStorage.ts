@@ -2,12 +2,14 @@ type StorageState<T> = Partial<T>
 
 export abstract class AbstractStorage<T extends Object> {
 
-    private state: StorageState<T> = this.getLocal();
+    private state: StorageState<T>;
 
     constructor(
         public storage: Storage = localStorage,
         public key: string,
-    ) {}
+    ) {
+        this.state = this.getLocal();
+    }
 
     set(key: keyof T, data: T[keyof T]): void {
         this.state[key] = data;

@@ -5,6 +5,8 @@ import { Route, Routes } from 'solid-app-router';
 import { Home, SigninPage, NotFound, SignupPage } from '@root/src/pages';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { PrivateGuard, PublicGuard } from '@root/src/shared/guards';
+import { userStorage } from '@root/src/services/storage';
+import { useApp } from '@root/src/shared/providers/AppProvider';
 
 
 const Routers: Component = () => {
@@ -35,6 +37,8 @@ const styles: JSX.CSSProperties = {
 
 const App: Component = () => {
 
+    initApp();
+
     return (
         <main class="main" style={styles}>
             <Header/>
@@ -44,6 +48,16 @@ const App: Component = () => {
             </section>
         </main>
     );
+};
+
+const initApp = () => {
+    const app = useApp();
+    const user = userStorage.get('user');
+
+    if (user) {
+        app.setAuth(true);
+        app.setUser(user);
+    }
 };
 
 export default App;
