@@ -87,6 +87,16 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
     };
 
     /**
+     * Set error to control
+     */
+    const setError = <Name extends keyof Partial<Controls>>(
+        control: Name,
+        message: string,
+    ) => {
+        setErrors({...errors, [control]: message});
+    };
+
+    /**
      * Set new value to registered control
      */
     const setValue = <Name extends keyof Controls, Value extends Controls[Name]>(
@@ -124,6 +134,7 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         register,
         setValue,
         getValue,
+        setError,
         submit,
         errors,
     };

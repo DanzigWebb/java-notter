@@ -1,11 +1,13 @@
 import { Component } from 'solid-js';
 import { Page } from '@root/src/pages/Page';
-import { Link } from 'solid-app-router';
+import { Link, useNavigate } from 'solid-app-router';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { createForm } from '@root/src/lib/form/createForm';
 import { Validators } from '@root/src/lib/form/validators/validators';
 import { FormField } from '@components/form/group/FormField';
 import { FormError } from '@components/form/group/FormError';
+import { authService } from '@root/src/services/api/auth.service';
+import { useApp } from '@root/src/shared/providers/AppProvider';
 
 type Inputs = {
     login: string;
@@ -13,9 +15,20 @@ type Inputs = {
 }
 
 export const SigninPage: Component = () => {
-    const {register, errors, submit} = createForm<Inputs>({
-        onSubmit: (values) => {
-            console.log(values);
+    const app = useApp();
+    const navigate = useNavigate();
+
+    const {register, errors, setError, submit} = createForm<Inputs>({
+        onSubmit: async (values) => {
+            try {
+                const response = await authService.login(values);
+                app.setAuth(true);
+                app.setUser(response.data.user);
+                navigate(`/${PagesPathEnum.HOME}`, {replace: true});
+            } catch (e) {
+                setError('password', 'Неверный пароль');
+                console.error(e);
+            }
         }
     });
 

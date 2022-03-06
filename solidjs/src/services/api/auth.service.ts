@@ -1,7 +1,7 @@
 import { userStorage, UserStorageState } from '../storage';
 import httpClient from '../http/httpClient';
 import { AxiosError } from 'axios';
-import { LoginDto, LoginResponseDto } from './dto';
+import { SigninDto, SigninResponseDto } from './dto';
 
 class AuthService {
     private _isAuth: boolean | undefined;
@@ -24,8 +24,8 @@ class AuthService {
     constructor() {
     }
 
-    async login(loginDto: LoginDto) {
-        return httpClient.post<LoginResponseDto>('/auth/sign-in', loginDto)
+    async login(loginDto: SigninDto) {
+        return httpClient.post<SigninResponseDto>('/auth/sign-in', loginDto)
             .then((res) => {
                 const {token, user} = res.data;
                 const state: UserStorageState = {isAuth: true, token, user};

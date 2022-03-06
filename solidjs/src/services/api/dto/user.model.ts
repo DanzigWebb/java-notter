@@ -10,12 +10,12 @@ export interface SignupDto {
     email: string;
 }
 
-export interface LoginDto {
+export interface SigninDto {
     login: string;
     password: string;
 }
 
-export interface LoginResponseDto {
+export interface SigninResponseDto {
     token: string;
     user: UserDto;
 }
