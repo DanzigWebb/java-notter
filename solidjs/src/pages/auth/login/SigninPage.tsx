@@ -4,6 +4,8 @@ import { Link } from 'solid-app-router';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { createForm } from '@root/src/lib/form/createForm';
 import { Validators } from '@root/src/lib/form/validators/validators';
+import { FormField } from '@components/form/group/FormField';
+import { FormError } from '@components/form/group/FormError';
 
 type Inputs = {
     login: string;
@@ -28,7 +30,7 @@ export const SigninPage: Component = () => {
                     </div>
                     <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <form onSubmit={submit} class="card-body">
-                            <div class="form-control">
+                            <FormField>
                                 <label class="label">
                                     <span class="label-text">Email</span>
                                 </label>
@@ -45,9 +47,9 @@ export const SigninPage: Component = () => {
                                         ]
                                     })}
                                 />
-                                {errors.login && <i class="text-xs text-error">{errors.login}</i>}
-                            </div>
-                            <div class="form-control">
+                                <FormError show={!!errors.login}>{errors.login}</FormError>
+                            </FormField>
+                            <FormField>
                                 <label class="label">
                                     <span class="label-text">Password</span>
                                 </label>
@@ -65,16 +67,16 @@ export const SigninPage: Component = () => {
                                         ]
                                     })}
                                 />
-                                {errors.password && <i class="text-xs text-error">{errors.password}</i>}
-                                <label class="label">
-                                    <Link
-                                        href={`/${PagesPathEnum.SIGNUP}`}
-                                        class="label-text-alt link link-hover"
-                                    >
-                                        Еще не зарегистрированы?
-                                    </Link>
-                                </label>
-                            </div>
+                                <FormError show={!!errors.password}>{errors.password}</FormError>
+                            </FormField>
+                            <label class="label">
+                                <Link
+                                    href={`/${PagesPathEnum.SIGNUP}`}
+                                    class="label-text-alt link link-hover"
+                                >
+                                    Еще не зарегистрированы?
+                                </Link>
+                            </label>
                             <div class="form-control mt-6">
                                 <button class="btn btn-primary">Login</button>
                             </div>
