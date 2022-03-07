@@ -19,7 +19,7 @@ export const ThemeMenu: Component = () => {
 
     return (
         <>
-            <Tooltip message="Цветовая схема">
+            <Tooltip message="Цветовая схема" placement="left">
                 <button class="btn btn-sm btn-circle btn-ghost" ref={setTrigger} onClick={toggleMenu}>
                     <i class="fa-solid fa-palette"/>
                 </button>
@@ -30,8 +30,12 @@ export const ThemeMenu: Component = () => {
                 reference={menuTrigger()}
                 onBackdropClick={toggleMenu}
             >
-                <MenuOption onClick={() => toggleTheme('light')} active={app.theme() === 'light'}>Светлая</MenuOption>
-                <MenuOption onClick={() => toggleTheme('dark')} active={app.theme() === 'dark'}>Темная</MenuOption>
+                <MenuOption onClick={() => toggleTheme('light')} active={app.theme() === 'light'}>
+                    <i class="fa-solid fa-sun"/>
+                </MenuOption>
+                <MenuOption onClick={() => toggleTheme('dark')} active={app.theme() === 'dark'}>
+                    <i class="fa-solid fa-moon"/>
+                </MenuOption>
             </Menu>
         </>
     );

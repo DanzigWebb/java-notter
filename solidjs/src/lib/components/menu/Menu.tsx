@@ -1,6 +1,8 @@
-import { Component, createSignal, onCleanup, Show } from 'solid-js';
+import { Component, createEffect, createSignal, onCleanup, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import usePopper from '@root/src/lib/popper/usePopper';
+import { Transition } from 'solid-transition-group';
+import { onMenuEnter, onMenuExit } from './utils/animations';
 
 type Props = {
     isShow: boolean;
@@ -32,6 +34,20 @@ export const Menu: Component<Props> = (props) => {
 
     const [reference] = createSignal(props.reference);
     const [popper, setPopper] = createSignal<HTMLElement>();
+    const [show, toggleShow] = createSignal(false);
+
+    /**
+     * Создаем компонент, помещаем в DOM
+     */
+    createEffect(() => {
+        if (props.isShow) {
+            toggleShow(true);
+        }
+    });
+
+    function destroy() {
+        toggleShow(false);
+    }
 
     function onBackdropClick() {
         props.onBackdropClick && props.onBackdropClick();
@@ -51,19 +67,22 @@ export const Menu: Component<Props> = (props) => {
     });
 
     return (
-        <Show when={props.isShow}>
+        <Show when={show()}>
             <Portal>
-                <div
-                    class="overlay"
-                    onClick={() => onBackdropClick()}
-                >
-                    <ul
-                        class="menu bg-base-200 z-10"
-                        ref={setPopper}
-                        onClick={e => e.stopPropagation()}
-                    >
-                        {props.children}
-                    </ul>
+                <div class="overlay" onClick={() => onBackdropClick()}>
+                    <div ref={setPopper} onClick={e => e.stopPropagation()}>
+                        <Transition
+                            appear={true}
+                            onEnter={onMenuEnter}
+                            onExit={(el) => onMenuExit(el).finished.then(destroy)}
+                        >
+                            {props.isShow && (
+                                <ul class="menu bg-base-200 z-10 shadow-xl">
+                                    {props.children}
+                                </ul>
+                            )}
+                        </Transition>
+                    </div>
                 </div>
             </Portal>
         </Show>
