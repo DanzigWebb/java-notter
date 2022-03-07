@@ -5,7 +5,7 @@ import { Route, Routes } from 'solid-app-router';
 import { Home, SigninPage, NotFound, SignupPage } from '@root/src/pages';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { PrivateGuard, PublicGuard } from '@root/src/shared/guards';
-import { userStorage } from '@root/src/services/storage';
+import { appStorage, userStorage } from '@root/src/services/storage';
 import { useApp } from '@root/src/shared/providers/AppProvider';
 
 
@@ -57,6 +57,12 @@ const initApp = () => {
     if (user) {
         app.setAuth(true);
         app.setUser(user);
+    }
+
+    const theme = appStorage.get('theme');
+
+    if (theme) {
+        app.setTheme(theme);
     }
 };
 

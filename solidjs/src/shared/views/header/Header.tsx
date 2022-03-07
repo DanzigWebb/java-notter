@@ -3,6 +3,7 @@ import { Component, Show } from 'solid-js';
 import { Tooltip } from '@components/tooltip/Tooltip';
 import { useApp } from '@root/src/shared/providers/AppProvider';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
+import { ThemeMenu } from '@root/src/shared/views/header/ThemeMenu';
 
 export const Header: Component = () => {
     const app = useApp();
@@ -23,6 +24,7 @@ export const Header: Component = () => {
                         </Tooltip>
                     </Show>
 
+                    <ThemeMenu/>
                 </div>
             </nav>
         </header>
