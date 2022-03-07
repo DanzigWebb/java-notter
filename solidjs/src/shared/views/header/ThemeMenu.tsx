@@ -13,8 +13,9 @@ export const ThemeMenu: Component = () => {
     const toggleMenu = () => setShow(!show());
 
     const toggleTheme = (theme: Theme) => {
-        app.setTheme(theme)
-    }
+        app.setTheme(theme);
+        setShow(false);
+    };
 
     return (
         <>
