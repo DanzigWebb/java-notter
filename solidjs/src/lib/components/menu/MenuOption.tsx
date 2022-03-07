@@ -10,7 +10,7 @@ export const MenuOption: Component<Props> = (props) => {
         <li>
             <a
                 onClick={() => props.onClick && props.onClick()}
-                classList={{'active': props.active}}
+                classList={{'active': !!props.active}}
             >
                 {props.children}
             </a>

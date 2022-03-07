@@ -4,6 +4,7 @@ import { Tooltip } from '@components/tooltip/Tooltip';
 import { useApp } from '@root/src/shared/providers/AppProvider';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { ThemeMenu } from '@root/src/shared/views/header/ThemeMenu';
+import { ProfileMenu } from '@root/src/shared/views/header/ProfileMenu';
 
 export const Header: Component = () => {
     const app = useApp();
@@ -25,6 +26,9 @@ export const Header: Component = () => {
                     </Show>
 
                     <ThemeMenu/>
+                    <Show when={!!app.user()}>
+                        <ProfileMenu user={app.user() || undefined}/>
+                    </Show>
                 </div>
             </nav>
         </header>

@@ -1,7 +1,7 @@
 export const onMenuEnter = (el: Element) => {
     return el.animate([{
         opacity: 0,
-        transform: 'scale(0.8) translateX(-5px) translateY(-20px)',
+        transform: 'scale(0.8) translateX(-5px) translateY(20px)',
     }, {
         opacity: 1,
         transform: 'scale(1) translateX(0) translateY(0)'
