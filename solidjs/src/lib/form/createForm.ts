@@ -68,7 +68,7 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
 
                 return controlRef;
             },
-            onChange: (e: Event) => {
+            onInput: (e: Event) => {
                 const value = (e.target as FormControl).value;
                 // @ts-ignore
                 onControlChange(value, name);
