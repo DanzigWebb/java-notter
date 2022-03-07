@@ -2,6 +2,7 @@ import { Component, createSignal, onCleanup, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import usePopper from '@root/src/lib/popper/usePopper';
 import { Placement } from '@popperjs/core';
+import { ScaleTransition } from '@components/utils/transitions/ScaleTransition';
 
 type Props = {
     message: string;
@@ -24,6 +25,7 @@ type Props = {
 export const Tooltip: Component<Props> = (props) => {
 
     const [show, setShow] = createSignal(false);
+    const [tooltip, setTooltip] = createSignal(false);
     const [triggerRef, setTriggerRef] = createSignal<HTMLElement>();
     const [popperRef, setPopperRef] = createSignal<HTMLElement>();
 
@@ -37,6 +39,11 @@ export const Tooltip: Component<Props> = (props) => {
         }]
     });
 
+    const showTooltip = () => {
+        setShow(true);
+        setTooltip(true);
+    };
+
     onCleanup(() => {
         instance()?.destroy();
     });
@@ -46,7 +53,7 @@ export const Tooltip: Component<Props> = (props) => {
             <span
                 class="inline-block"
                 ref={setTriggerRef}
-                onMouseEnter={() => setShow(true)}
+                onMouseEnter={showTooltip}
                 onMouseLeave={() => setShow(false)}
             >
                 {props.children}
@@ -54,12 +61,15 @@ export const Tooltip: Component<Props> = (props) => {
 
             <Show when={show()}>
                 <Portal>
-                    <span
-                        class="rounded shadow bg-base-200 p-2"
-                        ref={setPopperRef}
-                    >
-                        {props.message}
-                    </span>
+                    <div ref={setPopperRef}>
+                        <ScaleTransition appear={true}>
+                            {tooltip() && (
+                                <div class="rounded shadow-lg bg-base-200 p-2">
+                                    {props.message}
+                                </div>
+                            )}
+                        </ScaleTransition>
+                    </div>
                 </Portal>
             </Show>
         </>
