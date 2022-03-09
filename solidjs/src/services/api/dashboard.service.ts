@@ -3,11 +3,11 @@ import httpClient from '../http/httpClient';
 
 class DashboardService {
 
-    async getAll() {
+    getAll() {
         return httpClient.get<DashboardDto[]>('api/v1/dashboard');
     }
 
-    async create(dto: DashboardCreateDto) {
+    create(dto: DashboardCreateDto) {
         return httpClient.post<DashboardDto>('api/v1/dashboard', dto)
     }
 }
