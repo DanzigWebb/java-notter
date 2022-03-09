@@ -1,6 +1,7 @@
 import { Accessor, Component, createContext, createSignal, useContext } from 'solid-js';
 import { UserDto } from '@root/src/services/api/dto';
 import { appStorage } from '@root/src/services/storage';
+import { AlertProp } from '@root/src/shared/components/alerts/Alerts';
 
 export type Theme = 'light' | 'dark';
 
@@ -11,6 +12,8 @@ type AppContextType = {
     setUser: (u: UserDto | null) => void;
     theme: Accessor<Theme>;
     setTheme: (t: Theme) => void;
+    alerts: Accessor<AlertProp[]>;
+    setAlert: (a: AlertProp) => void;
 }
 
 export const AppContext = createContext<AppContextType>();
@@ -20,6 +23,7 @@ export const AppProvider: Component = (props) => {
     const [user, setUser] = createSignal<UserDto | null>(null);
     const [auth, setAuth] = createSignal(false);
     const [theme, setTheme] = createSignal<Theme>('dark');
+    const [alerts, setAlerts] = createSignal<AlertProp[]>([]);
 
     const store: AppContextType = {
         user,
@@ -27,7 +31,9 @@ export const AppProvider: Component = (props) => {
         auth,
         setAuth,
         theme,
-        setTheme: updateTheme
+        setTheme: updateTheme,
+        alerts,
+        setAlert: setAlertItem,
     };
 
     function updateTheme(t: Theme) {
@@ -35,6 +41,10 @@ export const AppProvider: Component = (props) => {
         html.setAttribute('data-theme', t);
         appStorage.set('theme', t);
         setTheme(t);
+    }
+
+    function setAlertItem(a: AlertProp) {
+        setAlerts([a]);
     }
 
     return (

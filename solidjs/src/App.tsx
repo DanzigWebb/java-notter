@@ -7,6 +7,7 @@ import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { PrivateGuard, PublicGuard } from '@root/src/shared/guards';
 import { appStorage, userStorage } from '@root/src/services/storage';
 import { useApp } from '@root/src/shared/providers/AppProvider';
+import { Alerts } from '@root/src/shared/components/alerts/Alerts';
 
 
 const Routers: Component = () => {
@@ -37,6 +38,8 @@ const styles: JSX.CSSProperties = {
 
 const App: Component = () => {
 
+    const app = useApp();
+
     initApp();
 
     return (
@@ -46,6 +49,8 @@ const App: Component = () => {
             <section>
                 <Routers/>
             </section>
+
+            <Alerts alerts={app.alerts()}/>
         </main>
     );
 };

@@ -4,8 +4,11 @@ import { FormField } from '@components/form/group/FormField';
 import { dashboardService } from '@root/src/services/api/dashboard.service';
 import { DashboardCreateDto, DashboardDto } from '@root/src/services/api/dto';
 import { DashboardList } from '@root/src/pages/home/DashboardList';
+import { useApp } from '@root/src/shared/providers/AppProvider';
 
 export const Home: Component = () => {
+
+    const app = useApp();
 
     const [name, setName] = createSignal('');
     const [dashboards, setDashboards] = createSignal<DashboardDto[]>([]);
@@ -15,8 +18,15 @@ export const Home: Component = () => {
     });
 
     async function getDashboards() {
-        const response = await dashboardService.getAll();
-        setDashboards(response.data);
+        try {
+            const response = await dashboardService.getAll();
+            setDashboards(response.data);
+        } catch (e) {
+            app.setAlert({
+                type: 'error',
+                message: 'Не удалось получить созданные доски',
+            });
+        }
     }
 
     async function onSubmit() {
@@ -27,6 +37,10 @@ export const Home: Component = () => {
                 await getDashboards();
                 setName('');
             } catch (e) {
+                app.setAlert({
+                    type: 'error',
+                    message: 'Не удалось создать новую доску',
+                });
                 console.error('Ошибка создания доски', e);
             }
         }
