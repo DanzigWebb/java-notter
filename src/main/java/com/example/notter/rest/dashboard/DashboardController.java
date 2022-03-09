@@ -41,9 +41,18 @@ public class DashboardController {
         return dashboardService.getAll(user.getUserEntity());
     }
 
+    @GetMapping("{dashboardId}")
+    public @ResponseBody
+    Dashboard getOne(
+            @PathVariable Integer dashboardId,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return dashboardService.getOne(user.getUserEntity(), dashboardId);
+    }
+
     @PutMapping("{dashboardId}")
     public @ResponseBody
-    Dashboard create(
+    Dashboard update(
             @PathVariable Integer dashboardId,
             @Valid @RequestBody DashboardUpdateRequest dash,
             @AuthenticationPrincipal CustomUserDetails user

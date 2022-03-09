@@ -56,4 +56,14 @@ public class DashboardService {
         var ds = dashboardRepo.findAllByUser(user.getId());
         return Util.entityListToModel(ds, Dashboard::toModel);
     }
+
+    public Dashboard getOne(UserEntity user, Integer id) {
+        var ds = dashboardRepo.findByUser(user.getId(), id);
+
+        if (ds == null) {
+            throw new EntityNotFoundException();
+        }
+
+        return Dashboard.toModel(ds);
+    }
 }
