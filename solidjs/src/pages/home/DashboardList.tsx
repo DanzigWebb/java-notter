@@ -1,5 +1,7 @@
 import { Component, For } from 'solid-js';
 import { DashboardDto } from '@root/src/services/api/dto';
+import { Link } from 'solid-app-router';
+import { PagesPathEnum } from '@root/src/pages/pages.type';
 
 type MenuItemProps = {
     dashboard: DashboardDto;
@@ -38,8 +40,12 @@ export const DashboardList: Component<Props> = (props) => {
     return (
         <ul className="menu">
             <For each={props.dashboards || []}>
-                {item => <li><a><DashboardMenuItem dashboard={item}/></a></li>}
+                {item =>
+                    <Link href={`/${PagesPathEnum.DASHBOARD}/${item.id}`}>
+                        <li><a><DashboardMenuItem dashboard={item}/></a></li>
+                    </Link>
+                }
             </For>
         </ul>
-    )
-}
+    );
+};

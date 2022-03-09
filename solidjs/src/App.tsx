@@ -8,15 +8,19 @@ import { PrivateGuard, PublicGuard } from '@root/src/shared/guards';
 import { appStorage, userStorage } from '@root/src/services/storage';
 import { useApp } from '@root/src/shared/providers/AppProvider';
 import { Alerts } from '@root/src/shared/views/alerts/Alerts';
+import { DashboardPage } from '@root/src/pages/dashboard/DashboardPage';
 
 
 const Routers: Component = () => {
     return (
         <Routes>
             <Route
-                path={`/${PagesPathEnum.HOME}`}
+                path={`/`}
                 element={<PrivateGuard children={<Home/>}/>}
             />
+            <Route path={`/${PagesPathEnum.DASHBOARD}/:id`}>
+                <Route path="/" element={<DashboardPage/>}/>
+            </Route>
             <Route
                 path={`/${PagesPathEnum.SIGNIN}`}
                 element={<PublicGuard children={<SigninPage/>}/>}
@@ -31,7 +35,7 @@ const Routers: Component = () => {
 };
 
 const styles: JSX.CSSProperties = {
-    'height': '100vh',
+    'min-height': '100vh',
     'display': 'grid',
     'grid-template-rows': 'auto 1fr'
 };
@@ -46,7 +50,7 @@ const App: Component = () => {
         <main class="main" style={styles}>
             <Header/>
 
-            <section>
+            <section class="overflow-hidden">
                 <Routers/>
             </section>
 

@@ -7,7 +7,9 @@ type Props = {
 export const Page: Component<Props> = (props) => {
 
     return (
-        <div classList={{
+        <div
+            class="flex flex-col"
+            classList={{
                 'h-full': !!props.full
             }}
         >

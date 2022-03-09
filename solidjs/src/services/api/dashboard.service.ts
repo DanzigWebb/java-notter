@@ -7,8 +7,12 @@ class DashboardService {
         return httpClient.get<DashboardDto[]>('api/v1/dashboard');
     }
 
+    getById(id: number) {
+        return httpClient.get<DashboardDto>(`api/v1/dashboard/${id}`);
+    }
+
     create(dto: DashboardCreateDto) {
-        return httpClient.post<DashboardDto>('api/v1/dashboard', dto)
+        return httpClient.post<DashboardDto>('api/v1/dashboard', dto);
     }
 }
 
