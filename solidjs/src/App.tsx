@@ -7,7 +7,7 @@ import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { PrivateGuard, PublicGuard } from '@root/src/shared/guards';
 import { appStorage, userStorage } from '@root/src/services/storage';
 import { useApp } from '@root/src/shared/providers/AppProvider';
-import { Alerts } from '@root/src/shared/components/alerts/Alerts';
+import { Alerts } from '@root/src/shared/views/alerts/Alerts';
 
 
 const Routers: Component = () => {

@@ -1,7 +1,7 @@
 import { Accessor, Component, createContext, createSignal, useContext } from 'solid-js';
 import { UserDto } from '@root/src/services/api/dto';
 import { appStorage } from '@root/src/services/storage';
-import { AlertProp } from '@root/src/shared/components/alerts/Alerts';
+import { AlertProp } from '@root/src/shared/views/alerts/Alerts';
 
 export type Theme = 'light' | 'dark';
 
