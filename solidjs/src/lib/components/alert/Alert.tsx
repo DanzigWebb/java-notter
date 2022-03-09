@@ -1,5 +1,6 @@
-import { Component, Show } from 'solid-js';
+import { Component, createEffect, createSignal, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
+import { SlideUpTransition } from '@components/utils/transitions';
 
 export type AlertType = 'info' | 'success' | 'warning' | 'error';
 
@@ -7,6 +8,7 @@ type Props = {
     show: boolean;
     type?: AlertType,
     onClose?: () => void;
+    timeout?: number;
 }
 
 /**
@@ -25,22 +27,53 @@ type Props = {
  */
 export const Alert: Component<Props> = (props) => {
 
+    const [show, setShow] = createSignal(false);
+
+    createEffect(() => {
+        if (props.show) {
+            setShow(true);
+        }
+
+        if (props.timeout) {
+            setTimeout(() => {
+                setShow(false);
+            }, props.timeout);
+        }
+    });
+
+    function onClose() {
+        props.onClose && props.onClose();
+    }
+
     return (
         <Show when={props.show}>
             <Portal>
-                <div className="container fixed bottom-2 left-0 right-0">
-                    <div
-                        class="alert shadow-lg"
-                        classList={{
-                            'alert-info': props.type === 'info',
-                            'alert-success': props.type === 'success',
-                            'alert-warning': props.type === 'warning',
-                            'alert-error': props.type === 'error',
-                        }}
-                    >
-                        {props.children}
-                    </div>
-                </div>
+                <SlideUpTransition appear={true} onExit={onClose}>
+                    {show() && (
+                        <div class="container fixed bottom-2 left-0 right-0">
+                            <div
+                                class="alert shadow-lg"
+                                classList={{
+                                    'alert-info': props.type === 'info',
+                                    'alert-success': props.type === 'success',
+                                    'alert-warning': props.type === 'warning',
+                                    'alert-error': props.type === 'error',
+                                }}
+                            >
+                                {props.children}
+
+                                <div class="flex-none">
+                                    <button
+                                        class="btn btn-sm btn-ghost btn-circle"
+                                        onClick={() => setShow(false)}
+                                    >
+                                        <i class="fa-solid fa-xmark"/>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </SlideUpTransition>
             </Portal>
         </Show>
     );
