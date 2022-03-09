@@ -2,6 +2,7 @@ import { Component, createEffect, createSignal, onCleanup, Show } from 'solid-js
 import { Portal } from 'solid-js/web';
 import usePopper from '@root/src/lib/popper/usePopper';
 import { ScaleTransition } from '@components/utils/transitions/ScaleTransition';
+import { Overlay } from '@components/utils/overlay/Overlay';
 
 type Props = {
     isShow: boolean;
@@ -68,7 +69,7 @@ export const Menu: Component<Props> = (props) => {
     return (
         <Show when={show()}>
             <Portal>
-                <div class="overlay" onClick={() => onBackdropClick()}>
+                <Overlay onClick={() => onBackdropClick()}>
                     <div ref={setPopper} onClick={e => e.stopPropagation()}>
                         <ScaleTransition appear={true} onExit={destroy}>
                             {props.isShow && (
@@ -78,7 +79,7 @@ export const Menu: Component<Props> = (props) => {
                             )}
                         </ScaleTransition>
                     </div>
-                </div>
+                </Overlay>
             </Portal>
         </Show>
     );

@@ -9,14 +9,21 @@ const onEnter = (el: Element) => {
         opacity: 1,
         transform: 'scale(1) translateX(0) translateY(0)'
     }], {
-        duration: 120,
+        duration: 160,
         easing: 'cubic-bezier(0.55, 0, 0.55, 0.2)'
     });
 };
 
 const onExit = (el: Element) => {
-    return el.animate([{opacity: 1}, {opacity: 0}], {
-        duration: 120
+    return el.animate([{
+        opacity: 1,
+        transform: 'scale(1)'
+    }, {
+        opacity: 0,
+        transform: 'scale(0.90)'
+    }], {
+        duration: 120,
+        easing: 'cubic-bezier(0.55, 0, 0.55, 0.2)'
     });
 };
 
